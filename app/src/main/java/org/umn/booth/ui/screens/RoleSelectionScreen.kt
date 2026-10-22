@@ -31,12 +31,16 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Snackbar
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -45,8 +49,8 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import kotlinx.coroutines.launch
 import org.umn.booth.ui.components.BoothLogo
-import org.umn.booth.ui.theme.BoothBorder
 import org.umn.booth.ui.theme.BoothPrimary
 import org.umn.booth.ui.theme.BoothTextMuted
 import org.umn.booth.ui.theme.BoothTextPrimary
@@ -57,15 +61,40 @@ enum class UserRole {
     MERCHANT
 }
 
+private const val MERCHANT_UNAVAILABLE_MESSAGE =
+    "Registration for merchants is still under development."
+
 @Composable
 fun RoleSelectionScreen(
     onContinue: (UserRole) -> Unit,
     onLoginClick: () -> Unit
 ) {
     var selectedRole by remember { mutableStateOf(UserRole.CUSTOMER) }
+    val snackbarHostState = remember { SnackbarHostState() }
+    val coroutineScope = rememberCoroutineScope()
+
+    fun showMerchantUnavailable() {
+        coroutineScope.launch {
+            snackbarHostState.currentSnackbarData?.dismiss()
+            snackbarHostState.showSnackbar(MERCHANT_UNAVAILABLE_MESSAGE)
+        }
+    }
 
     Scaffold(
         containerColor = Color.White,
+        snackbarHost = {
+            SnackbarHost(
+                hostState = snackbarHostState,
+                modifier = Modifier.padding(horizontal = 24.dp, vertical = 16.dp)
+            ) { snackbarData ->
+                Snackbar(
+                    snackbarData = snackbarData,
+                    shape = RoundedCornerShape(12.dp),
+                    containerColor = Color.White,
+                    contentColor = BoothTextPrimary
+                )
+            }
+        },
         bottomBar = {
             Surface(
                 modifier = Modifier.fillMaxWidth(),
@@ -78,7 +107,13 @@ fun RoleSelectionScreen(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Button(
-                        onClick = { onContinue(selectedRole) },
+                        onClick = {
+                            if (selectedRole == UserRole.CUSTOMER) {
+                                onContinue(selectedRole)
+                            } else {
+                                showMerchantUnavailable()
+                            }
+                        },
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(52.dp),
@@ -175,7 +210,10 @@ fun RoleSelectionScreen(
                 description = "Register your cafe & manage table bookings.",
                 icon = Icons.Default.Storefront,
                 isSelected = selectedRole == UserRole.MERCHANT,
-                onClick = { selectedRole = UserRole.MERCHANT }
+                onClick = {
+                    selectedRole = UserRole.MERCHANT
+                    showMerchantUnavailable()
+                }
             )
 
             Spacer(modifier = Modifier.height(24.dp))
