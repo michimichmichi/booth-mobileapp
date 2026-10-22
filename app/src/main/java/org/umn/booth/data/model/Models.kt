@@ -60,3 +60,4 @@ data class ReservationTicket(
     val totalAmount: Int,
     val itemsSummary: String
 )
+

@@ -1,12 +1,13 @@
 package org.umn.booth.ui.screens
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -21,10 +22,10 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Info
-import androidx.compose.material.icons.filled.Payment
 import androidx.compose.material.icons.filled.Remove
+import androidx.compose.material.icons.filled.Shield
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -54,15 +55,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.umn.booth.data.DummyData
 import org.umn.booth.data.model.MenuItem
-import org.umn.booth.ui.components.BoothTopAppBar
-import org.umn.booth.ui.theme.BoothBorder
 import org.umn.booth.ui.theme.BoothPrimary
-import org.umn.booth.ui.theme.BoothSuccess
-import org.umn.booth.ui.theme.BoothTextMuted
-import org.umn.booth.ui.theme.BoothTextPrimary
 import org.umn.booth.ui.theme.BoothTextSecondary
-import java.text.NumberFormat
-import java.util.Locale
 
 @Composable
 fun PreOrderScreen(
@@ -70,9 +64,8 @@ fun PreOrderScreen(
     onNavigateBack: () -> Unit,
     onConfirmAndPay: (Int, String) -> Unit
 ) {
-    // Dynamic cart state
-    var qtyItem1 by remember { mutableIntStateOf(1) } // Iced Americano
-    var qtyItem2 by remember { mutableIntStateOf(1) } // French Fries
+    var qtyItem1 by remember { mutableIntStateOf(1) }
+    var qtyItem2 by remember { mutableIntStateOf(1) }
     var selectedCategory by remember { mutableStateOf("All Pre-Orders (2)") }
 
     val categories = listOf("All Pre-Orders (2)", "Signature Coffee", "Pastries & Snacks")
@@ -83,44 +76,71 @@ fun PreOrderScreen(
     val subtotal = (qtyItem1 * item1.price) + (qtyItem2 * item2.price)
     val totalItems = qtyItem1 + qtyItem2
 
-    val rupiahFormat = NumberFormat.getCurrencyInstance(Locale("id", "ID")).apply {
-        maximumFractionDigits = 0
-    }
-
     Scaffold(
+        containerColor = Color(0xFFF8FAFC),
         topBar = {
-            BoothTopAppBar(
-                title = "Table 04 • Glasshouse Corner",
-                subtitle = "Pre-Order & Checkout",
-                canNavigateBack = true,
-                onNavigateBack = onNavigateBack
-            )
-        },
-        bottomBar = {
             Surface(
-                modifier = Modifier.fillMaxWidth(),
-                color = MaterialTheme.colorScheme.surface,
-                tonalElevation = 8.dp,
-                border = BorderStroke(1.dp, BoothBorder)
+                color = Color(0xFFF8FAFC),
+                modifier = Modifier.fillMaxWidth()
             ) {
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(16.dp),
+                        .padding(horizontal = 12.dp, vertical = 8.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    IconButton(onClick = onNavigateBack) {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                            contentDescription = "Back",
+                            tint = Color(0xFF0F172A)
+                        )
+                    }
+                    Spacer(modifier = Modifier.width(4.dp))
+                    Column {
+                        Text(
+                            text = "Table 04 • Glasshouse Corner",
+                            fontSize = 14.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = Color(0xFF0F172A)
+                        )
+                        Text(
+                            text = "Pre-Order & Checkout",
+                            fontSize = 11.5.sp,
+                            color = Color(0xFF64748B)
+                        )
+                    }
+                }
+            }
+        },
+        bottomBar = {
+            Surface(
+                modifier = Modifier.fillMaxWidth(),
+                color = Color.White,
+                tonalElevation = 8.dp,
+                border = androidx.compose.foundation.BorderStroke(1.dp, Color(0xFFE2E8F0))
+            ) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 20.dp, vertical = 14.dp),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Column {
                         Text(
                             text = "SUBTOTAL • $totalItems ITEMS",
-                            style = MaterialTheme.typography.labelSmall,
-                            color = BoothTextMuted
-                        )
-                        Text(
-                            text = rupiahFormat.format(subtotal).replace("Rp", "Rp "),
-                            style = MaterialTheme.typography.titleLarge,
+                            fontSize = 10.sp,
                             fontWeight = FontWeight.Bold,
-                            color = BoothPrimary
+                            color = Color(0xFF94A3B8),
+                            letterSpacing = 1.sp
+                        )
+                        Spacer(modifier = Modifier.height(2.dp))
+                        Text(
+                            text = "Rp ${String.format("%,d", subtotal).replace(',', '.')}",
+                            fontSize = 18.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = Color(0xFF0F172A)
                         )
                     }
 
@@ -129,11 +149,14 @@ fun PreOrderScreen(
                             val summary = "${item1.name} ($qtyItem1), ${item2.name} ($qtyItem2)"
                             onConfirmAndPay(subtotal, summary)
                         },
-                        enabled = totalItems > 0,
                         shape = RoundedCornerShape(12.dp),
-                        colors = ButtonDefaults.buttonColors(containerColor = BoothPrimary)
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = BoothPrimary,
+                            contentColor = Color.White
+                        ),
+                        modifier = Modifier.height(48.dp)
                     ) {
-                        Text("Confirm & Join Table →", fontWeight = FontWeight.Bold)
+                        Text("Confirm & Join Table →", fontWeight = FontWeight.Bold, fontSize = 13.5.sp, color = Color.White)
                     }
                 }
             }
@@ -143,26 +166,29 @@ fun PreOrderScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding)
-                .background(MaterialTheme.colorScheme.background)
-                .padding(horizontal = 16.dp),
+                .background(Color(0xFFF8FAFC)),
+            contentPadding = PaddingValues(start = 16.dp, end = 16.dp, top = 8.dp, bottom = 32.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
+
             item {
-                Spacer(modifier = Modifier.height(4.dp))
-                Text(
-                    text = "Pre-Order Food & Drinks",
-                    style = MaterialTheme.typography.headlineMedium,
-                    fontWeight = FontWeight.Bold,
-                    color = BoothTextPrimary
-                )
-                Text(
-                    text = "Ready & served fresh right when you take your seat",
-                    style = MaterialTheme.typography.bodySmall,
-                    color = BoothTextSecondary
-                )
+                Column {
+                    Text(
+                        text = "Pre-Order Food & Drinks",
+                        style = MaterialTheme.typography.titleLarge,
+                        fontWeight = FontWeight.Bold,
+                        color = Color(0xFF0F172A),
+                        fontSize = 20.sp
+                    )
+                    Spacer(modifier = Modifier.height(4.dp))
+                    Text(
+                        text = "Ready & served when you take your seat",
+                        fontSize = 12.5.sp,
+                        color = Color(0xFF64748B)
+                    )
+                }
             }
 
-            // Categories
             item {
                 LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                     items(categories) { category ->
@@ -170,188 +196,129 @@ fun PreOrderScreen(
                         FilterChip(
                             selected = isSelected,
                             onClick = { selectedCategory = category },
-                            label = { Text(category) },
-                            shape = RoundedCornerShape(20.dp),
+                            label = { Text(category, fontWeight = FontWeight.Medium, fontSize = 12.sp) },
                             colors = FilterChipDefaults.filterChipColors(
                                 selectedContainerColor = BoothPrimary,
-                                selectedLabelColor = Color.White
-                            )
+                                selectedLabelColor = Color.White,
+                                containerColor = Color.White,
+                                labelColor = Color(0xFF64748B)
+                            ),
+                            border = FilterChipDefaults.filterChipBorder(
+                                enabled = true,
+                                selected = isSelected,
+                                borderColor = if (isSelected) BoothPrimary else Color(0xFFE2E8F0)
+                            ),
+                            shape = RoundedCornerShape(20.dp)
                         )
                     }
                 }
             }
 
-            // Menu Item 1: Iced Americano
             item {
                 MenuItemCard(
                     item = item1,
-                    quantity = qtyItem1,
+                    qty = qtyItem1,
                     onIncrease = { qtyItem1++ },
                     onDecrease = { if (qtyItem1 > 0) qtyItem1-- }
                 )
             }
 
-            // Menu Item 2: French Fries
             item {
                 MenuItemCard(
                     item = item2,
-                    quantity = qtyItem2,
+                    qty = qtyItem2,
                     onIncrease = { qtyItem2++ },
                     onDecrease = { if (qtyItem2 > 0) qtyItem2-- }
                 )
             }
 
-            // + Add More (Slide 11)
             item {
-                Row(
+                Button(
+                    onClick = {},
                     modifier = Modifier
                         .fillMaxWidth()
-                        .clickable {}
-                        .padding(vertical = 4.dp),
-                    horizontalArrangement = Arrangement.Center,
-                    verticalAlignment = Alignment.CenterVertically
+                        .height(44.dp),
+                    shape = RoundedCornerShape(12.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color(0xFFEFF6FF),
+                        contentColor = BoothPrimary
+                    ),
+                    elevation = ButtonDefaults.buttonElevation(defaultElevation = 0.dp)
                 ) {
-                    Icon(
-                        imageVector = Icons.Default.Add,
-                        contentDescription = null,
-                        tint = BoothPrimary,
-                        modifier = Modifier.size(16.dp)
-                    )
-                    Spacer(modifier = Modifier.width(4.dp))
-                    Text(
-                        text = "Add More",
-                        style = MaterialTheme.typography.labelMedium,
-                        fontWeight = FontWeight.Bold,
-                        color = BoothPrimary
-                    )
+                    Icon(Icons.Default.Add, contentDescription = null, tint = BoothPrimary, modifier = Modifier.size(16.dp))
+                    Spacer(modifier = Modifier.width(6.dp))
+                    Text("Add More", fontWeight = FontWeight.Bold, fontSize = 13.sp)
                 }
             }
 
-            // Individual QRIS Checkout Info Card (Slide 11 Callout)
             item {
                 Card(
                     modifier = Modifier.fillMaxWidth(),
-                    shape = RoundedCornerShape(14.dp),
-                    colors = CardDefaults.cardColors(containerColor = Color(0xFFF0FDF4)),
-                    border = BorderStroke(1.dp, Color(0xFFBBF7D0))
-                ) {
-                    Row(
-                        modifier = Modifier.padding(14.dp),
-                        verticalAlignment = Alignment.Top
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.Info,
-                            contentDescription = null,
-                            tint = BoothSuccess,
-                            modifier = Modifier.size(20.dp)
-                        )
-                        Spacer(modifier = Modifier.width(10.dp))
-                        Column {
-                            Text(
-                                text = "Individual QRIS Checkout",
-                                style = MaterialTheme.typography.labelMedium,
-                                fontWeight = FontWeight.Bold,
-                                color = Color(0xFF166534)
-                            )
-                            Spacer(modifier = Modifier.height(2.dp))
-                            Text(
-                                text = "You only pay for your own items. Table reservation deposit of Rp 50.000 was guaranteed by host Sarah K. Seamless QRIS settlement activates upon arrival check-in.",
-                                style = MaterialTheme.typography.bodySmall,
-                                color = Color(0xFF15803D),
-                                lineHeight = 16.sp,
-                                fontSize = 12.sp
-                            )
-                        }
-                    }
-                }
-            }
-
-            // Summary Breakdown
-            item {
-                Card(
-                    modifier = Modifier.fillMaxWidth(),
-                    shape = RoundedCornerShape(14.dp),
-                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
-                    border = BorderStroke(1.dp, BoothBorder)
+                    shape = RoundedCornerShape(16.dp),
+                    colors = CardDefaults.cardColors(containerColor = Color.White),
+                    border = androidx.compose.foundation.BorderStroke(1.dp, Color(0xFFE2E8F0))
                 ) {
                     Column(modifier = Modifier.padding(16.dp)) {
-                        Text(
-                            text = "Order Summary",
-                            style = MaterialTheme.typography.labelLarge,
-                            fontWeight = FontWeight.Bold,
-                            color = BoothTextPrimary
-                        )
-
-                        Spacer(modifier = Modifier.height(10.dp))
-
-                        if (qtyItem1 > 0) {
-                            Row(
-                                modifier = Modifier.fillMaxWidth(),
-                                horizontalArrangement = Arrangement.SpaceBetween
+                        Row(verticalAlignment = Alignment.Top) {
+                            Box(
+                                modifier = Modifier
+                                    .size(32.dp)
+                                    .background(Color(0xFFE0EDFB), CircleShape),
+                                contentAlignment = Alignment.Center
                             ) {
-                                Text(
-                                    text = "${item1.name} × $qtyItem1",
-                                    style = MaterialTheme.typography.bodyMedium,
-                                    color = BoothTextSecondary
-                                )
-                                Text(
-                                    text = rupiahFormat.format(qtyItem1 * item1.price),
-                                    style = MaterialTheme.typography.bodyMedium,
-                                    fontWeight = FontWeight.Medium,
-                                    color = BoothTextPrimary
+                                Icon(
+                                    imageVector = Icons.Default.Shield,
+                                    contentDescription = null,
+                                    tint = BoothPrimary,
+                                    modifier = Modifier.size(16.dp)
                                 )
                             }
-                            Spacer(modifier = Modifier.height(6.dp))
-                        }
-
-                        if (qtyItem2 > 0) {
-                            Row(
-                                modifier = Modifier.fillMaxWidth(),
-                                horizontalArrangement = Arrangement.SpaceBetween
-                            ) {
+                            Spacer(modifier = Modifier.width(10.dp))
+                            Column(modifier = Modifier.weight(1f)) {
                                 Text(
-                                    text = "${item2.name} × $qtyItem2",
-                                    style = MaterialTheme.typography.bodyMedium,
-                                    color = BoothTextSecondary
+                                    text = "Individual QRIS Checkout",
+                                    fontSize = 13.sp,
+                                    fontWeight = FontWeight.Bold,
+                                    color = Color(0xFF0F172A)
                                 )
+                                Spacer(modifier = Modifier.height(3.dp))
                                 Text(
-                                    text = rupiahFormat.format(qtyItem2 * item2.price),
-                                    style = MaterialTheme.typography.bodyMedium,
-                                    fontWeight = FontWeight.Medium,
-                                    color = BoothTextPrimary
+                                    text = "You only pay for your own items. Table reservation deposit of Rp 50.000 was guaranteed by host Sarah K. Seamless QRIS settlement activates upon arrival check-in.",
+                                    fontSize = 11.5.sp,
+                                    color = Color(0xFF64748B),
+                                    lineHeight = 16.sp
                                 )
                             }
-                            Spacer(modifier = Modifier.height(6.dp))
                         }
 
-                        androidx.compose.material3.HorizontalDivider(
-                            modifier = Modifier.padding(vertical = 8.dp),
-                            color = BoothBorder
-                        )
+                        Spacer(modifier = Modifier.height(14.dp))
 
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.SpaceBetween
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .background(Color(0xFFF8FAFC), RoundedCornerShape(10.dp))
+                                .padding(horizontal = 14.dp, vertical = 10.dp)
                         ) {
-                            Text(
-                                text = "Pre-Order Subtotal",
-                                style = MaterialTheme.typography.titleMedium,
-                                fontWeight = FontWeight.Bold,
-                                color = BoothTextPrimary
-                            )
-                            Text(
-                                text = rupiahFormat.format(subtotal),
-                                style = MaterialTheme.typography.titleMedium,
-                                fontWeight = FontWeight.Bold,
-                                color = BoothPrimary
-                            )
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.SpaceBetween,
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Text(
+                                    text = "Pre-Order Subtotal",
+                                    fontSize = 12.sp,
+                                    color = Color(0xFF64748B)
+                                )
+                                Text(
+                                    text = "Rp ${String.format("%,d", subtotal).replace(',', '.')} ($totalItems items)",
+                                    fontSize = 13.sp,
+                                    fontWeight = FontWeight.Bold,
+                                    color = BoothPrimary
+                                )
+                            }
                         }
                     }
                 }
-            }
-
-            item {
-                Spacer(modifier = Modifier.height(24.dp))
             }
         }
     }
@@ -360,24 +327,21 @@ fun PreOrderScreen(
 @Composable
 private fun MenuItemCard(
     item: MenuItem,
-    quantity: Int,
+    qty: Int,
     onIncrease: () -> Unit,
     onDecrease: () -> Unit
 ) {
-    val rupiahFormat = NumberFormat.getCurrencyInstance(Locale("id", "ID")).apply {
-        maximumFractionDigits = 0
-    }
-
     Card(
         modifier = Modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(16.dp),
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
-        border = BorderStroke(1.dp, BoothBorder)
+        shape = RoundedCornerShape(14.dp),
+        colors = CardDefaults.cardColors(containerColor = Color.White),
+        border = androidx.compose.foundation.BorderStroke(1.dp, Color(0xFFE2E8F0)),
+        elevation = CardDefaults.cardElevation(defaultElevation = 1.dp)
     ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(14.dp),
+                .padding(12.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Image(
@@ -385,70 +349,74 @@ private fun MenuItemCard(
                 contentDescription = item.name,
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
-                    .size(70.dp)
-                    .clip(RoundedCornerShape(12.dp))
+                    .size(68.dp)
+                    .clip(RoundedCornerShape(10.dp))
             )
 
-            Spacer(modifier = Modifier.width(14.dp))
+            Spacer(modifier = Modifier.width(12.dp))
 
             Column(modifier = Modifier.weight(1f)) {
                 Text(
                     text = item.name,
-                    style = MaterialTheme.typography.titleSmall,
                     fontWeight = FontWeight.Bold,
-                    color = BoothTextPrimary
+                    fontSize = 14.5.sp,
+                    color = Color(0xFF0F172A)
                 )
+                Spacer(modifier = Modifier.height(2.dp))
                 Text(
                     text = item.description,
-                    style = MaterialTheme.typography.bodySmall,
-                    color = BoothTextSecondary,
-                    maxLines = 2,
                     fontSize = 11.sp,
-                    lineHeight = 14.sp
+                    color = Color(0xFF64748B),
+                    maxLines = 1
                 )
-                Spacer(modifier = Modifier.height(4.dp))
+                Spacer(modifier = Modifier.height(6.dp))
                 Text(
-                    text = rupiahFormat.format(item.price),
-                    style = MaterialTheme.typography.labelMedium,
+                    text = "Rp ${String.format("%,d", item.price).replace(',', '.')}",
                     fontWeight = FontWeight.Bold,
+                    fontSize = 13.sp,
                     color = BoothPrimary
                 )
             }
 
-            // Quantity Stepper
+            Spacer(modifier = Modifier.width(8.dp))
+
             Row(
                 verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier
-                    .background(Color(0xFFF1F5F9), RoundedCornerShape(20.dp))
-                    .padding(horizontal = 4.dp, vertical = 2.dp)
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                IconButton(
-                    onClick = onDecrease,
-                    modifier = Modifier.size(28.dp)
+                Box(
+                    modifier = Modifier
+                        .size(30.dp)
+                        .background(Color(0xFFF1F5F9), RoundedCornerShape(8.dp))
+                        .clickable { onDecrease() },
+                    contentAlignment = Alignment.Center
                 ) {
                     Icon(
                         imageVector = Icons.Default.Remove,
                         contentDescription = "Decrease",
-                        tint = if (quantity > 0) BoothTextPrimary else BoothTextMuted,
+                        tint = Color(0xFF64748B),
                         modifier = Modifier.size(16.dp)
                     )
                 }
 
                 Text(
-                    text = "$quantity",
-                    style = MaterialTheme.typography.labelMedium,
+                    text = "$qty",
                     fontWeight = FontWeight.Bold,
-                    modifier = Modifier.padding(horizontal = 8.dp)
+                    fontSize = 14.sp,
+                    color = Color(0xFF0F172A)
                 )
 
-                IconButton(
-                    onClick = onIncrease,
-                    modifier = Modifier.size(28.dp)
+                Box(
+                    modifier = Modifier
+                        .size(30.dp)
+                        .background(BoothPrimary, RoundedCornerShape(8.dp))
+                        .clickable { onIncrease() },
+                    contentAlignment = Alignment.Center
                 ) {
                     Icon(
                         imageVector = Icons.Default.Add,
                         contentDescription = "Increase",
-                        tint = BoothPrimary,
+                        tint = Color.White,
                         modifier = Modifier.size(16.dp)
                     )
                 }
@@ -456,3 +424,4 @@ private fun MenuItemCard(
         }
     }
 }
+

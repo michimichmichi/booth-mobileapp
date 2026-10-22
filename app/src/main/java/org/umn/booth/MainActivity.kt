@@ -35,7 +35,23 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+@Preview(name = "0. Full Interactive App Flow (Clickable)", showBackground = true, showSystemUi = true)
+@Composable
+fun PreviewFullAppFlow() {
+    BOOTHTheme {
+        Surface(modifier = Modifier.fillMaxSize()) {
+            BoothNavGraph()
+        }
+    }
+}
 
+@Preview(name = "0. Splash Screen (Slide 4 Left)", showBackground = true, showSystemUi = true)
+@Composable
+fun PreviewSplashScreen() {
+    BOOTHTheme {
+        org.umn.booth.ui.screens.SplashScreen(onTimeout = {})
+    }
+}
 
 @Preview(name = "1. Role Selection", showBackground = true, showSystemUi = true)
 @Composable
@@ -91,7 +107,9 @@ fun PreviewExplore() {
             userInitials = "AR",
             onVenueClick = {},
             onJoinTableWithCode = {},
-            onReservationsClick = {}
+            onReservationsClick = {},
+            onCommunityClick = {},
+            onProfileClick = {}
         )
     }
 }
@@ -103,7 +121,10 @@ fun PreviewVenueDetail() {
         VenueDetailScreen(
             venueId = "kopi-nako-serpong",
             onNavigateBack = {},
-            onBrowseSeatsClick = {}
+            onBrowseSeatsClick = {},
+            onReservationsClick = {},
+            onCommunityClick = {},
+            onProfileClick = {}
         )
     }
 }
@@ -150,6 +171,36 @@ fun PreviewReviewFeedback() {
         ReviewFeedbackScreen(
             onNavigateBack = {},
             onSubmitSuccess = {}
+        )
+    }
+}
+
+@Preview(name = "10. Community & Joined Circles", showBackground = true, showSystemUi = true)
+@Composable
+fun PreviewCommunity() {
+    BOOTHTheme {
+        org.umn.booth.ui.screens.CommunityScreen(
+            userInitials = "AR",
+            onExploreClick = {},
+            onReservationsClick = {},
+            onProfileClick = {},
+            onCommunityTableClick = {}
+        )
+    }
+}
+
+@Preview(name = "11. User Profile", showBackground = true, showSystemUi = true)
+@Composable
+fun PreviewProfile() {
+    BOOTHTheme {
+        org.umn.booth.ui.screens.ProfileScreen(
+            userInitials = "AR",
+            userName = "Alex Rivera",
+            userEmail = "alex.rivera@example.com",
+            onExploreClick = {},
+            onReservationsClick = {},
+            onCommunityClick = {},
+            onSignOutClick = {}
         )
     }
 }

@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -80,7 +81,9 @@ fun ReservationPassScreen(
         },
         bottomBar = {
             Surface(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .navigationBarsPadding(),
                 color = MaterialTheme.colorScheme.surface,
                 tonalElevation = 8.dp,
                 border = BorderStroke(1.dp, BoothBorder)
@@ -92,12 +95,16 @@ fun ReservationPassScreen(
                             .fillMaxWidth()
                             .height(52.dp),
                         shape = RoundedCornerShape(14.dp),
-                        colors = ButtonDefaults.buttonColors(containerColor = BoothPrimary)
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = BoothPrimary,
+                            contentColor = Color.White
+                        )
                     ) {
                         Text(
                             text = "Finish Session →",
                             style = MaterialTheme.typography.labelLarge,
-                            fontWeight = FontWeight.Bold
+                            fontWeight = FontWeight.Bold,
+                            color = Color.White
                         )
                     }
                 }
@@ -112,7 +119,7 @@ fun ReservationPassScreen(
                 .padding(horizontal = 20.dp, vertical = 12.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            // Offline-Ready Room DB Cached Badge (Slide 12 Callout)
+
             Surface(
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(12.dp),
@@ -150,7 +157,6 @@ fun ReservationPassScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Main Digital Pass Card
             Card(
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(20.dp),
@@ -164,7 +170,7 @@ fun ReservationPassScreen(
                         .padding(20.dp),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    // Venue & Table Header
+
                     Row(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.SpaceBetween,
@@ -208,7 +214,6 @@ fun ReservationPassScreen(
 
                     Spacer(modifier = Modifier.height(16.dp))
 
-                    // Booking Info Grid
                     Row(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.SpaceBetween
@@ -246,7 +251,6 @@ fun ReservationPassScreen(
 
                     Spacer(modifier = Modifier.height(20.dp))
 
-                    // Stylized QR Code with 4 Corner Scan Brackets (Slide 12)
                     Box(
                         modifier = Modifier
                             .size(210.dp)
@@ -258,19 +262,15 @@ fun ReservationPassScreen(
                             val bracketLength = 24.dp.toPx()
                             val bracketColor = Color(0xFF64748B)
 
-                            // Top-Left ┌
                             drawLine(bracketColor, Offset(0f, 0f), Offset(bracketLength, 0f), strokeWidth)
                             drawLine(bracketColor, Offset(0f, 0f), Offset(0f, bracketLength), strokeWidth)
 
-                            // Top-Right ┐
                             drawLine(bracketColor, Offset(size.width, 0f), Offset(size.width - bracketLength, 0f), strokeWidth)
                             drawLine(bracketColor, Offset(size.width, 0f), Offset(size.width, bracketLength), strokeWidth)
 
-                            // Bottom-Left └
                             drawLine(bracketColor, Offset(0f, size.height), Offset(bracketLength, size.height), strokeWidth)
                             drawLine(bracketColor, Offset(0f, size.height), Offset(0f, size.height - bracketLength), strokeWidth)
 
-                            // Bottom-Right ┘
                             drawLine(bracketColor, Offset(size.width, size.height), Offset(size.width - bracketLength, size.height), strokeWidth)
                             drawLine(bracketColor, Offset(size.width, size.height), Offset(size.width, size.height - bracketLength), strokeWidth)
                         }
@@ -284,7 +284,6 @@ fun ReservationPassScreen(
                         ) {
                             MockQRCode(modifier = Modifier.fillMaxSize())
 
-                            // Center Booth Logo Badge
                             Box(
                                 modifier = Modifier
                                     .size(38.dp)
@@ -299,7 +298,6 @@ fun ReservationPassScreen(
 
                     Spacer(modifier = Modifier.height(14.dp))
 
-                    // Ticket Identifier
                     Text(
                         text = "BTH-882-X904",
                         style = MaterialTheme.typography.titleLarge,
@@ -320,7 +318,6 @@ fun ReservationPassScreen(
 
                     androidx.compose.material3.HorizontalDivider(color = BoothBorder)
 
-                    // Accordion: Pre-order & Bill Breakdown
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -380,7 +377,6 @@ fun ReservationPassScreen(
 
                     Spacer(modifier = Modifier.height(12.dp))
 
-                    // Presence indicator
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -425,13 +421,11 @@ private fun MockQRCode(modifier: Modifier = Modifier) {
         val count = 21
         val cellSize = size.width / count
 
-        // Draw simulated QR matrix blocks
         for (i in 0 until count) {
             for (j in 0 until count) {
-                // Keep center empty for Booth logo
+
                 if (i in 8..12 && j in 8..12) continue
 
-                // Corner finder patterns
                 val isTopLeftCorner = (i < 7 && j < 7)
                 val isTopRightCorner = (i >= count - 7 && j < 7)
                 val isBottomLeftCorner = (i < 7 && j >= count - 7)
@@ -454,3 +448,4 @@ private fun MockQRCode(modifier: Modifier = Modifier) {
         }
     }
 }
+
