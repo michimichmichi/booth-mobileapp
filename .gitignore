@@ -13,3 +13,7 @@
 .externalNativeBuild
 .cxx
 local.properties
+
+# Agent / spec working notes
+.scratch/
+AGENTS.md
