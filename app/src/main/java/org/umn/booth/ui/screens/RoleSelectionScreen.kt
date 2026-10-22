@@ -51,7 +51,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.launch
 import org.umn.booth.ui.components.BoothLogo
-import org.umn.booth.ui.theme.BoothBorder
 import org.umn.booth.ui.theme.BoothPrimary
 import org.umn.booth.ui.theme.BoothTextMuted
 import org.umn.booth.ui.theme.BoothTextPrimary
@@ -90,7 +89,6 @@ fun RoleSelectionScreen(
             ) { snackbarData ->
                 Snackbar(
                     snackbarData = snackbarData,
-                    modifier = Modifier.border(1.dp, BoothBorder, RoundedCornerShape(12.dp)),
                     shape = RoundedCornerShape(12.dp),
                     containerColor = Color.White,
                     contentColor = BoothTextPrimary
