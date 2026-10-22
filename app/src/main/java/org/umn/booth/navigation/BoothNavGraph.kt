@@ -11,18 +11,22 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import org.umn.booth.ui.screens.CommunityScreen
 import org.umn.booth.ui.screens.ExploreScreen
 import org.umn.booth.ui.screens.FaceVerificationScreen
 import org.umn.booth.ui.screens.FloorPlanScreen
 import org.umn.booth.ui.screens.PreOrderScreen
 import org.umn.booth.ui.screens.ProfilePictureScreen
+import org.umn.booth.ui.screens.ProfileScreen
 import org.umn.booth.ui.screens.RegistrationScreen
 import org.umn.booth.ui.screens.ReservationPassScreen
 import org.umn.booth.ui.screens.ReviewFeedbackScreen
 import org.umn.booth.ui.screens.RoleSelectionScreen
+import org.umn.booth.ui.screens.SplashScreen
 import org.umn.booth.ui.screens.VenueDetailScreen
 
 sealed class Screen(val route: String) {
+    data object Splash : Screen("splash")
     data object RoleSelection : Screen("role_selection")
     data object Registration : Screen("registration")
     data object ProfilePicture : Screen("profile_picture")
@@ -39,6 +43,8 @@ sealed class Screen(val route: String) {
     }
     data object ReservationPass : Screen("reservation_pass")
     data object ReviewFeedback : Screen("review_feedback")
+    data object Community : Screen("community")
+    data object Profile : Screen("profile")
 }
 
 @Composable
@@ -49,9 +55,19 @@ fun BoothNavGraph(
 
     NavHost(
         navController = navController,
-        startDestination = Screen.RoleSelection.route
+        startDestination = Screen.Splash.route
     ) {
-        // 1. Role Selection Screen (Slide 4)
+
+        composable(Screen.Splash.route) {
+            SplashScreen(
+                onTimeout = {
+                    navController.navigate(Screen.RoleSelection.route) {
+                        popUpTo(Screen.Splash.route) { inclusive = true }
+                    }
+                }
+            )
+        }
+
         composable(Screen.RoleSelection.route) {
             RoleSelectionScreen(
                 onContinue = { role ->
@@ -63,7 +79,6 @@ fun BoothNavGraph(
             )
         }
 
-        // 2. Registration Form Screen (Slide 5 - Form / Input)
         composable(Screen.Registration.route) {
             RegistrationScreen(
                 onNavigateBack = { navController.popBackStack() },
@@ -84,7 +99,6 @@ fun BoothNavGraph(
             )
         }
 
-        // 2b. Profile Picture Screen (Slide 6 - Step 2 of 3)
         composable(Screen.ProfilePicture.route) {
             ProfilePictureScreen(
                 userInitials = registeredUserInitials,
@@ -95,7 +109,6 @@ fun BoothNavGraph(
             )
         }
 
-        // 3. Face Verification Screen (Slide 7 - Native Feature Mockup)
         composable(Screen.FaceVerification.route) {
             FaceVerificationScreen(
                 onNavigateBack = { navController.popBackStack() },
@@ -107,7 +120,6 @@ fun BoothNavGraph(
             )
         }
 
-        // 4. Explore Dashboard Screen (Slide 8 - List Screen)
         composable(Screen.Explore.route) {
             ExploreScreen(
                 userInitials = registeredUserInitials,
@@ -115,15 +127,20 @@ fun BoothNavGraph(
                     navController.navigate(Screen.VenueDetail.createRoute(venueId))
                 },
                 onJoinTableWithCode = { _ ->
-                    navController.navigate(Screen.FloorPlan.createRoute("kopi-nako-serpong"))
+                    navController.navigate(Screen.Community.route)
                 },
                 onReservationsClick = {
                     navController.navigate(Screen.ReservationPass.route)
+                },
+                onCommunityClick = {
+                    navController.navigate(Screen.Community.route)
+                },
+                onProfileClick = {
+                    navController.navigate(Screen.Profile.route)
                 }
             )
         }
 
-        // 5. Venue Detail Screen (Slide 9 - Detail Screen with Dynamic Argument)
         composable(
             route = Screen.VenueDetail.route,
             arguments = listOf(
@@ -136,11 +153,19 @@ fun BoothNavGraph(
                 onNavigateBack = { navController.popBackStack() },
                 onBrowseSeatsClick = { id: String ->
                     navController.navigate(Screen.FloorPlan.createRoute(id))
+                },
+                onReservationsClick = {
+                    navController.navigate(Screen.ReservationPass.route)
+                },
+                onCommunityClick = {
+                    navController.navigate(Screen.Community.route)
+                },
+                onProfileClick = {
+                    navController.navigate(Screen.Profile.route)
                 }
             )
         }
 
-        // 6. Floor Plan & Table Selection Screen (Slide 10)
         composable(
             route = Screen.FloorPlan.route,
             arguments = listOf(
@@ -152,12 +177,11 @@ fun BoothNavGraph(
                 venueId = venueId,
                 onNavigateBack = { navController.popBackStack() },
                 onProceedToPreOrder = { tableId ->
-                    navController.navigate(Screen.PreOrder.createRoute(tableId))
+                    navController.navigate(Screen.ReservationPass.route)
                 }
             )
         }
 
-        // 7. Pre-Order Menu Screen (Slide 11)
         composable(
             route = Screen.PreOrder.route,
             arguments = listOf(
@@ -174,7 +198,6 @@ fun BoothNavGraph(
             )
         }
 
-        // 8. Digital Ticket / Reservation Pass Screen (Slide 12)
         composable(Screen.ReservationPass.route) {
             ReservationPassScreen(
                 onNavigateBack = { navController.popBackStack() },
@@ -184,7 +207,6 @@ fun BoothNavGraph(
             )
         }
 
-        // 9. Review and Feedback Screen (Slide 13)
         composable(Screen.ReviewFeedback.route) {
             ReviewFeedbackScreen(
                 onNavigateBack = { navController.popBackStack() },
@@ -195,5 +217,34 @@ fun BoothNavGraph(
                 }
             )
         }
+
+        composable(Screen.Community.route) {
+            CommunityScreen(
+                userInitials = registeredUserInitials,
+                onExploreClick = { navController.navigate(Screen.Explore.route) },
+                onReservationsClick = { navController.navigate(Screen.ReservationPass.route) },
+                onProfileClick = { navController.navigate(Screen.Profile.route) },
+                onCommunityTableClick = { venueId ->
+                    navController.navigate(Screen.FloorPlan.createRoute(venueId))
+                }
+            )
+        }
+
+        composable(Screen.Profile.route) {
+            ProfileScreen(
+                userInitials = registeredUserInitials,
+                userName = "Alex Rivera",
+                userEmail = "alex.rivera@example.com",
+                onExploreClick = { navController.navigate(Screen.Explore.route) },
+                onReservationsClick = { navController.navigate(Screen.ReservationPass.route) },
+                onCommunityClick = { navController.navigate(Screen.Community.route) },
+                onSignOutClick = {
+                    navController.navigate(Screen.RoleSelection.route) {
+                        popUpTo(0) { inclusive = true }
+                    }
+                }
+            )
+        }
     }
 }
+

@@ -1,6 +1,5 @@
 package org.umn.booth.ui.screens
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -14,23 +13,27 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.CameraAlt
+import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.FolderOpen
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Shield
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -46,10 +49,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import org.umn.booth.ui.components.BoothPrimaryButton
-import org.umn.booth.ui.components.BoothTopAppBar
 import org.umn.booth.ui.components.InitialsAvatar
-import org.umn.booth.ui.theme.BoothBorder
 import org.umn.booth.ui.theme.BoothPrimary
 import org.umn.booth.ui.theme.BoothSuccess
 import org.umn.booth.ui.theme.BoothTextMuted
@@ -62,16 +62,80 @@ fun ProfilePictureScreen(
     onNavigateBack: () -> Unit,
     onContinue: () -> Unit
 ) {
-    var hasPhotoSelected by remember { mutableStateOf(true) }
+    var hasPhotoSelected by remember { mutableStateOf(false) }
 
     Scaffold(
+        containerColor = Color(0xFFF8FAFC),
         topBar = {
-            BoothTopAppBar(
-                title = "BOOTH",
-                subtitle = "Registration",
-                canNavigateBack = true,
-                onNavigateBack = onNavigateBack
-            )
+            Surface(
+                color = Color(0xFFF8FAFC),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .statusBarsPadding()
+            ) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 12.dp, vertical = 8.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    IconButton(onClick = onNavigateBack) {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                            contentDescription = "Back",
+                            tint = Color(0xFF0F172A)
+                        )
+                    }
+                    Spacer(modifier = Modifier.width(4.dp))
+                    Column {
+                        Text(
+                            text = "BOOTH",
+                            fontSize = 11.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = Color(0xFF64748B),
+                            letterSpacing = 1.5.sp
+                        )
+                        Text(
+                            text = "Registration",
+                            fontSize = 15.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = Color(0xFF0F172A)
+                        )
+                    }
+                }
+            }
+        },
+        bottomBar = {
+            Surface(
+                modifier = Modifier.fillMaxWidth(),
+                color = Color(0xFFF8FAFC)
+            ) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 24.dp, vertical = 16.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Button(
+                        onClick = onContinue,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(52.dp),
+                        shape = RoundedCornerShape(12.dp),
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = BoothPrimary,
+                            contentColor = Color.White
+                        )
+                    ) {
+                        Text(
+                            text = "Continue →",
+                            style = MaterialTheme.typography.titleMedium,
+                            fontWeight = FontWeight.Bold,
+                            color = Color.White
+                        )
+                    }
+                }
+            }
         }
     ) { innerPadding ->
         Column(
@@ -79,195 +143,262 @@ fun ProfilePictureScreen(
                 .fillMaxSize()
                 .padding(innerPadding)
                 .verticalScroll(rememberScrollState())
-                .padding(horizontal = 24.dp, vertical = 12.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
+                .padding(horizontal = 24.dp, vertical = 8.dp)
         ) {
-            // Step Indicator Badge
-            Surface(
-                shape = RoundedCornerShape(12.dp),
-                color = Color(0xFFEFF6FF)
-            ) {
-                Text(
-                    text = "• Step 2 of 3",
-                    modifier = Modifier.padding(horizontal = 10.dp, vertical = 4.dp),
-                    style = MaterialTheme.typography.labelSmall,
-                    color = BoothPrimary,
-                    fontWeight = FontWeight.Bold
-                )
-            }
 
-            Spacer(modifier = Modifier.height(12.dp))
-
-            Text(
-                text = "Add Your Profile Picture",
-                style = MaterialTheme.typography.headlineMedium,
-                fontWeight = FontWeight.Bold,
-                color = BoothTextPrimary
-            )
-
-            Spacer(modifier = Modifier.height(24.dp))
-
-            // Avatar Upload Container (Slide 6 UI)
             Box(
                 modifier = Modifier
-                    .size(140.dp)
-                    .clip(CircleShape)
-                    .background(Color(0xFFEFF6FF))
-                    .border(2.dp, if (hasPhotoSelected) BoothPrimary else BoothBorder, CircleShape),
-                contentAlignment = Alignment.Center
+                    .background(Color(0xFFE0EDFB), RoundedCornerShape(12.dp))
+                    .padding(horizontal = 10.dp, vertical = 4.dp)
             ) {
-                if (hasPhotoSelected) {
-                    InitialsAvatar(
-                        initials = userInitials,
-                        size = 136.dp,
-                        backgroundColor = BoothPrimary
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Box(
+                        modifier = Modifier
+                            .size(6.dp)
+                            .background(BoothPrimary, CircleShape)
                     )
-                } else {
-                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                        Icon(
-                            imageVector = Icons.Default.Person,
-                            contentDescription = null,
-                            tint = BoothTextMuted,
-                            modifier = Modifier.size(54.dp)
-                        )
-                        Text(
-                            text = "Portrait photo",
-                            style = MaterialTheme.typography.labelSmall,
-                            color = BoothTextSecondary
-                        )
-                    }
-                }
-
-                // Camera overlay pill
-                Box(
-                    modifier = Modifier
-                        .size(38.dp)
-                        .align(Alignment.BottomEnd)
-                        .clip(CircleShape)
-                        .background(BoothPrimary)
-                        .border(2.dp, Color.White, CircleShape),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.CameraAlt,
-                        contentDescription = "Change photo",
-                        tint = Color.White,
-                        modifier = Modifier.size(18.dp)
+                    Spacer(modifier = Modifier.width(6.dp))
+                    Text(
+                        text = "Step 2 of 3",
+                        fontSize = 12.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = BoothPrimary
                     )
                 }
             }
 
             Spacer(modifier = Modifier.height(10.dp))
 
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                Box(
+                    modifier = Modifier
+                        .weight(1f)
+                        .height(4.dp)
+                        .background(BoothPrimary, RoundedCornerShape(2.dp))
+                )
+                Box(
+                    modifier = Modifier
+                        .weight(1f)
+                        .height(4.dp)
+                        .background(BoothPrimary, RoundedCornerShape(2.dp))
+                )
+                Box(
+                    modifier = Modifier
+                        .weight(1f)
+                        .height(4.dp)
+                        .background(Color(0xFFDCE7F3), RoundedCornerShape(2.dp))
+                )
+            }
+
+            Spacer(modifier = Modifier.height(24.dp))
+
             Text(
-                text = if (hasPhotoSelected) "✓ Profile photo ready" else "No photo selected",
-                style = MaterialTheme.typography.bodySmall,
-                color = if (hasPhotoSelected) BoothSuccess else BoothTextMuted,
-                fontWeight = FontWeight.Medium
+                text = "Add Your Profile Picture",
+                style = MaterialTheme.typography.headlineMedium,
+                fontWeight = FontWeight.Bold,
+                color = BoothTextPrimary,
+                fontSize = 24.sp
             )
 
             Spacer(modifier = Modifier.height(20.dp))
 
-            // Action Buttons: Take Selfie & From Files
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(12.dp)
-            ) {
-                OutlinedButton(
-                    onClick = { hasPhotoSelected = true },
-                    modifier = Modifier
-                        .weight(1f)
-                        .height(48.dp),
-                    shape = RoundedCornerShape(12.dp),
-                    border = BorderStroke(1.5.dp, BoothPrimary)
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.CameraAlt,
-                        contentDescription = null,
-                        tint = BoothPrimary,
-                        modifier = Modifier.size(18.dp)
-                    )
-                    Spacer(modifier = Modifier.width(6.dp))
-                    Text(
-                        text = "Take Selfie",
-                        fontWeight = FontWeight.Bold,
-                        color = BoothPrimary,
-                        fontSize = 13.sp
-                    )
-                }
-
-                Button(
-                    onClick = { hasPhotoSelected = true },
-                    modifier = Modifier
-                        .weight(1f)
-                        .height(48.dp),
-                    shape = RoundedCornerShape(12.dp),
-                    colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.surfaceVariant)
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.FolderOpen,
-                        contentDescription = null,
-                        tint = BoothTextPrimary,
-                        modifier = Modifier.size(18.dp)
-                    )
-                    Spacer(modifier = Modifier.width(6.dp))
-                    Text(
-                        text = "From Files",
-                        fontWeight = FontWeight.Bold,
-                        color = BoothTextPrimary,
-                        fontSize = 13.sp
-                    )
-                }
-            }
-
-            Spacer(modifier = Modifier.height(24.dp))
-
-            // Photo Requirements Card (Slide 6 checklist)
             Card(
                 modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(14.dp),
-                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
-                border = BorderStroke(1.dp, BoothBorder)
+                shape = RoundedCornerShape(20.dp),
+                colors = CardDefaults.cardColors(containerColor = Color.White),
+                border = androidx.compose.foundation.BorderStroke(1.dp, Color(0xFFE2E8F0)),
+                elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
             ) {
-                Column(modifier = Modifier.padding(16.dp)) {
-                    Text(
-                        text = "Photo requirements",
-                        style = MaterialTheme.typography.labelMedium,
-                        fontWeight = FontWeight.Bold,
-                        color = BoothTextPrimary
-                    )
-
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(20.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
                     Spacer(modifier = Modifier.height(10.dp))
+
+                    Box(
+                        modifier = Modifier
+                            .size(136.dp)
+                            .clickable { hasPhotoSelected = !hasPhotoSelected },
+                        contentAlignment = Alignment.Center
+                    ) {
+                        if (hasPhotoSelected) {
+                            InitialsAvatar(
+                                initials = userInitials,
+                                size = 124.dp,
+                                backgroundColor = BoothPrimary
+                            )
+                        } else {
+                            Box(
+                                modifier = Modifier
+                                    .size(124.dp)
+                                    .clip(CircleShape)
+                                    .background(Color(0xFFE0EDFB)),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                                    Icon(
+                                        imageVector = Icons.Default.Person,
+                                        contentDescription = null,
+                                        tint = Color(0xFF2B6CB0),
+                                        modifier = Modifier.size(38.dp)
+                                    )
+                                    Spacer(modifier = Modifier.height(2.dp))
+                                    Text(
+                                        text = "Portrait photo",
+                                        style = MaterialTheme.typography.labelSmall,
+                                        color = Color(0xFF2B6CB0),
+                                        fontSize = 11.5.sp
+                                    )
+                                }
+                            }
+                        }
+
+                        Box(
+                            modifier = Modifier
+                                .size(34.dp)
+                                .align(Alignment.BottomEnd)
+                                .clip(CircleShape)
+                                .background(BoothPrimary)
+                                .border(2.5.dp, Color.White, CircleShape),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.CameraAlt,
+                                contentDescription = "Camera",
+                                tint = Color.White,
+                                modifier = Modifier.size(16.dp)
+                            )
+                        }
+                    }
+
+                    Spacer(modifier = Modifier.height(12.dp))
+
+                    Box(
+                        modifier = Modifier
+                            .background(
+                                color = if (hasPhotoSelected) Color(0xFFEBFDF2) else Color(0xFFF1F5F9),
+                                shape = RoundedCornerShape(12.dp)
+                            )
+                            .padding(horizontal = 12.dp, vertical = 4.dp)
+                    ) {
+                        Text(
+                            text = if (hasPhotoSelected) "✓ Profile photo ready" else "• No photo selected",
+                            fontSize = 11.5.sp,
+                            fontWeight = FontWeight.Medium,
+                            color = if (hasPhotoSelected) Color(0xFF16A34A) else Color(0xFF64748B)
+                        )
+                    }
+
+                    Spacer(modifier = Modifier.height(20.dp))
+
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(12.dp)
+                    ) {
+                        Button(
+                            onClick = { hasPhotoSelected = true },
+                            modifier = Modifier
+                                .weight(1f)
+                                .height(46.dp),
+                            shape = RoundedCornerShape(12.dp),
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = Color(0xFFEFF6FF),
+                                contentColor = BoothPrimary
+                            ),
+                            elevation = ButtonDefaults.buttonElevation(defaultElevation = 0.dp)
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.CameraAlt,
+                                contentDescription = null,
+                                tint = BoothPrimary,
+                                modifier = Modifier.size(17.dp)
+                            )
+                            Spacer(modifier = Modifier.width(6.dp))
+                            Text(
+                                text = "Take Selfie",
+                                fontWeight = FontWeight.Bold,
+                                color = BoothPrimary,
+                                fontSize = 13.sp
+                            )
+                        }
+
+                        Button(
+                            onClick = { hasPhotoSelected = true },
+                            modifier = Modifier
+                                .weight(1f)
+                                .height(46.dp),
+                            shape = RoundedCornerShape(12.dp),
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = Color(0xFFEFF6FF),
+                                contentColor = BoothPrimary
+                            ),
+                            elevation = ButtonDefaults.buttonElevation(defaultElevation = 0.dp)
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.FolderOpen,
+                                contentDescription = null,
+                                tint = BoothPrimary,
+                                modifier = Modifier.size(17.dp)
+                            )
+                            Spacer(modifier = Modifier.width(6.dp))
+                            Text(
+                                text = "From Files",
+                                fontWeight = FontWeight.Bold,
+                                color = BoothPrimary,
+                                fontSize = 13.sp
+                            )
+                        }
+                    }
+
+                    Spacer(modifier = Modifier.height(24.dp))
+
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Shield,
+                            contentDescription = null,
+                            tint = Color(0xFF2563EB),
+                            modifier = Modifier.size(18.dp)
+                        )
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Text(
+                            text = "Photo requirements",
+                            style = MaterialTheme.typography.titleSmall,
+                            fontWeight = FontWeight.Bold,
+                            color = Color(0xFF1E293B),
+                            fontSize = 14.sp
+                        )
+                    }
+
+                    Spacer(modifier = Modifier.height(14.dp))
 
                     RequirementItem(
                         title = "Clear lighting & high resolution",
-                        desc = "Even illumination without glare, shadows, or grain"
+                        description = "Even illumination without glare, shadows, or grain"
                     )
 
-                    Spacer(modifier = Modifier.height(8.dp))
+                    Spacer(modifier = Modifier.height(12.dp))
 
                     RequirementItem(
                         title = "Solo shot, facing directly forward",
-                        desc = "Neutral posture with shoulders centered in frame"
+                        description = "Neutral posture with shoulders centered in frame"
                     )
 
-                    Spacer(modifier = Modifier.height(8.dp))
+                    Spacer(modifier = Modifier.height(12.dp))
 
                     RequirementItem(
                         title = "No sunglasses, masks, or beauty filters",
-                        desc = "Eyes, eyebrows, and jawline must remain fully identifiable"
+                        description = "Eyes, eyebrows, and jawline must remain fully identifiable"
                     )
                 }
             }
-
-            Spacer(modifier = Modifier.weight(1f))
-            Spacer(modifier = Modifier.height(24.dp))
-
-            // Continue Button
-            BoothPrimaryButton(
-                text = "Continue →",
-                onClick = onContinue
-            )
 
             Spacer(modifier = Modifier.height(16.dp))
         }
@@ -275,29 +406,45 @@ fun ProfilePictureScreen(
 }
 
 @Composable
-private fun RequirementItem(title: String, desc: String) {
-    Row(verticalAlignment = Alignment.Top) {
-        Icon(
-            imageVector = Icons.Default.CheckCircle,
-            contentDescription = null,
-            tint = BoothSuccess,
-            modifier = Modifier.size(16.dp)
-        )
-        Spacer(modifier = Modifier.width(8.dp))
-        Column {
+private fun RequirementItem(
+    title: String,
+    description: String
+) {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        verticalAlignment = Alignment.Top
+    ) {
+        Box(
+            modifier = Modifier
+                .size(18.dp)
+                .background(Color(0xFFDBEAFE), CircleShape),
+            contentAlignment = Alignment.Center
+        ) {
+            Icon(
+                imageVector = Icons.Default.Check,
+                contentDescription = null,
+                tint = Color(0xFF2563EB),
+                modifier = Modifier.size(12.dp)
+            )
+        }
+
+        Spacer(modifier = Modifier.width(10.dp))
+
+        Column(modifier = Modifier.weight(1f)) {
             Text(
                 text = title,
-                style = MaterialTheme.typography.bodySmall,
-                fontWeight = FontWeight.SemiBold,
-                color = BoothTextPrimary
+                fontSize = 12.5.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color(0xFF1E293B)
             )
+            Spacer(modifier = Modifier.height(2.dp))
             Text(
-                text = desc,
-                style = MaterialTheme.typography.bodySmall,
-                color = BoothTextSecondary,
+                text = description,
                 fontSize = 11.sp,
-                lineHeight = 14.sp
+                color = Color(0xFF64748B),
+                lineHeight = 15.sp
             )
         }
     }
 }
+

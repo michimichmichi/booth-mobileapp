@@ -1,8 +1,5 @@
 package org.umn.booth.ui.screens
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.core.FastOutSlowInEasing
-import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.rememberInfiniteTransition
@@ -10,6 +7,7 @@ import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -20,17 +18,26 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Face
 import androidx.compose.material.icons.filled.RemoveRedEye
 import androidx.compose.material.icons.filled.Shield
 import androidx.compose.material.icons.filled.WbSunny
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
@@ -55,9 +62,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.delay
-import org.umn.booth.ui.components.BoothPrimaryButton
-import org.umn.booth.ui.components.BoothTopAppBar
-import org.umn.booth.ui.theme.BoothBorder
 import org.umn.booth.ui.theme.BoothPrimary
 import org.umn.booth.ui.theme.BoothSuccess
 import org.umn.booth.ui.theme.BoothTextMuted
@@ -76,262 +80,340 @@ fun FaceVerificationScreen(
     onVerificationSuccess: () -> Unit
 ) {
     var verificationState by remember { mutableStateOf(VerificationState.READY) }
-    var scanProgress by remember { mutableStateOf(0f) }
 
-    // Scan animation trigger
     LaunchedEffect(verificationState) {
         if (verificationState == VerificationState.SCANNING) {
-            scanProgress = 0f
-            while (scanProgress < 1f) {
-                delay(30)
-                scanProgress += 0.02f
-            }
+            delay(1200)
             verificationState = VerificationState.VERIFIED
-            delay(1000)
+            delay(800)
             onVerificationSuccess()
         }
     }
 
+    val infiniteTransition = rememberInfiniteTransition(label = "pulse")
+    val pulseAlpha by infiniteTransition.animateFloat(
+        initialValue = 0.5f,
+        targetValue = 0.95f,
+        animationSpec = infiniteRepeatable(
+            animation = tween(1000),
+            repeatMode = androidx.compose.animation.core.RepeatMode.Reverse
+        ),
+        label = "pulseAlpha"
+    )
+
     Scaffold(
+        containerColor = Color(0xFFF8FAFC),
         topBar = {
-            BoothTopAppBar(
-                title = "BOOTH",
-                subtitle = "Registration",
-                canNavigateBack = true,
-                onNavigateBack = onNavigateBack
-            )
+            Surface(
+                color = Color(0xFFF8FAFC),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .statusBarsPadding()
+            ) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 12.dp, vertical = 8.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    IconButton(onClick = onNavigateBack) {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                            contentDescription = "Back",
+                            tint = Color(0xFF0F172A)
+                        )
+                    }
+                    Spacer(modifier = Modifier.width(4.dp))
+                    Column {
+                        Text(
+                            text = "BOOTH",
+                            fontSize = 11.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = Color(0xFF64748B),
+                            letterSpacing = 1.5.sp
+                        )
+                        Text(
+                            text = "Registration",
+                            fontSize = 15.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = Color(0xFF0F172A)
+                        )
+                    }
+                }
+            }
+        },
+        bottomBar = {
+            Surface(
+                modifier = Modifier.fillMaxWidth(),
+                color = Color(0xFFF8FAFC)
+            ) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 24.dp, vertical = 16.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Button(
+                        onClick = {
+                            if (verificationState == VerificationState.READY) {
+                                verificationState = VerificationState.SCANNING
+                            } else {
+                                onVerificationSuccess()
+                            }
+                        },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(52.dp),
+                        shape = RoundedCornerShape(12.dp),
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = if (verificationState == VerificationState.VERIFIED) BoothSuccess else BoothPrimary
+                        )
+                    ) {
+                        if (verificationState == VerificationState.SCANNING) {
+                            CircularProgressIndicator(
+                                color = Color.White,
+                                modifier = Modifier.size(22.dp),
+                                strokeWidth = 2.dp
+                            )
+                            Spacer(modifier = Modifier.width(10.dp))
+                            Text(
+                                text = "Verifying biometric match...",
+                                style = MaterialTheme.typography.titleMedium,
+                                fontWeight = FontWeight.Bold,
+                                color = Color.White
+                            )
+                        } else if (verificationState == VerificationState.VERIFIED) {
+                            Icon(
+                                imageVector = Icons.Default.CheckCircle,
+                                contentDescription = null,
+                                tint = Color.White,
+                                modifier = Modifier.size(20.dp)
+                            )
+                            Spacer(modifier = Modifier.width(8.dp))
+                            Text(
+                                text = "Identity Verified! Continue →",
+                                style = MaterialTheme.typography.titleMedium,
+                                fontWeight = FontWeight.Bold,
+                                color = Color.White
+                            )
+                        } else {
+                            Text(
+                                text = "Verify Face & Continue →",
+                                style = MaterialTheme.typography.titleMedium,
+                                fontWeight = FontWeight.Bold,
+                                color = Color.White
+                            )
+                        }
+                    }
+                }
+            }
         }
     ) { innerPadding ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding)
-                .padding(horizontal = 24.dp, vertical = 12.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
+                .verticalScroll(rememberScrollState())
+                .padding(horizontal = 24.dp, vertical = 8.dp)
         ) {
-            // Step badge
-            Surface(
-                shape = RoundedCornerShape(12.dp),
-                color = Color(0xFFEFF6FF)
+
+            Box(
+                modifier = Modifier
+                    .background(Color(0xFFE0EDFB), RoundedCornerShape(12.dp))
+                    .padding(horizontal = 10.dp, vertical = 4.dp)
             ) {
-                Text(
-                    text = "• Step 3 of 3",
-                    modifier = Modifier.padding(horizontal = 10.dp, vertical = 4.dp),
-                    style = MaterialTheme.typography.labelSmall,
-                    color = BoothPrimary,
-                    fontWeight = FontWeight.Bold
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Box(
+                        modifier = Modifier
+                            .size(6.dp)
+                            .background(BoothPrimary, CircleShape)
+                    )
+                    Spacer(modifier = Modifier.width(6.dp))
+                    Text(
+                        text = "Step 3 of 3",
+                        fontSize = 12.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = BoothPrimary
+                    )
+                }
+            }
+
+            Spacer(modifier = Modifier.height(10.dp))
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                Box(
+                    modifier = Modifier
+                        .weight(1f)
+                        .height(4.dp)
+                        .background(BoothPrimary, RoundedCornerShape(2.dp))
+                )
+                Box(
+                    modifier = Modifier
+                        .weight(1f)
+                        .height(4.dp)
+                        .background(BoothPrimary, RoundedCornerShape(2.dp))
+                )
+                Box(
+                    modifier = Modifier
+                        .weight(1f)
+                        .height(4.dp)
+                        .background(BoothPrimary, RoundedCornerShape(2.dp))
                 )
             }
 
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(20.dp))
 
             Text(
                 text = "Face Verification",
                 style = MaterialTheme.typography.headlineMedium,
                 fontWeight = FontWeight.Bold,
-                color = BoothTextPrimary
+                color = BoothTextPrimary,
+                fontSize = 24.sp
             )
 
-            Spacer(modifier = Modifier.height(4.dp))
+            Spacer(modifier = Modifier.height(6.dp))
 
             Text(
                 text = "Center your face in the oval guide to verify your identity against your uploaded profile picture.",
-                style = MaterialTheme.typography.bodySmall,
+                style = MaterialTheme.typography.bodyMedium,
                 color = BoothTextSecondary,
-                textAlign = TextAlign.Center,
-                lineHeight = 16.sp
+                fontSize = 13.sp,
+                lineHeight = 18.sp
             )
 
             Spacer(modifier = Modifier.height(18.dp))
 
-            // Camera Viewfinder Simulation Box
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(280.dp)
+                    .height(340.dp)
                     .clip(RoundedCornerShape(20.dp))
-                    .background(Color(0xFF1E293B)),
+                    .background(Color(0xFF223042))
+                    .clickable {
+                        if (verificationState == VerificationState.READY) {
+                            verificationState = VerificationState.SCANNING
+                        }
+                    },
                 contentAlignment = Alignment.Center
             ) {
-                // Oval Scanner Guide
-                val infiniteTransition = rememberInfiniteTransition(label = "scanLine")
-                val scanLineY by infiniteTransition.animateFloat(
-                    initialValue = 0.2f,
-                    targetValue = 0.8f,
-                    animationSpec = infiniteRepeatable(
-                        animation = tween(1200, easing = FastOutSlowInEasing),
-                        repeatMode = RepeatMode.Reverse
-                    ),
-                    label = "scanLineY"
-                )
 
                 Canvas(modifier = Modifier.fillMaxSize()) {
                     val ovalWidth = size.width * 0.58f
-                    val ovalHeight = size.height * 0.76f
-                    val left = (size.width - ovalWidth) / 2
-                    val top = (size.height - ovalHeight) / 2
+                    val ovalHeight = size.height * 0.74f
+                    val left = (size.width - ovalWidth) / 2f
+                    val top = (size.height - ovalHeight) / 2f
 
-                    // Dashed oval guide
+                    val strokeColor = if (verificationState == VerificationState.VERIFIED) {
+                        Color(0xFF22C55E)
+                    } else if (verificationState == VerificationState.SCANNING) {
+                        Color(0xFF60A5FA).copy(alpha = pulseAlpha)
+                    } else {
+                        Color(0xFFCBD5E1).copy(alpha = 0.8f)
+                    }
+
                     drawOval(
-                        color = when (verificationState) {
-                            VerificationState.READY -> Color.White.copy(alpha = 0.6f)
-                            VerificationState.SCANNING -> Color(0xFF38BDF8)
-                            VerificationState.VERIFIED -> Color(0xFF10B981)
-                        },
+                        color = strokeColor,
                         topLeft = Offset(left, top),
                         size = Size(ovalWidth, ovalHeight),
                         style = Stroke(
-                            width = 4f,
-                            pathEffect = PathEffect.dashPathEffect(floatArrayOf(24f, 16f), 0f)
+                            width = 3.dp.toPx(),
+                            pathEffect = PathEffect.dashPathEffect(floatArrayOf(24f, 18f))
                         )
                     )
-
-                    // Laser Scanning Line when scanning
-                    if (verificationState == VerificationState.SCANNING) {
-                        val currentY = top + (ovalHeight * scanLineY)
-                        drawLine(
-                            color = Color(0xFF38BDF8),
-                            start = Offset(left + 20f, currentY),
-                            end = Offset(left + ovalWidth - 20f, currentY),
-                            strokeWidth = 5f
-                        )
-                    }
                 }
 
-                // Inner Status Icon / Feedback
-                when (verificationState) {
-                    VerificationState.READY -> {
+                if (verificationState == VerificationState.SCANNING) {
+                    CircularProgressIndicator(
+                        color = Color.White,
+                        modifier = Modifier.size(54.dp),
+                        strokeWidth = 3.dp
+                    )
+                } else if (verificationState == VerificationState.VERIFIED) {
+                    Box(
+                        modifier = Modifier
+                            .size(64.dp)
+                            .background(Color(0xFF22C55E), CircleShape),
+                        contentAlignment = Alignment.Center
+                    ) {
                         Icon(
-                            imageVector = Icons.Default.Face,
-                            contentDescription = "Face Guide",
-                            tint = Color.White.copy(alpha = 0.35f),
-                            modifier = Modifier.size(72.dp)
+                            imageVector = Icons.Default.CheckCircle,
+                            contentDescription = "Verified",
+                            tint = Color.White,
+                            modifier = Modifier.size(40.dp)
                         )
-                    }
-                    VerificationState.SCANNING -> {
-                        Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                            CircularProgressIndicator(
-                                progress = { scanProgress },
-                                color = Color(0xFF38BDF8),
-                                trackColor = Color.White.copy(alpha = 0.2f),
-                                modifier = Modifier.size(54.dp)
-                            )
-                            Spacer(modifier = Modifier.height(10.dp))
-                            Text(
-                                text = "Scanning facial landmarks... ${(scanProgress * 100).toInt()}%",
-                                style = MaterialTheme.typography.labelMedium,
-                                color = Color.White,
-                                fontWeight = FontWeight.SemiBold
-                            )
-                        }
-                    }
-                    VerificationState.VERIFIED -> {
-                        Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                            Icon(
-                                imageVector = Icons.Default.CheckCircle,
-                                contentDescription = "Verified",
-                                tint = BoothSuccess,
-                                modifier = Modifier.size(64.dp)
-                            )
-                            Spacer(modifier = Modifier.height(8.dp))
-                            Text(
-                                text = "Match Confirmed (99.4%)",
-                                style = MaterialTheme.typography.titleMedium,
-                                color = Color.White,
-                                fontWeight = FontWeight.Bold
-                            )
-                        }
                     }
                 }
             }
 
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(18.dp))
 
-            // Guidance Tips Row
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceEvenly
+                horizontalArrangement = Arrangement.spacedBy(10.dp)
             ) {
-                GuidelineItem(
+                VerificationTipItem(
                     icon = Icons.Default.WbSunny,
-                    label = "Even Light",
-                    sub = "No glare"
+                    title = "Even Light",
+                    subtitle = "No glare",
+                    modifier = Modifier.weight(1f)
                 )
-                GuidelineItem(
+
+                VerificationTipItem(
                     icon = Icons.Default.Face,
-                    label = "Natural Pose",
-                    sub = "Keep relaxed"
+                    title = "Natural Pose",
+                    subtitle = "Keep relaxed",
+                    modifier = Modifier.weight(1f)
                 )
-                GuidelineItem(
+
+                VerificationTipItem(
                     icon = Icons.Default.RemoveRedEye,
-                    label = "Eye Level",
-                    sub = "Direct gaze"
+                    title = "Eye Level",
+                    subtitle = "Direct gaze",
+                    modifier = Modifier.weight(1f)
                 )
             }
 
-            Spacer(modifier = Modifier.height(14.dp))
+            Spacer(modifier = Modifier.height(18.dp))
 
-            // Security Guarantee Banner
-            Surface(
+            Card(
                 modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(12.dp),
-                color = MaterialTheme.colorScheme.surfaceVariant,
-                border = androidx.compose.foundation.BorderStroke(1.dp, BoothBorder)
+                shape = RoundedCornerShape(14.dp),
+                colors = CardDefaults.cardColors(containerColor = Color(0xFFE8F1FC)),
+                border = androidx.compose.foundation.BorderStroke(1.dp, Color(0xFFBFDBFE))
             ) {
-                Row(
-                    modifier = Modifier.padding(12.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.Shield,
-                        contentDescription = null,
-                        tint = BoothPrimary,
-                        modifier = Modifier.size(24.dp)
-                    )
-                    Spacer(modifier = Modifier.width(10.dp))
-                    Column {
-                        Text(
-                            text = "BOOTH SafePass • Biometric Match Guarantee",
-                            style = MaterialTheme.typography.labelMedium,
-                            fontWeight = FontWeight.Bold,
-                            color = BoothTextPrimary
+                Column(modifier = Modifier.padding(14.dp)) {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Icon(
+                            imageVector = Icons.Default.Shield,
+                            contentDescription = null,
+                            tint = BoothPrimary,
+                            modifier = Modifier.size(18.dp)
                         )
+                        Spacer(modifier = Modifier.width(6.dp))
                         Text(
-                            text = "Your live scan is checked against your uploaded profile photo using zero-knowledge biometric encryption.",
-                            style = MaterialTheme.typography.labelSmall,
-                            color = BoothTextSecondary,
-                            lineHeight = 14.sp
+                            text = "BOOTH SafePass",
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 12.5.sp,
+                            color = BoothPrimary
+                        )
+                        Spacer(modifier = Modifier.width(4.dp))
+                        Text(
+                            text = "• Biometric Match Guarantee",
+                            fontSize = 11.5.sp,
+                            color = Color(0xFF475569)
                         )
                     }
+                    Spacer(modifier = Modifier.height(4.dp))
+                    Text(
+                        text = "Your live scan is checked against your uploaded profile photo using zero-knowledge biometric encryption. Raw frames are immediately discarded.",
+                        fontSize = 11.sp,
+                        color = Color(0xFF475569),
+                        lineHeight = 15.sp
+                    )
                 }
-            }
-
-            Spacer(modifier = Modifier.weight(1f))
-
-            // Action Buttons
-            BoothPrimaryButton(
-                text = when (verificationState) {
-                    VerificationState.READY -> "Verify & Continue →"
-                    VerificationState.SCANNING -> "Verifying Face..."
-                    VerificationState.VERIFIED -> "Verified! Entering Booth..."
-                },
-                enabled = verificationState == VerificationState.READY,
-                onClick = {
-                    verificationState = VerificationState.SCANNING
-                }
-            )
-
-            Spacer(modifier = Modifier.height(10.dp))
-
-            androidx.compose.material3.TextButton(
-                onClick = onVerificationSuccess,
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Text(
-                    text = "Skip to Explore →",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = BoothTextSecondary
-                )
             }
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -340,37 +422,50 @@ fun FaceVerificationScreen(
 }
 
 @Composable
-private fun GuidelineItem(
+private fun VerificationTipItem(
     icon: ImageVector,
-    label: String,
-    sub: String
+    title: String,
+    subtitle: String,
+    modifier: Modifier = Modifier
 ) {
-    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-        Box(
+    Card(
+        modifier = modifier,
+        shape = RoundedCornerShape(12.dp),
+        colors = CardDefaults.cardColors(containerColor = Color(0xFFF0F7FF)),
+        elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
+    ) {
+        Column(
             modifier = Modifier
-                .size(36.dp)
-                .background(Color(0xFFE2E8F0), CircleShape),
-            contentAlignment = Alignment.Center
+                .fillMaxWidth()
+                .padding(vertical = 12.dp, horizontal = 6.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Icon(
-                imageVector = icon,
-                contentDescription = null,
-                tint = BoothPrimary,
-                modifier = Modifier.size(18.dp)
+            Box(
+                modifier = Modifier
+                    .size(32.dp)
+                    .background(Color(0xFFDBEAFE), CircleShape),
+                contentAlignment = Alignment.Center
+            ) {
+                Icon(
+                    imageVector = icon,
+                    contentDescription = null,
+                    tint = BoothPrimary,
+                    modifier = Modifier.size(16.dp)
+                )
+            }
+            Spacer(modifier = Modifier.height(6.dp))
+            Text(
+                text = title,
+                fontWeight = FontWeight.Bold,
+                fontSize = 11.5.sp,
+                color = Color(0xFF1E293B)
+            )
+            Text(
+                text = subtitle,
+                fontSize = 10.sp,
+                color = Color(0xFF64748B)
             )
         }
-        Spacer(modifier = Modifier.height(4.dp))
-        Text(
-            text = label,
-            style = MaterialTheme.typography.labelMedium,
-            fontWeight = FontWeight.Bold,
-            color = BoothTextPrimary
-        )
-        Text(
-            text = sub,
-            style = MaterialTheme.typography.bodySmall,
-            color = BoothTextMuted,
-            fontSize = 11.sp
-        )
     }
 }
+
