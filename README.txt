@@ -137,6 +137,8 @@ PREREQUISITES
 
 - Android Studio recent enough to support Android Gradle Plugin 9.4.1 and
   Android SDK Platform 37.
-- JDK 17 or newer. The JDK bundled with Android Studio works.
+- JDK 17 or newer to launch Gradle. The Gradle daemon is pinned to JDK 25
+  and Gradle downloads it on the first sync; if your network blocks the
+  download, install JDK 25 manually.
 - Internet access on the first Gradle sync so the wrapper and dependencies can
   download.
