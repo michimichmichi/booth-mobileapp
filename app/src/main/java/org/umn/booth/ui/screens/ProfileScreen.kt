@@ -21,6 +21,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ChevronRight
+import androidx.compose.material.icons.filled.DarkMode
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Fingerprint
 import androidx.compose.material.icons.filled.Groups
@@ -43,11 +44,13 @@ import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -69,57 +72,69 @@ fun ProfileScreen(
     onExploreClick: () -> Unit,
     onReservationsClick: () -> Unit,
     onCommunityClick: () -> Unit,
-    onSignOutClick: () -> Unit
+    onSignOutClick: () -> Unit,
+    darkTheme: Boolean = false,
+    onDarkThemeChange: (Boolean) -> Unit = {}
 ) {
+    var faceVerificationEnabled by rememberSaveable { mutableStateOf(true) }
+
     Scaffold(
-        containerColor = Color(0xFFF8FAFC),
+        containerColor = MaterialTheme.colorScheme.background,
         bottomBar = {
             NavigationBar(
-                containerColor = Color.White,
+                containerColor = MaterialTheme.colorScheme.surface,
                 tonalElevation = 8.dp
             ) {
                 NavigationBarItem(
                     selected = false,
                     onClick = onExploreClick,
                     icon = { Icon(Icons.Default.Search, contentDescription = "Explore") },
-                    label = { Text("Explore", fontSize = 11.sp) },
+                    label = { Text("Explore", fontSize = 11.sp, color = MaterialTheme.colorScheme.onSurface) },
                     colors = NavigationBarItemDefaults.colors(
-                        selectedIconColor = BoothPrimary,
-                        selectedTextColor = BoothPrimary,
-                        indicatorColor = Color(0xFFEFF6FF)
+                        selectedIconColor = MaterialTheme.colorScheme.primary,
+                        selectedTextColor = MaterialTheme.colorScheme.primary,
+                        unselectedIconColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                        unselectedTextColor = MaterialTheme.colorScheme.onSurface,
+                        indicatorColor = MaterialTheme.colorScheme.primaryContainer
                     )
                 )
                 NavigationBarItem(
                     selected = false,
                     onClick = onReservationsClick,
                     icon = { Icon(Icons.Default.DateRange, contentDescription = "Reservations") },
-                    label = { Text("Reservations", fontSize = 11.sp) },
+                    label = { Text("Reservations", fontSize = 11.sp, color = MaterialTheme.colorScheme.onSurface) },
                     colors = NavigationBarItemDefaults.colors(
-                        selectedIconColor = BoothPrimary,
-                        selectedTextColor = BoothPrimary,
-                        indicatorColor = Color(0xFFEFF6FF)
+                        selectedIconColor = MaterialTheme.colorScheme.primary,
+                        selectedTextColor = MaterialTheme.colorScheme.primary,
+                        unselectedIconColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                        unselectedTextColor = MaterialTheme.colorScheme.onSurface,
+                        indicatorColor = MaterialTheme.colorScheme.primaryContainer
                     )
                 )
                 NavigationBarItem(
                     selected = false,
                     onClick = onCommunityClick,
                     icon = { Icon(Icons.Default.Groups, contentDescription = "Community") },
-                    label = { Text("Community", fontSize = 11.sp) },
+                    label = { Text("Community", fontSize = 11.sp, color = MaterialTheme.colorScheme.onSurface) },
                     colors = NavigationBarItemDefaults.colors(
-                        selectedIconColor = BoothPrimary,
-                        selectedTextColor = BoothPrimary,
-                        indicatorColor = Color(0xFFEFF6FF)
+                        selectedIconColor = MaterialTheme.colorScheme.primary,
+                        selectedTextColor = MaterialTheme.colorScheme.primary,
+                        unselectedIconColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                        unselectedTextColor = MaterialTheme.colorScheme.onSurface,
+                        indicatorColor = MaterialTheme.colorScheme.primaryContainer
                     )
                 )
                 NavigationBarItem(
                     selected = true,
                     onClick = { },
                     icon = { Icon(Icons.Default.Person, contentDescription = "Profile") },
-                    label = { Text("Profile", fontSize = 11.sp, fontWeight = FontWeight.SemiBold) },
+                    label = { Text("Profile", fontSize = 11.sp, fontWeight = FontWeight.SemiBold, color = MaterialTheme.colorScheme.primary) },
                     colors = NavigationBarItemDefaults.colors(
-                        selectedIconColor = BoothPrimary,
-                        selectedTextColor = BoothPrimary,
-                        indicatorColor = Color(0xFFEFF6FF)
+                        selectedIconColor = MaterialTheme.colorScheme.primary,
+                        selectedTextColor = MaterialTheme.colorScheme.primary,
+                        unselectedIconColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                        unselectedTextColor = MaterialTheme.colorScheme.onSurface,
+                        indicatorColor = MaterialTheme.colorScheme.primaryContainer
                     )
                 )
             }
@@ -129,7 +144,7 @@ fun ProfileScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding)
-                .background(Color(0xFFF8FAFC)),
+                .background(MaterialTheme.colorScheme.background),
             contentPadding = PaddingValues(start = 16.dp, end = 16.dp, top = 4.dp, bottom = 48.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
@@ -138,8 +153,8 @@ fun ProfileScreen(
                 Card(
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(20.dp),
-                    colors = CardDefaults.cardColors(containerColor = Color.White),
-                    border = BorderStroke(1.dp, Color(0xFFE2E8F0))
+                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+                    border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline)
                 ) {
                     Column(
                         modifier = Modifier
@@ -159,14 +174,14 @@ fun ProfileScreen(
                             text = userName,
                             style = MaterialTheme.typography.titleLarge,
                             fontWeight = FontWeight.Bold,
-                            color = Color(0xFF0F172A),
+                            color = MaterialTheme.colorScheme.onSurface,
                             fontSize = 20.sp
                         )
 
                         Text(
                             text = userEmail,
                             fontSize = 12.5.sp,
-                            color = Color(0xFF64748B)
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
 
                         Spacer(modifier = Modifier.height(10.dp))
@@ -174,20 +189,20 @@ fun ProfileScreen(
                         Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                             Surface(
                                 shape = RoundedCornerShape(12.dp),
-                                color = Color(0xFFEFF6FF)
+                                color = MaterialTheme.colorScheme.primaryContainer
                             ) {
                                 Text(
                                     text = "Customer Account",
                                     fontSize = 11.sp,
                                     fontWeight = FontWeight.Bold,
-                                    color = BoothPrimary,
+                                    color = MaterialTheme.colorScheme.primary,
                                     modifier = Modifier.padding(horizontal = 10.dp, vertical = 4.dp)
                                 )
                             }
 
                             Surface(
                                 shape = RoundedCornerShape(12.dp),
-                                color = Color(0xFFF0FDF4)
+                                color = BoothSuccess.copy(alpha = 0.12f)
                             ) {
                                 Row(
                                     modifier = Modifier.padding(horizontal = 10.dp, vertical = 4.dp),
@@ -210,15 +225,15 @@ fun ProfileScreen(
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .background(Color(0xFFF8FAFC), RoundedCornerShape(14.dp))
+                                .background(MaterialTheme.colorScheme.background, RoundedCornerShape(14.dp))
                                 .padding(vertical = 12.dp),
                             horizontalArrangement = Arrangement.SpaceEvenly,
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             ProfileStatItem(count = "6", label = "Tables Joined")
-                            Box(modifier = Modifier.width(1.dp).height(28.dp).background(Color(0xFFCBD5E1)))
+                            Box(modifier = Modifier.width(1.dp).height(28.dp).background(MaterialTheme.colorScheme.outlineVariant))
                             ProfileStatItem(count = "2", label = "Tables Hosted")
-                            Box(modifier = Modifier.width(1.dp).height(28.dp).background(Color(0xFFCBD5E1)))
+                            Box(modifier = Modifier.width(1.dp).height(28.dp).background(MaterialTheme.colorScheme.outlineVariant))
                             ProfileStatItem(count = "3", label = "Circles")
                         }
                     }
@@ -230,7 +245,7 @@ fun ProfileScreen(
                     text = "Account & Security",
                     fontWeight = FontWeight.Bold,
                     fontSize = 16.sp,
-                    color = Color(0xFF0F172A)
+                    color = MaterialTheme.colorScheme.onSurface
                 )
             }
 
@@ -238,18 +253,24 @@ fun ProfileScreen(
                 Card(
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(16.dp),
-                    colors = CardDefaults.cardColors(containerColor = Color.White),
-                    border = BorderStroke(1.dp, Color(0xFFE2E8F0))
+                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+                    border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline)
                 ) {
                     Column(modifier = Modifier.padding(16.dp)) {
                         ProfileMenuRow(
                             icon = Icons.Default.Fingerprint,
-                            title = "Biometric SafePass",
-                            subtitle = "Face recognition verification active",
-                            trailingText = "Active ✓"
+                            title = "Face Verification",
+                            subtitle = if (faceVerificationEnabled) "Face recognition verification active" else "Off",
+                            trailingText = null,
+                            trailing = {
+                                Switch(
+                                    checked = faceVerificationEnabled,
+                                    onCheckedChange = { faceVerificationEnabled = it }
+                                )
+                            }
                         )
                         Spacer(modifier = Modifier.height(12.dp))
-                        Box(modifier = Modifier.fillMaxWidth().height(1.dp).background(Color(0xFFF1F5F9)))
+                        Box(modifier = Modifier.fillMaxWidth().height(1.dp).background(MaterialTheme.colorScheme.surfaceVariant))
                         Spacer(modifier = Modifier.height(12.dp))
                         ProfileMenuRow(
                             icon = Icons.Default.Notifications,
@@ -258,14 +279,53 @@ fun ProfileScreen(
                             trailingText = "On"
                         )
                         Spacer(modifier = Modifier.height(12.dp))
-                        Box(modifier = Modifier.fillMaxWidth().height(1.dp).background(Color(0xFFF1F5F9)))
+                        Box(modifier = Modifier.fillMaxWidth().height(1.dp).background(MaterialTheme.colorScheme.surfaceVariant))
                         Spacer(modifier = Modifier.height(12.dp))
                         ProfileMenuRow(
                             icon = Icons.Default.Security,
                             title = "Privacy & Data",
-                            subtitle = "Manage biometric cache & profile visibility",
+                            subtitle = "Control your profile and verification data",
                             trailingText = null
                         )
+                        Spacer(modifier = Modifier.height(12.dp))
+                        Box(modifier = Modifier.fillMaxWidth().height(1.dp).background(MaterialTheme.colorScheme.surfaceVariant))
+                        Spacer(modifier = Modifier.height(12.dp))
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Box(
+                                modifier = Modifier
+                                    .size(36.dp)
+                                    .background(MaterialTheme.colorScheme.surfaceVariant, CircleShape),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Default.DarkMode,
+                                    contentDescription = null,
+                                    tint = MaterialTheme.colorScheme.primary,
+                                    modifier = Modifier.size(18.dp)
+                                )
+                            }
+                            Spacer(modifier = Modifier.width(12.dp))
+                            Column(modifier = Modifier.weight(1f)) {
+                                Text(
+                                    text = "Dark Mode",
+                                    fontWeight = FontWeight.Bold,
+                                    fontSize = 13.5.sp,
+                                    color = MaterialTheme.colorScheme.onSurface
+                                )
+                                Text(
+                                    text = "Switch between light and dark appearance",
+                                    fontSize = 11.sp,
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                                )
+                            }
+                            Switch(
+                                checked = darkTheme,
+                                onCheckedChange = onDarkThemeChange
+                            )
+                        }
                     }
                 }
             }
@@ -275,7 +335,7 @@ fun ProfileScreen(
                     text = "Actions",
                     fontWeight = FontWeight.Bold,
                     fontSize = 16.sp,
-                    color = Color(0xFF0F172A)
+                    color = MaterialTheme.colorScheme.onSurface
                 )
             }
 
@@ -283,8 +343,8 @@ fun ProfileScreen(
                 Card(
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(16.dp),
-                    colors = CardDefaults.cardColors(containerColor = Color.White),
-                    border = BorderStroke(1.dp, Color(0xFFE2E8F0))
+                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+                    border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline)
                 ) {
                     Column(modifier = Modifier.padding(16.dp)) {
                         Row(
@@ -297,21 +357,21 @@ fun ProfileScreen(
                             Box(
                                 modifier = Modifier
                                     .size(36.dp)
-                                    .background(Color(0xFFEFF6FF), CircleShape),
+                                    .background(MaterialTheme.colorScheme.primaryContainer, CircleShape),
                                 contentAlignment = Alignment.Center
                             ) {
-                                Icon(Icons.Default.Storefront, contentDescription = null, tint = BoothPrimary, modifier = Modifier.size(18.dp))
+                                Icon(Icons.Default.Storefront, contentDescription = null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(18.dp))
                             }
                             Spacer(modifier = Modifier.width(12.dp))
                             Column(modifier = Modifier.weight(1f)) {
-                                Text("Switch to Merchant Mode", fontWeight = FontWeight.Bold, fontSize = 13.5.sp, color = Color(0xFF0F172A))
-                                Text("Manage cafe seats and bookings", fontSize = 11.5.sp, color = Color(0xFF64748B))
+                                Text("Switch to Merchant Mode", fontWeight = FontWeight.Bold, fontSize = 13.5.sp, color = MaterialTheme.colorScheme.onSurface)
+                                Text("Manage cafe seats and bookings", fontSize = 11.5.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
                             }
                             Icon(Icons.Default.ChevronRight, contentDescription = null, tint = Color(0xFF94A3B8), modifier = Modifier.size(20.dp))
                         }
 
                         Spacer(modifier = Modifier.height(12.dp))
-                        Box(modifier = Modifier.fillMaxWidth().height(1.dp).background(Color(0xFFF1F5F9)))
+                        Box(modifier = Modifier.fillMaxWidth().height(1.dp).background(MaterialTheme.colorScheme.surfaceVariant))
                         Spacer(modifier = Modifier.height(12.dp))
 
                         Row(
@@ -324,13 +384,13 @@ fun ProfileScreen(
                             Box(
                                 modifier = Modifier
                                     .size(36.dp)
-                                    .background(Color(0xFFFEE2E2), CircleShape),
+                                    .background(MaterialTheme.colorScheme.errorContainer, CircleShape),
                                 contentAlignment = Alignment.Center
                             ) {
-                                Icon(Icons.Default.Logout, contentDescription = null, tint = Color(0xFFDC2626), modifier = Modifier.size(18.dp))
+                                Icon(Icons.Default.Logout, contentDescription = null, tint = MaterialTheme.colorScheme.error, modifier = Modifier.size(18.dp))
                             }
                             Spacer(modifier = Modifier.width(12.dp))
-                            Text("Sign Out", fontWeight = FontWeight.Bold, fontSize = 13.5.sp, color = Color(0xFFDC2626))
+                            Text("Sign Out", fontWeight = FontWeight.Bold, fontSize = 13.5.sp, color = MaterialTheme.colorScheme.error)
                         }
                     }
                 }
@@ -342,8 +402,8 @@ fun ProfileScreen(
 @Composable
 private fun ProfileStatItem(count: String, label: String) {
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
-        Text(text = count, fontWeight = FontWeight.Bold, fontSize = 17.sp, color = BoothPrimary)
-        Text(text = label, fontSize = 10.5.sp, color = Color(0xFF64748B))
+        Text(text = count, fontWeight = FontWeight.Bold, fontSize = 17.sp, color = MaterialTheme.colorScheme.primary)
+        Text(text = label, fontSize = 10.5.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
     }
 }
 
@@ -352,7 +412,8 @@ private fun ProfileMenuRow(
     icon: ImageVector,
     title: String,
     subtitle: String,
-    trailingText: String?
+    trailingText: String?,
+    trailing: (@Composable () -> Unit)? = null
 ) {
     Row(
         modifier = Modifier.fillMaxWidth(),
@@ -361,23 +422,25 @@ private fun ProfileMenuRow(
         Box(
             modifier = Modifier
                 .size(36.dp)
-                .background(Color(0xFFF1F5F9), CircleShape),
+                .background(MaterialTheme.colorScheme.surfaceVariant, CircleShape),
             contentAlignment = Alignment.Center
         ) {
-            Icon(imageVector = icon, contentDescription = null, tint = BoothPrimary, modifier = Modifier.size(18.dp))
+            Icon(imageVector = icon, contentDescription = null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(18.dp))
         }
         Spacer(modifier = Modifier.width(12.dp))
         Column(modifier = Modifier.weight(1f)) {
-            Text(text = title, fontWeight = FontWeight.Bold, fontSize = 13.5.sp, color = Color(0xFF0F172A))
-            Text(text = subtitle, fontSize = 11.sp, color = Color(0xFF64748B))
+            Text(text = title, fontWeight = FontWeight.Bold, fontSize = 13.5.sp, color = MaterialTheme.colorScheme.onSurface)
+            Text(text = subtitle, fontSize = 11.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
         }
-        if (trailingText != null) {
-            Surface(shape = RoundedCornerShape(8.dp), color = Color(0xFFEFF6FF)) {
+        if (trailing != null) {
+            trailing()
+        } else if (trailingText != null) {
+            Surface(shape = RoundedCornerShape(8.dp), color = MaterialTheme.colorScheme.primaryContainer) {
                 Text(
                     text = trailingText,
                     fontSize = 11.sp,
                     fontWeight = FontWeight.Bold,
-                    color = BoothPrimary,
+                    color = MaterialTheme.colorScheme.primary,
                     modifier = Modifier.padding(horizontal = 8.dp, vertical = 3.dp)
                 )
             }

@@ -71,12 +71,8 @@ import org.umn.booth.data.DummyData
 import org.umn.booth.data.model.Venue
 import org.umn.booth.ui.components.BoothLogo
 import org.umn.booth.ui.components.InitialsAvatar
-import org.umn.booth.ui.theme.BoothBorder
 import org.umn.booth.ui.theme.BoothPrimary
 import org.umn.booth.ui.theme.BoothSuccess
-import org.umn.booth.ui.theme.BoothTextMuted
-import org.umn.booth.ui.theme.BoothTextPrimary
-import org.umn.booth.ui.theme.BoothTextSecondary
 
 @Composable
 fun ExploreScreen(
@@ -102,21 +98,23 @@ fun ExploreScreen(
     }
 
     Scaffold(
-        containerColor = Color(0xFFF8FAFC),
+        containerColor = MaterialTheme.colorScheme.background,
         bottomBar = {
             NavigationBar(
-                containerColor = Color.White,
+                containerColor = MaterialTheme.colorScheme.surface,
                 tonalElevation = 8.dp
             ) {
                 NavigationBarItem(
                     selected = selectedBottomNav == 0,
                     onClick = { selectedBottomNav = 0 },
                     icon = { Icon(Icons.Default.Search, contentDescription = "Explore") },
-                    label = { Text("Explore", fontSize = 11.sp, fontWeight = FontWeight.SemiBold) },
+                    label = { Text("Explore", fontSize = 11.sp, fontWeight = FontWeight.SemiBold, color = MaterialTheme.colorScheme.primary) },
                     colors = NavigationBarItemDefaults.colors(
-                        selectedIconColor = BoothPrimary,
-                        selectedTextColor = BoothPrimary,
-                        indicatorColor = Color(0xFFEFF6FF)
+                        selectedIconColor = MaterialTheme.colorScheme.primary,
+                        selectedTextColor = MaterialTheme.colorScheme.primary,
+                        unselectedIconColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                        unselectedTextColor = MaterialTheme.colorScheme.onSurface,
+                        indicatorColor = MaterialTheme.colorScheme.primaryContainer
                     )
                 )
                 NavigationBarItem(
@@ -126,11 +124,13 @@ fun ExploreScreen(
                         onReservationsClick()
                     },
                     icon = { Icon(Icons.Default.DateRange, contentDescription = "Reservations") },
-                    label = { Text("Reservations", fontSize = 11.sp) },
+                    label = { Text("Reservations", fontSize = 11.sp, color = MaterialTheme.colorScheme.onSurface) },
                     colors = NavigationBarItemDefaults.colors(
-                        selectedIconColor = BoothPrimary,
-                        selectedTextColor = BoothPrimary,
-                        indicatorColor = Color(0xFFEFF6FF)
+                        selectedIconColor = MaterialTheme.colorScheme.primary,
+                        selectedTextColor = MaterialTheme.colorScheme.primary,
+                        unselectedIconColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                        unselectedTextColor = MaterialTheme.colorScheme.onSurface,
+                        indicatorColor = MaterialTheme.colorScheme.primaryContainer
                     )
                 )
                 NavigationBarItem(
@@ -140,11 +140,13 @@ fun ExploreScreen(
                         onCommunityClick()
                     },
                     icon = { Icon(Icons.Default.Groups, contentDescription = "Community") },
-                    label = { Text("Community", fontSize = 11.sp) },
+                    label = { Text("Community", fontSize = 11.sp, color = MaterialTheme.colorScheme.onSurface) },
                     colors = NavigationBarItemDefaults.colors(
-                        selectedIconColor = BoothPrimary,
-                        selectedTextColor = BoothPrimary,
-                        indicatorColor = Color(0xFFEFF6FF)
+                        selectedIconColor = MaterialTheme.colorScheme.primary,
+                        selectedTextColor = MaterialTheme.colorScheme.primary,
+                        unselectedIconColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                        unselectedTextColor = MaterialTheme.colorScheme.onSurface,
+                        indicatorColor = MaterialTheme.colorScheme.primaryContainer
                     )
                 )
                 NavigationBarItem(
@@ -154,11 +156,13 @@ fun ExploreScreen(
                         onProfileClick()
                     },
                     icon = { Icon(Icons.Default.Person, contentDescription = "Profile") },
-                    label = { Text("Profile", fontSize = 11.sp) },
+                    label = { Text("Profile", fontSize = 11.sp, color = MaterialTheme.colorScheme.onSurface) },
                     colors = NavigationBarItemDefaults.colors(
-                        selectedIconColor = BoothPrimary,
-                        selectedTextColor = BoothPrimary,
-                        indicatorColor = Color(0xFFEFF6FF)
+                        selectedIconColor = MaterialTheme.colorScheme.primary,
+                        selectedTextColor = MaterialTheme.colorScheme.primary,
+                        unselectedIconColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                        unselectedTextColor = MaterialTheme.colorScheme.onSurface,
+                        indicatorColor = MaterialTheme.colorScheme.primaryContainer
                     )
                 )
             }
@@ -168,7 +172,7 @@ fun ExploreScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding)
-                .background(Color(0xFFF8FAFC)),
+                .background(MaterialTheme.colorScheme.background),
             contentPadding = PaddingValues(start = 16.dp, end = 16.dp, top = 4.dp, bottom = 48.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
@@ -184,7 +188,7 @@ fun ExploreScreen(
                             modifier = Modifier
                                 .size(36.dp)
                                 .clip(RoundedCornerShape(8.dp))
-                                .background(BoothPrimary),
+                                .background(MaterialTheme.colorScheme.primary),
                             contentAlignment = Alignment.Center
                         ) {
                             BoothLogo(modifier = Modifier.size(24.dp), isWhite = true)
@@ -194,7 +198,7 @@ fun ExploreScreen(
                             text = "Explore",
                             style = MaterialTheme.typography.titleLarge,
                             fontWeight = FontWeight.Bold,
-                            color = Color(0xFF0F172A),
+                            color = MaterialTheme.colorScheme.onSurface,
                             fontSize = 22.sp
                         )
                     }
@@ -204,7 +208,7 @@ fun ExploreScreen(
                             Icon(
                                 Icons.Default.Notifications,
                                 contentDescription = "Alerts",
-                                tint = Color(0xFF64748B)
+                                tint = MaterialTheme.colorScheme.onSurfaceVariant
                             )
                         }
                         InitialsAvatar(
@@ -221,13 +225,13 @@ fun ExploreScreen(
                     Box(
                         modifier = Modifier
                             .size(32.dp)
-                            .background(Color(0xFFE0EDFB), CircleShape),
+                            .background(MaterialTheme.colorScheme.primaryContainer, CircleShape),
                         contentAlignment = Alignment.Center
                     ) {
                         Icon(
                             imageVector = Icons.Default.NearMe,
                             contentDescription = null,
-                            tint = BoothPrimary,
+                            tint = MaterialTheme.colorScheme.primary,
                             modifier = Modifier.size(16.dp)
                         )
                     }
@@ -245,12 +249,12 @@ fun ExploreScreen(
                                 text = "BSD & Gading Serpong",
                                 fontSize = 14.sp,
                                 fontWeight = FontWeight.Bold,
-                                color = Color(0xFF0F172A)
+                                color = MaterialTheme.colorScheme.onSurface
                             )
                             Icon(
                                 imageVector = Icons.Default.KeyboardArrowDown,
                                 contentDescription = null,
-                                tint = Color(0xFF64748B),
+                                tint = MaterialTheme.colorScheme.onSurfaceVariant,
                                 modifier = Modifier.size(18.dp)
                             )
                         }
@@ -268,17 +272,17 @@ fun ExploreScreen(
                     },
                     trailingIcon = {
                         IconButton(onClick = {}) {
-                            Icon(Icons.Default.Tune, contentDescription = "Filter", tint = Color(0xFF64748B), modifier = Modifier.size(20.dp))
+                            Icon(Icons.Default.Tune, contentDescription = "Filter", tint = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.size(20.dp))
                         }
                     },
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(12.dp),
                     singleLine = true,
                     colors = OutlinedTextFieldDefaults.colors(
-                        focusedContainerColor = Color.White,
-                        unfocusedContainerColor = Color.White,
-                        focusedBorderColor = BoothPrimary,
-                        unfocusedBorderColor = Color(0xFFE2E8F0)
+                        focusedContainerColor = MaterialTheme.colorScheme.surface,
+                        unfocusedContainerColor = MaterialTheme.colorScheme.surface,
+                        focusedBorderColor = MaterialTheme.colorScheme.primary,
+                        unfocusedBorderColor = MaterialTheme.colorScheme.outline
                     )
                 )
             }
@@ -287,21 +291,21 @@ fun ExploreScreen(
                 Card(
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(16.dp),
-                    colors = CardDefaults.cardColors(containerColor = Color(0xFFF0F7FF)),
-                    border = androidx.compose.foundation.BorderStroke(1.dp, Color(0xFFBFDBFE))
+                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer),
+                    border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.primary.copy(alpha = 0.3f))
                 ) {
                     Column(modifier = Modifier.padding(16.dp)) {
                         Row(verticalAlignment = Alignment.CenterVertically) {
                             Box(
                                 modifier = Modifier
                                     .size(28.dp)
-                                    .background(Color(0xFFDBEAFE), CircleShape),
+                                    .background(MaterialTheme.colorScheme.primaryContainer, CircleShape),
                                 contentAlignment = Alignment.Center
                             ) {
                                 Icon(
                                     imageVector = Icons.Default.Groups,
                                     contentDescription = null,
-                                    tint = BoothPrimary,
+                                    tint = MaterialTheme.colorScheme.primary,
                                     modifier = Modifier.size(16.dp)
                                 )
                             }
@@ -310,20 +314,20 @@ fun ExploreScreen(
                                 text = "Have a Table Invite?",
                                 fontSize = 14.sp,
                                 fontWeight = FontWeight.Bold,
-                                color = Color(0xFF0F172A)
+                                color = MaterialTheme.colorScheme.onSurface
                             )
                             Spacer(modifier = Modifier.width(4.dp))
                             Icon(
                                 imageVector = Icons.Default.AutoAwesome,
                                 contentDescription = null,
-                                tint = BoothPrimary,
+                                tint = MaterialTheme.colorScheme.primary,
                                 modifier = Modifier.size(14.dp)
                             )
                         }
                         Text(
-                            text = "Join a reserved booth",
+                            text = "Join a reserved table",
                             fontSize = 11.5.sp,
-                            color = Color(0xFF64748B),
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
                             modifier = Modifier.padding(start = 36.dp)
                         )
 
@@ -341,10 +345,10 @@ fun ExploreScreen(
                                 shape = RoundedCornerShape(10.dp),
                                 singleLine = true,
                                 colors = OutlinedTextFieldDefaults.colors(
-                                    focusedContainerColor = Color.White,
-                                    unfocusedContainerColor = Color.White,
-                                    focusedBorderColor = BoothPrimary,
-                                    unfocusedBorderColor = Color(0xFFCBD5E1)
+                                    focusedContainerColor = MaterialTheme.colorScheme.surface,
+                                    unfocusedContainerColor = MaterialTheme.colorScheme.surface,
+                                    focusedBorderColor = MaterialTheme.colorScheme.primary,
+                                    unfocusedBorderColor = MaterialTheme.colorScheme.outlineVariant
                                 )
                             )
 
@@ -357,11 +361,11 @@ fun ExploreScreen(
                                 },
                                 shape = RoundedCornerShape(10.dp),
                                 colors = ButtonDefaults.buttonColors(
-                                    containerColor = BoothPrimary,
-                                    contentColor = Color.White
+                                    containerColor = MaterialTheme.colorScheme.primary,
+                                    contentColor = MaterialTheme.colorScheme.onPrimary
                                 )
                             ) {
-                                Text("Join Table", fontWeight = FontWeight.Bold, fontSize = 13.sp, color = Color.White)
+                                Text("Join Table", fontWeight = FontWeight.Bold, fontSize = 13.sp, color = MaterialTheme.colorScheme.onPrimary)
                             }
                         }
                     }
@@ -382,7 +386,7 @@ fun ExploreScreen(
                                             Icons.Default.Coffee,
                                             contentDescription = null,
                                             modifier = Modifier.size(14.dp),
-                                            tint = if (isSelected) Color.White else Color(0xFF64748B)
+                                            tint = if (isSelected) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurfaceVariant
                                         )
                                         Spacer(modifier = Modifier.width(4.dp))
                                     } else if (category == "Sports & Padel") {
@@ -390,7 +394,7 @@ fun ExploreScreen(
                                             Icons.Default.SportsTennis,
                                             contentDescription = null,
                                             modifier = Modifier.size(14.dp),
-                                            tint = if (isSelected) Color.White else Color(0xFF64748B)
+                                            tint = if (isSelected) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurfaceVariant
                                         )
                                         Spacer(modifier = Modifier.width(4.dp))
                                     }
@@ -398,15 +402,15 @@ fun ExploreScreen(
                                 }
                             },
                             colors = FilterChipDefaults.filterChipColors(
-                                selectedContainerColor = BoothPrimary,
-                                selectedLabelColor = Color.White,
-                                containerColor = Color.White,
-                                labelColor = Color(0xFF64748B)
+                                selectedContainerColor = MaterialTheme.colorScheme.primary,
+                                selectedLabelColor = MaterialTheme.colorScheme.onPrimary,
+                                containerColor = MaterialTheme.colorScheme.surface,
+                                labelColor = MaterialTheme.colorScheme.onSurfaceVariant
                             ),
                             border = FilterChipDefaults.filterChipBorder(
                                 enabled = true,
                                 selected = isSelected,
-                                borderColor = if (isSelected) BoothPrimary else Color(0xFFE2E8F0)
+                                borderColor = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline
                             ),
                             shape = RoundedCornerShape(20.dp)
                         )
@@ -425,20 +429,20 @@ fun ExploreScreen(
                             text = "Trending Around You",
                             style = MaterialTheme.typography.titleLarge,
                             fontWeight = FontWeight.Bold,
-                            color = Color(0xFF0F172A),
+                            color = MaterialTheme.colorScheme.onSurface,
                             fontSize = 18.sp
                         )
                         Text(
-                            text = "Verified seats & live availability",
+                            text = "Popular tables near you",
                             fontSize = 11.5.sp,
-                            color = Color(0xFF64748B)
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                     }
                     Text(
                         text = "View All →",
                         style = MaterialTheme.typography.labelMedium,
                         fontWeight = FontWeight.Bold,
-                        color = BoothPrimary,
+                        color = MaterialTheme.colorScheme.primary,
                         fontSize = 13.sp,
                         modifier = Modifier.clickable {}
                     )
@@ -465,8 +469,8 @@ private fun VenueCard(
             .fillMaxWidth()
             .clickable { onBookClick() },
         shape = RoundedCornerShape(18.dp),
-        colors = CardDefaults.cardColors(containerColor = Color.White),
-        border = androidx.compose.foundation.BorderStroke(1.dp, Color(0xFFE2E8F0)),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+        border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.outline),
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
     ) {
         Column {
@@ -488,7 +492,7 @@ private fun VenueCard(
                         .padding(12.dp)
                         .align(Alignment.TopStart),
                     shape = RoundedCornerShape(20.dp),
-                    color = Color.White
+                    color = MaterialTheme.colorScheme.surface
                 ) {
                     Row(
                         modifier = Modifier.padding(horizontal = 10.dp, vertical = 5.dp),
@@ -504,7 +508,7 @@ private fun VenueCard(
                             text = "Tables Open",
                             style = MaterialTheme.typography.labelSmall,
                             fontWeight = FontWeight.Bold,
-                            color = Color(0xFF1E293B),
+                            color = MaterialTheme.colorScheme.onSurface,
                             fontSize = 11.sp
                         )
                     }
@@ -571,7 +575,7 @@ private fun VenueCard(
                     text = venue.name,
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold,
-                    color = Color(0xFF0F172A),
+                    color = MaterialTheme.colorScheme.onSurface,
                     fontSize = 16.sp
                 )
 
@@ -588,7 +592,7 @@ private fun VenueCard(
                     Text(
                         text = "${venue.distanceKm} km • ${venue.address}",
                         fontSize = 11.5.sp,
-                        color = Color(0xFF64748B)
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 }
 
@@ -598,13 +602,13 @@ private fun VenueCard(
                     items(venue.amenities.take(3)) { amenity ->
                         Box(
                             modifier = Modifier
-                                .background(Color(0xFFF0F7FF), RoundedCornerShape(8.dp))
+                                .background(MaterialTheme.colorScheme.primaryContainer, RoundedCornerShape(8.dp))
                                 .padding(horizontal = 8.dp, vertical = 4.dp)
                         ) {
                             Text(
                                 text = amenity,
                                 fontSize = 11.sp,
-                                color = BoothPrimary,
+                                color = MaterialTheme.colorScheme.primary,
                                 fontWeight = FontWeight.Medium
                             )
                         }
@@ -628,17 +632,17 @@ private fun VenueCard(
                                 modifier = Modifier
                                     .padding(start = 2.dp)
                                     .size(26.dp)
-                                    .background(Color(0xFFE2E8F0), CircleShape),
+                                    .background(MaterialTheme.colorScheme.outline, CircleShape),
                                 contentAlignment = Alignment.Center
                             ) {
-                                Text("+3", fontSize = 9.sp, fontWeight = FontWeight.Bold, color = Color(0xFF475569))
+                                Text("+3", fontSize = 9.sp, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSurfaceVariant)
                             }
                         }
                         Spacer(modifier = Modifier.width(8.dp))
                         Text(
-                            text = "${venue.activeBoothsCount} active booths",
+                            text = "${venue.activeBoothsCount} open tables",
                             fontSize = 11.5.sp,
-                            color = Color(0xFF64748B)
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                     }
 
@@ -646,12 +650,12 @@ private fun VenueCard(
                         onClick = onBookClick,
                         shape = RoundedCornerShape(10.dp),
                         colors = ButtonDefaults.buttonColors(
-                            containerColor = BoothPrimary,
-                            contentColor = Color.White
+                            containerColor = MaterialTheme.colorScheme.primary,
+                            contentColor = MaterialTheme.colorScheme.onPrimary
                         ),
                         contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp)
                     ) {
-                        Text("Book Booth", fontWeight = FontWeight.Bold, fontSize = 12.5.sp, color = Color.White)
+                        Text("View Tables", fontWeight = FontWeight.Bold, fontSize = 12.5.sp, color = MaterialTheme.colorScheme.onPrimary)
                     }
                 }
             }

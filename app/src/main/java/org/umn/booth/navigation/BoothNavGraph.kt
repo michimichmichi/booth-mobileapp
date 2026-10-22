@@ -49,6 +49,8 @@ sealed class Screen(val route: String) {
 
 @Composable
 fun BoothNavGraph(
+    darkTheme: Boolean = false,
+    onDarkThemeChange: (Boolean) -> Unit = {},
     navController: NavHostController = rememberNavController()
 ) {
     var registeredUserInitials by remember { mutableStateOf("AR") }
@@ -235,6 +237,8 @@ fun BoothNavGraph(
                 userInitials = registeredUserInitials,
                 userName = "Alex Rivera",
                 userEmail = "alex.rivera@example.com",
+                darkTheme = darkTheme,
+                onDarkThemeChange = onDarkThemeChange,
                 onExploreClick = { navController.navigate(Screen.Explore.route) },
                 onReservationsClick = { navController.navigate(Screen.ReservationPass.route) },
                 onCommunityClick = { navController.navigate(Screen.Community.route) },

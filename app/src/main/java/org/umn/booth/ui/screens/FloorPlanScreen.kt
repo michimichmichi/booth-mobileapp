@@ -79,9 +79,9 @@ fun FloorPlanScreen(
 
     var qtyItem1 by remember { mutableIntStateOf(1) }
     var qtyItem2 by remember { mutableIntStateOf(1) }
-    var selectedCategory by remember { mutableStateOf("All Pre-Orders (2)") }
+    var selectedCategory by remember { mutableStateOf("All Items (2)") }
 
-    val categories = listOf("All Pre-Orders (2)", "Signature Coffee", "Pastries & Snacks")
+    val categories = listOf("All Items (2)", "Signature Coffee", "Pastries & Snacks")
 
     val item1 = DummyData.menuItems[0]
     val item2 = DummyData.menuItems[1]
@@ -90,10 +90,10 @@ fun FloorPlanScreen(
     val totalItems = qtyItem1 + qtyItem2
 
     Scaffold(
-        containerColor = Color(0xFFF8FAFC),
+        containerColor = MaterialTheme.colorScheme.background,
         topBar = {
             Surface(
-                color = Color(0xFFF8FAFC),
+                color = MaterialTheme.colorScheme.background,
                 modifier = Modifier
                     .fillMaxWidth()
                     .statusBarsPadding()
@@ -108,7 +108,7 @@ fun FloorPlanScreen(
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = "Back",
-                            tint = Color(0xFF0F172A)
+                            tint = MaterialTheme.colorScheme.onSurface
                         )
                     }
                     Spacer(modifier = Modifier.width(4.dp))
@@ -117,12 +117,12 @@ fun FloorPlanScreen(
                             text = "Join ${currentSession.tableNumber}",
                             fontSize = 15.sp,
                             fontWeight = FontWeight.Bold,
-                            color = Color(0xFF0F172A)
+                            color = MaterialTheme.colorScheme.onSurface
                         )
                         Text(
                             text = currentVenue.name,
                             fontSize = 11.5.sp,
-                            color = Color(0xFF64748B)
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                     }
                 }
@@ -132,9 +132,9 @@ fun FloorPlanScreen(
 
             Surface(
                 modifier = Modifier.fillMaxWidth(),
-                color = Color.White,
+                color = MaterialTheme.colorScheme.surface,
                 tonalElevation = 8.dp,
-                border = BorderStroke(1.dp, Color(0xFFE2E8F0))
+                border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline)
             ) {
                 Row(
                     modifier = Modifier
@@ -156,7 +156,7 @@ fun FloorPlanScreen(
                             text = "Rp ${String.format("%,d", subtotal).replace(',', '.')}",
                             fontSize = 18.sp,
                             fontWeight = FontWeight.Bold,
-                            color = Color(0xFF0F172A)
+                            color = MaterialTheme.colorScheme.onSurface
                         )
                     }
 
@@ -164,12 +164,12 @@ fun FloorPlanScreen(
                         onClick = { onProceedToPreOrder(currentSession.id) },
                         shape = RoundedCornerShape(12.dp),
                         colors = ButtonDefaults.buttonColors(
-                            containerColor = BoothPrimary,
-                            contentColor = Color.White
+                            containerColor = MaterialTheme.colorScheme.primary,
+                            contentColor = MaterialTheme.colorScheme.onPrimary
                         ),
                         modifier = Modifier.height(48.dp)
                     ) {
-                        Text("Confirm & Join Table →", fontWeight = FontWeight.Bold, fontSize = 13.5.sp, color = Color.White)
+                        Text("Confirm & Join Table →", fontWeight = FontWeight.Bold, fontSize = 13.5.sp, color = MaterialTheme.colorScheme.onPrimary)
                     }
                 }
             }
@@ -186,8 +186,8 @@ fun FloorPlanScreen(
             Card(
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(12.dp),
-                colors = CardDefaults.cardColors(containerColor = Color.White),
-                border = BorderStroke(1.dp, Color(0xFFE2E8F0))
+                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+                border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline)
             ) {
                 Row(
                     modifier = Modifier
@@ -198,7 +198,7 @@ fun FloorPlanScreen(
                     Icon(
                         imageVector = Icons.AutoMirrored.Filled.ArrowForward,
                         contentDescription = null,
-                        tint = BoothPrimary,
+                        tint = MaterialTheme.colorScheme.primary,
                         modifier = Modifier.size(16.dp)
                     )
                     Spacer(modifier = Modifier.width(8.dp))
@@ -207,12 +207,12 @@ fun FloorPlanScreen(
                             text = currentSession.locationArea,
                             fontSize = 13.sp,
                             fontWeight = FontWeight.Bold,
-                            color = Color(0xFF0F172A)
+                            color = MaterialTheme.colorScheme.onSurface
                         )
                         Text(
                             text = "${currentVenue.name} • Step 2 of 3",
                             fontSize = 11.sp,
-                            color = Color(0xFF64748B)
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                     }
                 }
@@ -223,8 +223,8 @@ fun FloorPlanScreen(
             Card(
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(16.dp),
-                colors = CardDefaults.cardColors(containerColor = Color.White),
-                border = BorderStroke(1.dp, Color(0xFFE2E8F0))
+                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+                border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline)
             ) {
                 Column(modifier = Modifier.padding(16.dp)) {
                     Row(
@@ -235,13 +235,13 @@ fun FloorPlanScreen(
                         Row(verticalAlignment = Alignment.CenterVertically) {
                             Surface(
                                 shape = RoundedCornerShape(6.dp),
-                                color = Color(0xFFEFF6FF)
+                                color = MaterialTheme.colorScheme.primaryContainer
                             ) {
                                 Text(
                                     text = currentSession.tableNumber,
                                     fontSize = 11.5.sp,
                                     fontWeight = FontWeight.Bold,
-                                    color = BoothPrimary,
+                                    color = MaterialTheme.colorScheme.primary,
                                     modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp)
                                 )
                             }
@@ -249,19 +249,19 @@ fun FloorPlanScreen(
                             Text(
                                 text = currentSession.locationArea,
                                 fontSize = 12.sp,
-                                color = Color(0xFF64748B)
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
                             )
                         }
 
                         Surface(
                             shape = RoundedCornerShape(12.dp),
-                            color = Color(0xFFEFF6FF)
+                            color = MaterialTheme.colorScheme.primaryContainer
                         ) {
                             Text(
                                 text = currentSession.circleType,
                                 modifier = Modifier.padding(horizontal = 8.dp, vertical = 3.dp),
                                 style = MaterialTheme.typography.labelSmall,
-                                color = BoothPrimary,
+                                color = MaterialTheme.colorScheme.primary,
                                 fontWeight = FontWeight.Bold
                             )
                         }
@@ -273,7 +273,7 @@ fun FloorPlanScreen(
                         text = currentSession.title,
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.Bold,
-                        color = Color(0xFF0F172A),
+                        color = MaterialTheme.colorScheme.onSurface,
                         fontSize = 15.sp
                     )
 
@@ -282,7 +282,7 @@ fun FloorPlanScreen(
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .background(Color(0xFFF8FAFC), RoundedCornerShape(12.dp))
+                            .background(MaterialTheme.colorScheme.background, RoundedCornerShape(12.dp))
                             .padding(10.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
@@ -298,20 +298,20 @@ fun FloorPlanScreen(
                                     text = currentSession.hostName,
                                     fontWeight = FontWeight.Bold,
                                     fontSize = 13.5.sp,
-                                    color = Color(0xFF0F172A)
+                                    color = MaterialTheme.colorScheme.onSurface
                                 )
                                 Spacer(modifier = Modifier.width(4.dp))
                                 Icon(
                                     imageVector = Icons.Default.Check,
                                     contentDescription = null,
-                                    tint = Color(0xFF3B82F6),
+                                    tint = MaterialTheme.colorScheme.primary,
                                     modifier = Modifier.size(14.dp)
                                 )
                             }
                             Text(
                                 text = currentSession.hostRole,
                                 fontSize = 11.sp,
-                                color = Color(0xFF64748B)
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
                             )
                         }
                     }
@@ -322,14 +322,14 @@ fun FloorPlanScreen(
                         Box(
                             modifier = Modifier
                                 .size(7.dp)
-                                .background(BoothPrimary, CircleShape)
+                                .background(MaterialTheme.colorScheme.primary, CircleShape)
                         )
                         Spacer(modifier = Modifier.width(6.dp))
                         Text(
                             text = "${currentSession.filledSeats} of ${currentSession.totalSeats} Seats Filled",
                             fontSize = 12.5.sp,
                             fontWeight = FontWeight.Bold,
-                            color = Color(0xFF0F172A)
+                            color = MaterialTheme.colorScheme.onSurface
                         )
                     }
 
@@ -343,7 +343,7 @@ fun FloorPlanScreen(
                             Card(
                                 modifier = Modifier.weight(1f),
                                 shape = RoundedCornerShape(10.dp),
-                                colors = CardDefaults.cardColors(containerColor = Color(0xFFF8FAFC))
+                                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.background)
                             ) {
                                 Column(
                                     modifier = Modifier
@@ -361,7 +361,7 @@ fun FloorPlanScreen(
                                         text = if (member.isHost) "${member.name.split(" ").first()} (H)" else member.name.split(" ").first(),
                                         fontSize = 11.5.sp,
                                         fontWeight = FontWeight.Bold,
-                                        color = Color(0xFF0F172A)
+                                        color = MaterialTheme.colorScheme.onSurface
                                     )
                                 }
                             }
@@ -377,12 +377,12 @@ fun FloorPlanScreen(
                         currentSession.tags.forEach { tag ->
                             Surface(
                                 shape = RoundedCornerShape(8.dp),
-                                color = Color(0xFFF0F7FF)
+                                color = MaterialTheme.colorScheme.primaryContainer
                             ) {
                                 Text(
                                     text = tag,
                                     fontSize = 11.sp,
-                                    color = BoothPrimary,
+                                    color = MaterialTheme.colorScheme.primary,
                                     fontWeight = FontWeight.Medium,
                                     modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
                                 )
@@ -397,8 +397,8 @@ fun FloorPlanScreen(
             Card(
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(16.dp),
-                colors = CardDefaults.cardColors(containerColor = Color.White),
-                border = BorderStroke(1.dp, Color(0xFFE2E8F0))
+                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+                border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline)
             ) {
                 Column(modifier = Modifier.padding(16.dp)) {
                     Row(
@@ -410,27 +410,27 @@ fun FloorPlanScreen(
                             Icon(
                                 imageVector = Icons.Default.GridOn,
                                 contentDescription = null,
-                                tint = BoothPrimary,
+                                tint = MaterialTheme.colorScheme.primary,
                                 modifier = Modifier.size(18.dp)
                             )
                             Spacer(modifier = Modifier.width(8.dp))
                             Text(
-                                text = "Floor Plan Reference",
+                                text = "Legend",
                                 fontSize = 14.sp,
                                 fontWeight = FontWeight.Bold,
-                                color = Color(0xFF0F172A)
+                                color = MaterialTheme.colorScheme.onSurface
                             )
                         }
 
                         Surface(
                             shape = RoundedCornerShape(10.dp),
-                            color = Color(0xFFEFF6FF)
+                            color = MaterialTheme.colorScheme.primaryContainer
                         ) {
                             Text(
                                 text = "Indoor Lounge",
                                 fontSize = 11.sp,
                                 fontWeight = FontWeight.Bold,
-                                color = BoothPrimary,
+                                color = MaterialTheme.colorScheme.primary,
                                 modifier = Modifier.padding(horizontal = 8.dp, vertical = 3.dp)
                             )
                         }
@@ -487,14 +487,14 @@ fun FloorPlanScreen(
                     text = "Pre-Order Food & Drinks",
                     style = MaterialTheme.typography.titleLarge,
                     fontWeight = FontWeight.Bold,
-                    color = Color(0xFF0F172A),
+                    color = MaterialTheme.colorScheme.onSurface,
                     fontSize = 20.sp
                 )
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(
                     text = "Ready & served when you take your seat",
                     fontSize = 12.5.sp,
-                    color = Color(0xFF64748B)
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
 
@@ -508,15 +508,15 @@ fun FloorPlanScreen(
                         onClick = { selectedCategory = category },
                         label = { Text(category, fontWeight = FontWeight.Medium, fontSize = 12.sp) },
                         colors = FilterChipDefaults.filterChipColors(
-                            selectedContainerColor = BoothPrimary,
-                            selectedLabelColor = Color.White,
-                            containerColor = Color.White,
-                            labelColor = Color(0xFF64748B)
+                            selectedContainerColor = MaterialTheme.colorScheme.primary,
+                            selectedLabelColor = MaterialTheme.colorScheme.onPrimary,
+                            containerColor = MaterialTheme.colorScheme.surface,
+                            labelColor = MaterialTheme.colorScheme.onSurfaceVariant
                         ),
                         border = FilterChipDefaults.filterChipBorder(
                             enabled = true,
                             selected = isSelected,
-                            borderColor = if (isSelected) BoothPrimary else Color(0xFFE2E8F0)
+                            borderColor = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline
                         ),
                         shape = RoundedCornerShape(20.dp)
                     )
@@ -550,12 +550,12 @@ fun FloorPlanScreen(
                     .height(44.dp),
                 shape = RoundedCornerShape(12.dp),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = Color(0xFFEFF6FF),
-                    contentColor = BoothPrimary
+                    containerColor = MaterialTheme.colorScheme.primaryContainer,
+                    contentColor = MaterialTheme.colorScheme.primary
                 ),
                 elevation = ButtonDefaults.buttonElevation(defaultElevation = 0.dp)
             ) {
-                Icon(Icons.Default.Add, contentDescription = null, tint = BoothPrimary, modifier = Modifier.size(16.dp))
+                Icon(Icons.Default.Add, contentDescription = null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(16.dp))
                 Spacer(modifier = Modifier.width(6.dp))
                 Text("Add More", fontWeight = FontWeight.Bold, fontSize = 13.sp)
             }
@@ -565,37 +565,37 @@ fun FloorPlanScreen(
             Card(
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(16.dp),
-                colors = CardDefaults.cardColors(containerColor = Color.White),
-                border = BorderStroke(1.dp, Color(0xFFE2E8F0))
+                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+                border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline)
             ) {
                 Column(modifier = Modifier.padding(16.dp)) {
                     Row(verticalAlignment = Alignment.Top) {
                         Box(
                             modifier = Modifier
                                 .size(32.dp)
-                                .background(Color(0xFFE0EDFB), CircleShape),
+                                .background(MaterialTheme.colorScheme.primaryContainer, CircleShape),
                             contentAlignment = Alignment.Center
                         ) {
                             Icon(
                                 imageVector = Icons.Default.Shield,
                                 contentDescription = null,
-                                tint = BoothPrimary,
+                                tint = MaterialTheme.colorScheme.primary,
                                 modifier = Modifier.size(16.dp)
                             )
                         }
                         Spacer(modifier = Modifier.width(10.dp))
                         Column(modifier = Modifier.weight(1f)) {
                             Text(
-                                text = "Individual QRIS Checkout",
+                                text = "Pay for Your Order (QRIS)",
                                 fontSize = 13.sp,
                                 fontWeight = FontWeight.Bold,
-                                color = Color(0xFF0F172A)
+                                color = MaterialTheme.colorScheme.onSurface
                             )
                             Spacer(modifier = Modifier.height(3.dp))
                             Text(
-                                text = "You only pay for your own items. Table reservation deposit of Rp 50.000 was guaranteed by host Sarah K. Seamless QRIS settlement activates upon arrival check-in.",
+                                text = "You pay only for your own order. Sarah K. covered the Rp 50.000 table deposit.",
                                 fontSize = 11.5.sp,
-                                color = Color(0xFF64748B),
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
                                 lineHeight = 16.sp
                             )
                         }
@@ -606,7 +606,7 @@ fun FloorPlanScreen(
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .background(Color(0xFFF8FAFC), RoundedCornerShape(10.dp))
+                            .background(MaterialTheme.colorScheme.background, RoundedCornerShape(10.dp))
                             .padding(horizontal = 14.dp, vertical = 10.dp)
                     ) {
                         Row(
@@ -617,13 +617,13 @@ fun FloorPlanScreen(
                             Text(
                                 text = "Pre-Order Subtotal",
                                 fontSize = 12.sp,
-                                color = Color(0xFF64748B)
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
                             )
                             Text(
                                 text = "Rp ${String.format("%,d", subtotal).replace(',', '.')} ($totalItems items)",
                                 fontSize = 13.sp,
                                 fontWeight = FontWeight.Bold,
-                                color = BoothPrimary
+                                color = MaterialTheme.colorScheme.primary
                             )
                         }
                     }
@@ -645,8 +645,8 @@ private fun MenuItemCard(
     Card(
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(14.dp),
-        colors = CardDefaults.cardColors(containerColor = Color.White),
-        border = BorderStroke(1.dp, Color(0xFFE2E8F0)),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline),
         elevation = CardDefaults.cardElevation(defaultElevation = 1.dp)
     ) {
         Row(
@@ -671,13 +671,13 @@ private fun MenuItemCard(
                     text = item.name,
                     fontWeight = FontWeight.Bold,
                     fontSize = 14.5.sp,
-                    color = Color(0xFF0F172A)
+                    color = MaterialTheme.colorScheme.onSurface
                 )
                 Spacer(modifier = Modifier.height(2.dp))
                 Text(
                     text = item.description,
                     fontSize = 11.sp,
-                    color = Color(0xFF64748B),
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
                     maxLines = 1
                 )
                 Spacer(modifier = Modifier.height(6.dp))
@@ -685,7 +685,7 @@ private fun MenuItemCard(
                     text = "Rp ${String.format("%,d", item.price).replace(',', '.')}",
                     fontWeight = FontWeight.Bold,
                     fontSize = 13.sp,
-                    color = BoothPrimary
+                    color = MaterialTheme.colorScheme.primary
                 )
             }
 
@@ -698,14 +698,14 @@ private fun MenuItemCard(
                 Box(
                     modifier = Modifier
                         .size(30.dp)
-                        .background(Color(0xFFF1F5F9), RoundedCornerShape(8.dp))
+                        .background(MaterialTheme.colorScheme.surfaceVariant, RoundedCornerShape(8.dp))
                         .clickable { onDecrease() },
                     contentAlignment = Alignment.Center
                 ) {
                     Icon(
                         imageVector = Icons.Default.Remove,
                         contentDescription = "Decrease",
-                        tint = Color(0xFF64748B),
+                        tint = MaterialTheme.colorScheme.onSurfaceVariant,
                         modifier = Modifier.size(16.dp)
                     )
                 }
@@ -714,20 +714,20 @@ private fun MenuItemCard(
                     text = "$qty",
                     fontWeight = FontWeight.Bold,
                     fontSize = 14.sp,
-                    color = Color(0xFF0F172A)
+                    color = MaterialTheme.colorScheme.onSurface
                 )
 
                 Box(
                     modifier = Modifier
                         .size(30.dp)
-                        .background(BoothPrimary, RoundedCornerShape(8.dp))
+                        .background(MaterialTheme.colorScheme.primary, RoundedCornerShape(8.dp))
                         .clickable { onIncrease() },
                     contentAlignment = Alignment.Center
                 ) {
                     Icon(
                         imageVector = Icons.Default.Add,
                         contentDescription = "Increase",
-                        tint = Color.White,
+                        tint = MaterialTheme.colorScheme.onPrimary,
                         modifier = Modifier.size(16.dp)
                     )
                 }
@@ -747,9 +747,9 @@ private fun FloorPlanTableItem(
         modifier = modifier.height(64.dp),
         shape = RoundedCornerShape(12.dp),
         colors = CardDefaults.cardColors(
-            containerColor = if (isSelected) BoothPrimary else Color(0xFFF8FAFC)
+            containerColor = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.background
         ),
-        border = if (isSelected) null else BorderStroke(1.dp, Color(0xFFE2E8F0))
+        border = if (isSelected) null else BorderStroke(1.dp, MaterialTheme.colorScheme.outline)
     ) {
         Row(
             modifier = Modifier
@@ -763,12 +763,12 @@ private fun FloorPlanTableItem(
                     text = name,
                     fontWeight = FontWeight.Bold,
                     fontSize = 12.5.sp,
-                    color = if (isSelected) Color.White else Color(0xFF0F172A)
+                    color = if (isSelected) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurface
                 )
                 Text(
                     text = status,
                     fontSize = 10.5.sp,
-                    color = if (isSelected) Color.White.copy(alpha = 0.8f) else Color(0xFF64748B)
+                    color = if (isSelected) MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.8f) else MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
 
@@ -776,7 +776,7 @@ private fun FloorPlanTableItem(
                 modifier = Modifier
                     .size(8.dp)
                     .background(
-                        color = if (isSelected) Color.White else Color(0xFFCBD5E1),
+                        color = if (isSelected) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.outlineVariant,
                         shape = CircleShape
                     )
             )

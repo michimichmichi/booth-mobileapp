@@ -1,19 +1,20 @@
 package org.umn.booth.ui.theme
 
+import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 
-val Typography = Typography(
+fun boothTypography(colors: ColorScheme): Typography = Typography(
     headlineLarge = TextStyle(
         fontFamily = FontFamily.Default,
         fontWeight = FontWeight.Bold,
         fontSize = 28.sp,
         lineHeight = 34.sp,
         letterSpacing = (-0.25).sp,
-        color = BoothTextPrimary
+        color = colors.onSurface
     ),
     headlineMedium = TextStyle(
         fontFamily = FontFamily.Default,
@@ -21,7 +22,7 @@ val Typography = Typography(
         fontSize = 22.sp,
         lineHeight = 28.sp,
         letterSpacing = 0.sp,
-        color = BoothTextPrimary
+        color = colors.onSurface
     ),
     headlineSmall = TextStyle(
         fontFamily = FontFamily.Default,
@@ -29,7 +30,7 @@ val Typography = Typography(
         fontSize = 18.sp,
         lineHeight = 24.sp,
         letterSpacing = 0.sp,
-        color = BoothTextPrimary
+        color = colors.onSurface
     ),
     titleLarge = TextStyle(
         fontFamily = FontFamily.Default,
@@ -37,7 +38,7 @@ val Typography = Typography(
         fontSize = 18.sp,
         lineHeight = 24.sp,
         letterSpacing = 0.sp,
-        color = BoothTextPrimary
+        color = colors.onSurface
     ),
     titleMedium = TextStyle(
         fontFamily = FontFamily.Default,
@@ -45,7 +46,7 @@ val Typography = Typography(
         fontSize = 15.sp,
         lineHeight = 20.sp,
         letterSpacing = 0.15.sp,
-        color = BoothTextPrimary
+        color = colors.onSurface
     ),
     titleSmall = TextStyle(
         fontFamily = FontFamily.Default,
@@ -53,7 +54,7 @@ val Typography = Typography(
         fontSize = 13.sp,
         lineHeight = 18.sp,
         letterSpacing = 0.1.sp,
-        color = BoothTextSecondary
+        color = colors.onSurfaceVariant
     ),
     bodyLarge = TextStyle(
         fontFamily = FontFamily.Default,
@@ -61,7 +62,7 @@ val Typography = Typography(
         fontSize = 15.sp,
         lineHeight = 22.sp,
         letterSpacing = 0.25.sp,
-        color = BoothTextPrimary
+        color = colors.onSurface
     ),
     bodyMedium = TextStyle(
         fontFamily = FontFamily.Default,
@@ -69,7 +70,7 @@ val Typography = Typography(
         fontSize = 13.sp,
         lineHeight = 19.sp,
         letterSpacing = 0.25.sp,
-        color = BoothTextSecondary
+        color = colors.onSurfaceVariant
     ),
     bodySmall = TextStyle(
         fontFamily = FontFamily.Default,

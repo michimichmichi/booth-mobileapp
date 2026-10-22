@@ -62,11 +62,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.delay
-import org.umn.booth.ui.theme.BoothPrimary
 import org.umn.booth.ui.theme.BoothSuccess
-import org.umn.booth.ui.theme.BoothTextMuted
-import org.umn.booth.ui.theme.BoothTextPrimary
-import org.umn.booth.ui.theme.BoothTextSecondary
 
 enum class VerificationState {
     READY,
@@ -102,10 +98,10 @@ fun FaceVerificationScreen(
     )
 
     Scaffold(
-        containerColor = Color(0xFFF8FAFC),
+        containerColor = MaterialTheme.colorScheme.background,
         topBar = {
             Surface(
-                color = Color(0xFFF8FAFC),
+                color = MaterialTheme.colorScheme.background,
                 modifier = Modifier
                     .fillMaxWidth()
                     .statusBarsPadding()
@@ -120,7 +116,7 @@ fun FaceVerificationScreen(
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = "Back",
-                            tint = Color(0xFF0F172A)
+                            tint = MaterialTheme.colorScheme.onSurface
                         )
                     }
                     Spacer(modifier = Modifier.width(4.dp))
@@ -129,14 +125,14 @@ fun FaceVerificationScreen(
                             text = "BOOTH",
                             fontSize = 11.sp,
                             fontWeight = FontWeight.Bold,
-                            color = Color(0xFF64748B),
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
                             letterSpacing = 1.5.sp
                         )
                         Text(
                             text = "Registration",
                             fontSize = 15.sp,
                             fontWeight = FontWeight.Bold,
-                            color = Color(0xFF0F172A)
+                            color = MaterialTheme.colorScheme.onSurface
                         )
                     }
                 }
@@ -145,7 +141,7 @@ fun FaceVerificationScreen(
         bottomBar = {
             Surface(
                 modifier = Modifier.fillMaxWidth(),
-                color = Color(0xFFF8FAFC)
+                color = MaterialTheme.colorScheme.background
             ) {
                 Column(
                     modifier = Modifier
@@ -166,7 +162,7 @@ fun FaceVerificationScreen(
                             .height(52.dp),
                         shape = RoundedCornerShape(12.dp),
                         colors = ButtonDefaults.buttonColors(
-                            containerColor = if (verificationState == VerificationState.VERIFIED) BoothSuccess else BoothPrimary
+                            containerColor = if (verificationState == VerificationState.VERIFIED) BoothSuccess else MaterialTheme.colorScheme.primary
                         )
                     ) {
                         if (verificationState == VerificationState.SCANNING) {
@@ -219,21 +215,21 @@ fun FaceVerificationScreen(
 
             Box(
                 modifier = Modifier
-                    .background(Color(0xFFE0EDFB), RoundedCornerShape(12.dp))
+                    .background(MaterialTheme.colorScheme.primaryContainer, RoundedCornerShape(12.dp))
                     .padding(horizontal = 10.dp, vertical = 4.dp)
             ) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Box(
                         modifier = Modifier
                             .size(6.dp)
-                            .background(BoothPrimary, CircleShape)
+                            .background(MaterialTheme.colorScheme.primary, CircleShape)
                     )
                     Spacer(modifier = Modifier.width(6.dp))
                     Text(
                         text = "Step 3 of 3",
                         fontSize = 12.sp,
                         fontWeight = FontWeight.Bold,
-                        color = BoothPrimary
+                        color = MaterialTheme.colorScheme.primary
                     )
                 }
             }
@@ -248,19 +244,19 @@ fun FaceVerificationScreen(
                     modifier = Modifier
                         .weight(1f)
                         .height(4.dp)
-                        .background(BoothPrimary, RoundedCornerShape(2.dp))
+                        .background(MaterialTheme.colorScheme.primary, RoundedCornerShape(2.dp))
                 )
                 Box(
                     modifier = Modifier
                         .weight(1f)
                         .height(4.dp)
-                        .background(BoothPrimary, RoundedCornerShape(2.dp))
+                        .background(MaterialTheme.colorScheme.primary, RoundedCornerShape(2.dp))
                 )
                 Box(
                     modifier = Modifier
                         .weight(1f)
                         .height(4.dp)
-                        .background(BoothPrimary, RoundedCornerShape(2.dp))
+                        .background(MaterialTheme.colorScheme.primary, RoundedCornerShape(2.dp))
                 )
             }
 
@@ -270,16 +266,16 @@ fun FaceVerificationScreen(
                 text = "Face Verification",
                 style = MaterialTheme.typography.headlineMedium,
                 fontWeight = FontWeight.Bold,
-                color = BoothTextPrimary,
+                color = MaterialTheme.colorScheme.onSurface,
                 fontSize = 24.sp
             )
 
             Spacer(modifier = Modifier.height(6.dp))
 
             Text(
-                text = "Center your face in the oval guide to verify your identity against your uploaded profile picture.",
+                text = "Center your face in the oval to verify it's you.",
                 style = MaterialTheme.typography.bodyMedium,
-                color = BoothTextSecondary,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
                 fontSize = 13.sp,
                 lineHeight = 18.sp
             )
@@ -299,6 +295,7 @@ fun FaceVerificationScreen(
                     },
                 contentAlignment = Alignment.Center
             ) {
+                val idleStrokeColor = MaterialTheme.colorScheme.outlineVariant
 
                 Canvas(modifier = Modifier.fillMaxSize()) {
                     val ovalWidth = size.width * 0.58f
@@ -307,11 +304,11 @@ fun FaceVerificationScreen(
                     val top = (size.height - ovalHeight) / 2f
 
                     val strokeColor = if (verificationState == VerificationState.VERIFIED) {
-                        Color(0xFF22C55E)
+                        BoothSuccess
                     } else if (verificationState == VerificationState.SCANNING) {
                         Color(0xFF60A5FA).copy(alpha = pulseAlpha)
                     } else {
-                        Color(0xFFCBD5E1).copy(alpha = 0.8f)
+                        idleStrokeColor.copy(alpha = 0.8f)
                     }
 
                     drawOval(
@@ -335,7 +332,7 @@ fun FaceVerificationScreen(
                     Box(
                         modifier = Modifier
                             .size(64.dp)
-                            .background(Color(0xFF22C55E), CircleShape),
+                            .background(BoothSuccess, CircleShape),
                         contentAlignment = Alignment.Center
                     ) {
                         Icon(
@@ -381,15 +378,15 @@ fun FaceVerificationScreen(
             Card(
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(14.dp),
-                colors = CardDefaults.cardColors(containerColor = Color(0xFFE8F1FC)),
-                border = androidx.compose.foundation.BorderStroke(1.dp, Color(0xFFBFDBFE))
+                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer),
+                border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.primary.copy(alpha = 0.3f))
             ) {
                 Column(modifier = Modifier.padding(14.dp)) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Icon(
                             imageVector = Icons.Default.Shield,
                             contentDescription = null,
-                            tint = BoothPrimary,
+                            tint = MaterialTheme.colorScheme.primary,
                             modifier = Modifier.size(18.dp)
                         )
                         Spacer(modifier = Modifier.width(6.dp))
@@ -397,20 +394,14 @@ fun FaceVerificationScreen(
                             text = "BOOTH SafePass",
                             fontWeight = FontWeight.Bold,
                             fontSize = 12.5.sp,
-                            color = BoothPrimary
-                        )
-                        Spacer(modifier = Modifier.width(4.dp))
-                        Text(
-                            text = "• Biometric Match Guarantee",
-                            fontSize = 11.5.sp,
-                            color = Color(0xFF475569)
+                            color = MaterialTheme.colorScheme.primary
                         )
                     }
                     Spacer(modifier = Modifier.height(4.dp))
                     Text(
-                        text = "Your live scan is checked against your uploaded profile photo using zero-knowledge biometric encryption. Raw frames are immediately discarded.",
+                        text = "We compare your live photo with your profile picture. Your scan is not stored.",
                         fontSize = 11.sp,
-                        color = Color(0xFF475569),
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
                         lineHeight = 15.sp
                     )
                 }
@@ -431,7 +422,7 @@ private fun VerificationTipItem(
     Card(
         modifier = modifier,
         shape = RoundedCornerShape(12.dp),
-        colors = CardDefaults.cardColors(containerColor = Color(0xFFF0F7FF)),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer),
         elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
     ) {
         Column(
@@ -443,13 +434,13 @@ private fun VerificationTipItem(
             Box(
                 modifier = Modifier
                     .size(32.dp)
-                    .background(Color(0xFFDBEAFE), CircleShape),
+                    .background(MaterialTheme.colorScheme.primaryContainer, CircleShape),
                 contentAlignment = Alignment.Center
             ) {
                 Icon(
                     imageVector = icon,
                     contentDescription = null,
-                    tint = BoothPrimary,
+                    tint = MaterialTheme.colorScheme.primary,
                     modifier = Modifier.size(16.dp)
                 )
             }
@@ -458,12 +449,12 @@ private fun VerificationTipItem(
                 text = title,
                 fontWeight = FontWeight.Bold,
                 fontSize = 11.5.sp,
-                color = Color(0xFF1E293B)
+                color = MaterialTheme.colorScheme.onSurface
             )
             Text(
                 text = subtitle,
                 fontSize = 10.sp,
-                color = Color(0xFF64748B)
+                color = MaterialTheme.colorScheme.onSurfaceVariant
             )
         }
     }
