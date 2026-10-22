@@ -40,11 +40,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.umn.booth.R
 import org.umn.booth.ui.theme.BoothPrimary
-import org.umn.booth.ui.theme.BoothPrimaryDark
-import org.umn.booth.ui.theme.BoothSuccess
-import org.umn.booth.ui.theme.BoothTextMuted
-import org.umn.booth.ui.theme.BoothTextPrimary
-import org.umn.booth.ui.theme.BoothTextSecondary
 import org.umn.booth.ui.theme.BoothWarning
 
 @Composable
@@ -108,7 +103,7 @@ fun BoothTopAppBar(
                             Text(
                                 text = subtitle,
                                 style = MaterialTheme.typography.bodySmall,
-                                color = BoothTextSecondary
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
                             )
                         }
                     }
@@ -121,14 +116,17 @@ fun BoothTopAppBar(
                     Icon(
                         imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                         contentDescription = "Back",
-                        tint = BoothTextPrimary
+                        tint = MaterialTheme.colorScheme.onSurface
                     )
                 }
             }
         },
         actions = { actions() },
         colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
-            containerColor = MaterialTheme.colorScheme.surface
+            containerColor = MaterialTheme.colorScheme.surface,
+            titleContentColor = MaterialTheme.colorScheme.onSurface,
+            navigationIconContentColor = MaterialTheme.colorScheme.onSurface,
+            actionIconContentColor = MaterialTheme.colorScheme.onSurface
         )
     )
 }
@@ -148,10 +146,10 @@ fun BoothPrimaryButton(
             .height(52.dp),
         shape = RoundedCornerShape(14.dp),
         colors = ButtonDefaults.buttonColors(
-            containerColor = BoothPrimary,
-            contentColor = Color.White,
-            disabledContainerColor = BoothTextMuted.copy(alpha = 0.4f),
-            disabledContentColor = Color.White
+            containerColor = MaterialTheme.colorScheme.primary,
+            contentColor = MaterialTheme.colorScheme.onPrimary,
+            disabledContainerColor = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.4f),
+            disabledContentColor = MaterialTheme.colorScheme.onPrimary
         )
     ) {
         Text(
@@ -167,7 +165,7 @@ fun TagChip(
     text: String,
     modifier: Modifier = Modifier,
     containerColor: Color = MaterialTheme.colorScheme.surfaceVariant,
-    contentColor: Color = BoothTextSecondary
+    contentColor: Color = MaterialTheme.colorScheme.onSurfaceVariant
 ) {
     Surface(
         modifier = modifier,
@@ -193,7 +191,7 @@ fun RatingPill(
     Surface(
         modifier = modifier,
         shape = RoundedCornerShape(20.dp),
-        color = Color(0xFFFEF3C7)
+        color = BoothWarning.copy(alpha = 0.15f)
     ) {
         Row(
             modifier = Modifier.padding(horizontal = 8.dp, vertical = 3.dp),
@@ -202,7 +200,7 @@ fun RatingPill(
             Icon(
                 imageVector = Icons.Default.Star,
                 contentDescription = null,
-                tint = Color(0xFFF59E0B),
+                tint = BoothWarning,
                 modifier = Modifier.size(14.dp)
             )
             Spacer(modifier = Modifier.width(3.dp))
@@ -210,7 +208,7 @@ fun RatingPill(
                 text = if (reviewCount != null) "$rating ($reviewCount+)" else "$rating",
                 style = MaterialTheme.typography.labelSmall,
                 fontWeight = FontWeight.Bold,
-                color = Color(0xFF92400E)
+                color = MaterialTheme.colorScheme.onSurface
             )
         }
     }

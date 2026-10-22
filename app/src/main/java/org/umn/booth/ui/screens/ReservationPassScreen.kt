@@ -55,13 +55,7 @@ import androidx.compose.ui.unit.sp
 import org.umn.booth.ui.components.BoothLogo
 import org.umn.booth.ui.components.BoothTopAppBar
 import org.umn.booth.ui.components.InitialsAvatar
-import org.umn.booth.ui.theme.BoothBadgeBg
-import org.umn.booth.ui.theme.BoothBorder
-import org.umn.booth.ui.theme.BoothPrimary
 import org.umn.booth.ui.theme.BoothSuccess
-import org.umn.booth.ui.theme.BoothTextMuted
-import org.umn.booth.ui.theme.BoothTextPrimary
-import org.umn.booth.ui.theme.BoothTextSecondary
 
 @Composable
 fun ReservationPassScreen(
@@ -86,7 +80,7 @@ fun ReservationPassScreen(
                     .navigationBarsPadding(),
                 color = MaterialTheme.colorScheme.surface,
                 tonalElevation = 8.dp,
-                border = BorderStroke(1.dp, BoothBorder)
+                border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline)
             ) {
                 Box(modifier = Modifier.padding(16.dp)) {
                     Button(
@@ -96,15 +90,15 @@ fun ReservationPassScreen(
                             .height(52.dp),
                         shape = RoundedCornerShape(14.dp),
                         colors = ButtonDefaults.buttonColors(
-                            containerColor = BoothPrimary,
-                            contentColor = Color.White
+                            containerColor = MaterialTheme.colorScheme.primary,
+                            contentColor = MaterialTheme.colorScheme.onPrimary
                         )
                     ) {
                         Text(
                             text = "Finish Session →",
                             style = MaterialTheme.typography.labelLarge,
                             fontWeight = FontWeight.Bold,
-                            color = Color.White
+                            color = MaterialTheme.colorScheme.onPrimary
                         )
                     }
                 }
@@ -123,8 +117,8 @@ fun ReservationPassScreen(
             Surface(
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(12.dp),
-                color = Color(0xFFF0FDF4),
-                border = BorderStroke(1.dp, Color(0xFFBBF7D0))
+                color = BoothSuccess.copy(alpha = 0.12f),
+                border = BorderStroke(1.dp, BoothSuccess.copy(alpha = 0.3f))
             ) {
                 Row(
                     modifier = Modifier.padding(12.dp),
@@ -137,21 +131,12 @@ fun ReservationPassScreen(
                         modifier = Modifier.size(20.dp)
                     )
                     Spacer(modifier = Modifier.width(10.dp))
-                    Column {
-                        Text(
-                            text = "Offline-Ready • Room DB Cached",
-                            style = MaterialTheme.typography.labelMedium,
-                            fontWeight = FontWeight.Bold,
-                            color = Color(0xFF166534)
-                        )
-                        Text(
-                            text = "Valid at venue table sensors and terminal scanners with zero cellular reception.",
-                            style = MaterialTheme.typography.bodySmall,
-                            fontSize = 11.sp,
-                            color = Color(0xFF15803D),
-                            lineHeight = 14.sp
-                        )
-                    }
+                    Text(
+                        text = "Saved on this device — works without internet.",
+                        style = MaterialTheme.typography.labelMedium,
+                        fontWeight = FontWeight.Bold,
+                        color = BoothSuccess
+                    )
                 }
             }
 
@@ -161,7 +146,7 @@ fun ReservationPassScreen(
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(20.dp),
                 colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
-                border = BorderStroke(1.dp, BoothBorder),
+                border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline),
                 elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
             ) {
                 Column(
@@ -188,26 +173,26 @@ fun ReservationPassScreen(
                                     text = "Kopi Nako Serpong",
                                     style = MaterialTheme.typography.titleMedium,
                                     fontWeight = FontWeight.Bold,
-                                    color = BoothTextPrimary
+                                    color = MaterialTheme.colorScheme.onSurface
                                 )
                             }
                             Text(
-                                text = "Table 04 • Indoor Lounge",
+                                text = "Table 04 • Glasshouse Corner",
                                 style = MaterialTheme.typography.bodySmall,
-                                color = BoothTextSecondary
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
                             )
                         }
 
                         Surface(
                             shape = RoundedCornerShape(8.dp),
-                            color = Color(0xFFDCFCE7)
+                            color = BoothSuccess.copy(alpha = 0.12f)
                         ) {
                             Text(
                                 text = "PAID",
                                 modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp),
                                 style = MaterialTheme.typography.labelSmall,
                                 fontWeight = FontWeight.Bold,
-                                color = Color(0xFF15803D)
+                                color = BoothSuccess
                             )
                         }
                     }
@@ -222,14 +207,14 @@ fun ReservationPassScreen(
                             Text(
                                 text = "Arrival Time",
                                 style = MaterialTheme.typography.bodySmall,
-                                color = BoothTextMuted,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
                                 fontSize = 11.sp
                             )
                             Text(
                                 text = "Today, 16:30 WIB",
                                 style = MaterialTheme.typography.labelMedium,
                                 fontWeight = FontWeight.Bold,
-                                color = BoothTextPrimary
+                                color = MaterialTheme.colorScheme.onSurface
                             )
                         }
 
@@ -237,14 +222,14 @@ fun ReservationPassScreen(
                             Text(
                                 text = "Assigned Seat",
                                 style = MaterialTheme.typography.bodySmall,
-                                color = BoothTextMuted,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
                                 fontSize = 11.sp
                             )
                             Text(
-                                text = "Seat #4 (Sarah's)",
+                                text = "Seat 4 • Sarah's table",
                                 style = MaterialTheme.typography.labelMedium,
                                 fontWeight = FontWeight.Bold,
-                                color = BoothPrimary
+                                color = MaterialTheme.colorScheme.primary
                             )
                         }
                     }
@@ -257,10 +242,11 @@ fun ReservationPassScreen(
                             .padding(6.dp),
                         contentAlignment = Alignment.Center
                     ) {
+                        val bracketColor = MaterialTheme.colorScheme.onSurfaceVariant
+
                         Canvas(modifier = Modifier.fillMaxSize()) {
                             val strokeWidth = 3.dp.toPx()
                             val bracketLength = 24.dp.toPx()
-                            val bracketColor = Color(0xFF64748B)
 
                             drawLine(bracketColor, Offset(0f, 0f), Offset(bracketLength, 0f), strokeWidth)
                             drawLine(bracketColor, Offset(0f, 0f), Offset(0f, bracketLength), strokeWidth)
@@ -278,7 +264,7 @@ fun ReservationPassScreen(
                         Box(
                             modifier = Modifier
                                 .size(175.dp)
-                                .background(Color.White)
+                                .background(MaterialTheme.colorScheme.surface)
                                 .padding(8.dp),
                             contentAlignment = Alignment.Center
                         ) {
@@ -287,8 +273,8 @@ fun ReservationPassScreen(
                             Box(
                                 modifier = Modifier
                                     .size(38.dp)
-                                    .background(Color.White, CircleShape)
-                                    .border(2.dp, BoothPrimary, CircleShape),
+                                    .background(MaterialTheme.colorScheme.surface, CircleShape)
+                                    .border(2.dp, MaterialTheme.colorScheme.primary, CircleShape),
                                 contentAlignment = Alignment.Center
                             ) {
                                 BoothLogo(modifier = Modifier.size(24.dp))
@@ -303,20 +289,20 @@ fun ReservationPassScreen(
                         style = MaterialTheme.typography.titleLarge,
                         fontWeight = FontWeight.Bold,
                         fontFamily = FontFamily.Monospace,
-                        color = BoothTextPrimary,
+                        color = MaterialTheme.colorScheme.onSurface,
                         letterSpacing = 2.sp
                     )
 
                     Text(
-                        text = "Scan at the cashier counter upon arrival",
+                        text = "Show this code at the table to check in",
                         style = MaterialTheme.typography.bodySmall,
-                        color = BoothTextSecondary,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
                         fontSize = 11.sp
                     )
 
                     Spacer(modifier = Modifier.height(16.dp))
 
-                    androidx.compose.material3.HorizontalDivider(color = BoothBorder)
+                    androidx.compose.material3.HorizontalDivider(color = MaterialTheme.colorScheme.outline)
 
                     Row(
                         modifier = Modifier
@@ -327,16 +313,16 @@ fun ReservationPassScreen(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Text(
-                            text = "Pre-Order & Bill Breakdown",
+                            text = "Pre-Order & Receipt",
                             style = MaterialTheme.typography.labelMedium,
                             fontWeight = FontWeight.SemiBold,
-                            color = BoothTextPrimary
+                            color = MaterialTheme.colorScheme.onSurface
                         )
 
                         Icon(
                             imageVector = if (isBreakdownExpanded) Icons.Default.KeyboardArrowUp else Icons.Default.KeyboardArrowDown,
                             contentDescription = null,
-                            tint = BoothTextSecondary
+                            tint = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                     }
 
@@ -363,14 +349,14 @@ fun ReservationPassScreen(
                                 Text("Rp 25.000", style = MaterialTheme.typography.bodySmall, fontWeight = FontWeight.Medium)
                             }
                             Spacer(modifier = Modifier.height(6.dp))
-                            androidx.compose.material3.HorizontalDivider(color = BoothBorder)
+                            androidx.compose.material3.HorizontalDivider(color = MaterialTheme.colorScheme.outline)
                             Spacer(modifier = Modifier.height(6.dp))
                             Row(
                                 modifier = Modifier.fillMaxWidth(),
                                 horizontalArrangement = Arrangement.SpaceBetween
                             ) {
                                 Text("Total Paid (QRIS)", style = MaterialTheme.typography.labelMedium, fontWeight = FontWeight.Bold)
-                                Text("Rp 57.000", style = MaterialTheme.typography.labelMedium, fontWeight = FontWeight.Bold, color = BoothPrimary)
+                                Text("Rp 57.000", style = MaterialTheme.typography.labelMedium, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.primary)
                             }
                         }
                     }
@@ -380,7 +366,7 @@ fun ReservationPassScreen(
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .background(Color(0xFFEFF6FF), RoundedCornerShape(10.dp))
+                            .background(MaterialTheme.colorScheme.primaryContainer, RoundedCornerShape(10.dp))
                             .padding(10.dp),
                         horizontalArrangement = Arrangement.SpaceBetween,
                         verticalAlignment = Alignment.CenterVertically
@@ -396,15 +382,15 @@ fun ReservationPassScreen(
                                 text = "Sarah & 2 others are seated",
                                 style = MaterialTheme.typography.bodySmall,
                                 fontWeight = FontWeight.Medium,
-                                color = BoothPrimary
+                                color = MaterialTheme.colorScheme.primary
                             )
                         }
 
                         Text(
-                            text = "3/4 Seats",
+                            text = "3 of 4 seats filled",
                             style = MaterialTheme.typography.labelSmall,
                             fontWeight = FontWeight.Bold,
-                            color = BoothPrimary
+                            color = MaterialTheme.colorScheme.primary
                         )
                     }
                 }
@@ -417,6 +403,7 @@ fun ReservationPassScreen(
 
 @Composable
 private fun MockQRCode(modifier: Modifier = Modifier) {
+    val qrColor = MaterialTheme.colorScheme.onSurface
     Canvas(modifier = modifier) {
         val count = 21
         val cellSize = size.width / count
@@ -439,7 +426,7 @@ private fun MockQRCode(modifier: Modifier = Modifier) {
 
                 if (shouldDraw) {
                     drawRect(
-                        color = Color(0xFF0F172A),
+                        color = qrColor,
                         topLeft = Offset(i * cellSize, j * cellSize),
                         size = Size(cellSize, cellSize)
                     )

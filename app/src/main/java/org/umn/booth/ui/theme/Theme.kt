@@ -15,8 +15,8 @@ import androidx.core.view.WindowCompat
 private val LightColorScheme = lightColorScheme(
     primary = BoothPrimary,
     onPrimary = Color.White,
-    primaryContainer = BoothBadgeBg,
-    onPrimaryContainer = BoothBadgeText,
+    primaryContainer = Color(0xFFEFF6FF),
+    onPrimaryContainer = BoothPrimary,
     secondary = BoothSecondary,
     onSecondary = Color.White,
     tertiary = BoothTertiary,
@@ -28,6 +28,7 @@ private val LightColorScheme = lightColorScheme(
     surfaceVariant = BoothSurfaceVariant,
     onSurfaceVariant = BoothTextSecondary,
     outline = BoothOutline,
+    outlineVariant = Color(0xFFE2E8F0),
     error = BoothError,
     onError = Color.White
 )
@@ -48,6 +49,7 @@ private val DarkColorScheme = darkColorScheme(
     surfaceVariant = BoothSurfaceVariantDark,
     onSurfaceVariant = BoothTextSecondaryDark,
     outline = Color(0xFF2E3D59),
+    outlineVariant = Color(0xFF2E3D59),
     error = BoothError,
     onError = Color.White
 )
@@ -71,7 +73,7 @@ fun BOOTHTheme(
 
     MaterialTheme(
         colorScheme = colorScheme,
-        typography = Typography,
+        typography = boothTypography(colorScheme),
         shapes = Shapes,
         content = content
     )

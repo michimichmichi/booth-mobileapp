@@ -51,10 +51,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.launch
 import org.umn.booth.ui.components.BoothLogo
-import org.umn.booth.ui.theme.BoothPrimary
-import org.umn.booth.ui.theme.BoothTextMuted
-import org.umn.booth.ui.theme.BoothTextPrimary
-import org.umn.booth.ui.theme.BoothTextSecondary
 
 enum class UserRole {
     CUSTOMER,
@@ -62,7 +58,7 @@ enum class UserRole {
 }
 
 private const val MERCHANT_UNAVAILABLE_MESSAGE =
-    "Registration for merchants is still under development."
+    "Merchant sign-up is coming soon."
 
 @Composable
 fun RoleSelectionScreen(
@@ -81,7 +77,7 @@ fun RoleSelectionScreen(
     }
 
     Scaffold(
-        containerColor = Color.White,
+        containerColor = MaterialTheme.colorScheme.surface,
         snackbarHost = {
             SnackbarHost(
                 hostState = snackbarHostState,
@@ -90,15 +86,15 @@ fun RoleSelectionScreen(
                 Snackbar(
                     snackbarData = snackbarData,
                     shape = RoundedCornerShape(12.dp),
-                    containerColor = Color.White,
-                    contentColor = BoothTextPrimary
+                    containerColor = MaterialTheme.colorScheme.surface,
+                    contentColor = MaterialTheme.colorScheme.onSurface
                 )
             }
         },
         bottomBar = {
             Surface(
                 modifier = Modifier.fillMaxWidth(),
-                color = Color.White
+                color = MaterialTheme.colorScheme.surface
             ) {
                 Column(
                     modifier = Modifier
@@ -119,15 +115,15 @@ fun RoleSelectionScreen(
                             .height(52.dp),
                         shape = RoundedCornerShape(12.dp),
                         colors = ButtonDefaults.buttonColors(
-                            containerColor = BoothPrimary,
-                            contentColor = Color.White
+                            containerColor = MaterialTheme.colorScheme.primary,
+                            contentColor = MaterialTheme.colorScheme.onPrimary
                         )
                     ) {
                         Text(
                             text = "Continue →",
                             style = MaterialTheme.typography.titleMedium,
                             fontWeight = FontWeight.Bold,
-                            color = Color.White
+                            color = MaterialTheme.colorScheme.onPrimary
                         )
                     }
 
@@ -140,13 +136,13 @@ fun RoleSelectionScreen(
                         Text(
                             text = "Already have an account? ",
                             style = MaterialTheme.typography.bodySmall,
-                            color = BoothTextSecondary
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                         Text(
                             text = "Log In",
                             style = MaterialTheme.typography.bodySmall,
                             fontWeight = FontWeight.Bold,
-                            color = BoothPrimary
+                            color = MaterialTheme.colorScheme.primary
                         )
                     }
                 }
@@ -180,7 +176,7 @@ fun RoleSelectionScreen(
                 text = "Choose Your Role",
                 style = MaterialTheme.typography.headlineMedium,
                 fontWeight = FontWeight.Bold,
-                color = BoothTextPrimary,
+                color = MaterialTheme.colorScheme.onSurface,
                 fontSize = 24.sp
             )
 
@@ -189,7 +185,7 @@ fun RoleSelectionScreen(
             Text(
                 text = "Select how you want to connect on Booth.",
                 style = MaterialTheme.typography.bodyMedium,
-                color = BoothTextSecondary,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
                 fontSize = 13.5.sp
             )
 
@@ -229,8 +225,8 @@ private fun RoleSelectionCard(
     isSelected: Boolean,
     onClick: () -> Unit
 ) {
-    val borderColor = if (isSelected) BoothPrimary else Color(0xFFE2E8F0)
-    val backgroundColor = if (isSelected) Color(0xFFF8FAFC) else Color.White
+    val borderColor = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline
+    val backgroundColor = if (isSelected) MaterialTheme.colorScheme.background else MaterialTheme.colorScheme.surface
 
     Card(
         modifier = Modifier
@@ -252,7 +248,7 @@ private fun RoleSelectionCard(
                 modifier = Modifier
                     .size(44.dp)
                     .background(
-                        color = if (isSelected) Color(0xFFEFF4FA) else Color(0xFFF1F5F9),
+                        color = MaterialTheme.colorScheme.surfaceVariant,
                         shape = RoundedCornerShape(10.dp)
                     ),
                 contentAlignment = Alignment.Center
@@ -260,7 +256,7 @@ private fun RoleSelectionCard(
                 Icon(
                     imageVector = icon,
                     contentDescription = null,
-                    tint = if (isSelected) BoothPrimary else Color(0xFF94A3B8),
+                    tint = if (isSelected) MaterialTheme.colorScheme.primary else Color(0xFF94A3B8),
                     modifier = Modifier.size(22.dp)
                 )
             }
@@ -272,14 +268,14 @@ private fun RoleSelectionCard(
                     text = title,
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold,
-                    color = BoothTextPrimary,
+                    color = MaterialTheme.colorScheme.onSurface,
                     fontSize = 16.sp
                 )
                 Spacer(modifier = Modifier.height(3.dp))
                 Text(
                     text = description,
                     style = MaterialTheme.typography.bodySmall,
-                    color = BoothTextSecondary,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
                     fontSize = 12.5.sp,
                     lineHeight = 17.sp
                 )
@@ -291,13 +287,13 @@ private fun RoleSelectionCard(
                 Box(
                     modifier = Modifier
                         .size(22.dp)
-                        .background(BoothPrimary, CircleShape),
+                        .background(MaterialTheme.colorScheme.primary, CircleShape),
                     contentAlignment = Alignment.Center
                 ) {
                     Icon(
                         imageVector = Icons.Default.Check,
                         contentDescription = "Selected",
-                        tint = Color.White,
+                        tint = MaterialTheme.colorScheme.onPrimary,
                         modifier = Modifier.size(14.dp)
                     )
                 }
@@ -305,7 +301,7 @@ private fun RoleSelectionCard(
                 Box(
                     modifier = Modifier
                         .size(22.dp)
-                        .border(1.5.dp, Color(0xFFCBD5E1), CircleShape)
+                        .border(1.5.dp, MaterialTheme.colorScheme.outlineVariant, CircleShape)
                 )
             }
         }

@@ -58,11 +58,6 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import org.umn.booth.ui.theme.BoothBorder
-import org.umn.booth.ui.theme.BoothPrimary
-import org.umn.booth.ui.theme.BoothTextMuted
-import org.umn.booth.ui.theme.BoothTextPrimary
-import org.umn.booth.ui.theme.BoothTextSecondary
 
 @Composable
 fun RegistrationScreen(
@@ -87,10 +82,10 @@ fun RegistrationScreen(
     val isFormValid = isFullNameValid && isEmailValid && isPhoneValid && isPasswordValid && agreedToTerms
 
     Scaffold(
-        containerColor = Color(0xFFF8FAFC),
+        containerColor = MaterialTheme.colorScheme.background,
         topBar = {
             Surface(
-                color = Color(0xFFF8FAFC),
+                color = MaterialTheme.colorScheme.background,
                 modifier = Modifier
                     .fillMaxWidth()
                     .statusBarsPadding()
@@ -105,7 +100,7 @@ fun RegistrationScreen(
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = "Back",
-                            tint = Color(0xFF0F172A)
+                            tint = MaterialTheme.colorScheme.onSurface
                         )
                     }
                     Spacer(modifier = Modifier.width(4.dp))
@@ -114,14 +109,14 @@ fun RegistrationScreen(
                             text = "BOOTH",
                             fontSize = 11.sp,
                             fontWeight = FontWeight.Bold,
-                            color = Color(0xFF64748B),
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
                             letterSpacing = 1.5.sp
                         )
                         Text(
                             text = "Registration",
                             fontSize = 15.sp,
                             fontWeight = FontWeight.Bold,
-                            color = Color(0xFF0F172A)
+                            color = MaterialTheme.colorScheme.onSurface
                         )
                     }
                 }
@@ -130,7 +125,7 @@ fun RegistrationScreen(
         bottomBar = {
             Surface(
                 modifier = Modifier.fillMaxWidth(),
-                color = Color(0xFFF8FAFC)
+                color = MaterialTheme.colorScheme.background
             ) {
                 Column(
                     modifier = Modifier
@@ -156,15 +151,15 @@ fun RegistrationScreen(
                             .height(52.dp),
                         shape = RoundedCornerShape(12.dp),
                         colors = ButtonDefaults.buttonColors(
-                            containerColor = BoothPrimary,
-                            contentColor = Color.White
+                            containerColor = MaterialTheme.colorScheme.primary,
+                            contentColor = MaterialTheme.colorScheme.onPrimary
                         )
                     ) {
                         Text(
                             text = "Continue →",
                             style = MaterialTheme.typography.titleMedium,
                             fontWeight = FontWeight.Bold,
-                            color = Color.White
+                            color = MaterialTheme.colorScheme.onPrimary
                         )
                     }
 
@@ -177,13 +172,13 @@ fun RegistrationScreen(
                         Text(
                             text = "Already have an account? ",
                             style = MaterialTheme.typography.bodySmall,
-                            color = BoothTextSecondary
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                         Text(
                             text = "Log In",
                             style = MaterialTheme.typography.bodySmall,
                             fontWeight = FontWeight.Bold,
-                            color = BoothPrimary
+                            color = MaterialTheme.colorScheme.primary
                         )
                     }
                 }
@@ -205,28 +200,28 @@ fun RegistrationScreen(
             ) {
                 Box(
                     modifier = Modifier
-                        .background(Color(0xFFE0EDFB), RoundedCornerShape(12.dp))
+                        .background(MaterialTheme.colorScheme.primaryContainer, RoundedCornerShape(12.dp))
                         .padding(horizontal = 10.dp, vertical = 4.dp)
                 ) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Box(
                             modifier = Modifier
                                 .size(6.dp)
-                                .background(BoothPrimary, CircleShape)
+                                .background(MaterialTheme.colorScheme.primary, CircleShape)
                         )
                         Spacer(modifier = Modifier.width(6.dp))
                         Text(
                             text = "Step 1 of 3",
                             fontSize = 12.sp,
                             fontWeight = FontWeight.Bold,
-                            color = BoothPrimary
+                            color = MaterialTheme.colorScheme.primary
                         )
                     }
                 }
 
                 Surface(
                     shape = RoundedCornerShape(12.dp),
-                    color = Color(0xFFEFF6FF),
+                    color = MaterialTheme.colorScheme.primaryContainer,
                     modifier = Modifier.clickable {
                         fullName = "Alex Rivera"
                         email = "alex.rivera@example.com"
@@ -243,7 +238,7 @@ fun RegistrationScreen(
                         Icon(
                             imageVector = Icons.Default.AutoAwesome,
                             contentDescription = null,
-                            tint = BoothPrimary,
+                            tint = MaterialTheme.colorScheme.primary,
                             modifier = Modifier.size(12.dp)
                         )
                         Spacer(modifier = Modifier.width(4.dp))
@@ -251,7 +246,7 @@ fun RegistrationScreen(
                             text = "Autofill Demo",
                             fontSize = 11.sp,
                             fontWeight = FontWeight.Bold,
-                            color = BoothPrimary
+                            color = MaterialTheme.colorScheme.primary
                         )
                     }
                 }
@@ -267,19 +262,19 @@ fun RegistrationScreen(
                     modifier = Modifier
                         .weight(1f)
                         .height(4.dp)
-                        .background(BoothPrimary, RoundedCornerShape(2.dp))
+                        .background(MaterialTheme.colorScheme.primary, RoundedCornerShape(2.dp))
                 )
                 Box(
                     modifier = Modifier
                         .weight(1f)
                         .height(4.dp)
-                        .background(Color(0xFFDCE7F3), RoundedCornerShape(2.dp))
+                        .background(MaterialTheme.colorScheme.surfaceVariant, RoundedCornerShape(2.dp))
                 )
                 Box(
                     modifier = Modifier
                         .weight(1f)
                         .height(4.dp)
-                        .background(Color(0xFFDCE7F3), RoundedCornerShape(2.dp))
+                        .background(MaterialTheme.colorScheme.surfaceVariant, RoundedCornerShape(2.dp))
                 )
             }
 
@@ -289,7 +284,7 @@ fun RegistrationScreen(
                 text = "Create Customer Account",
                 style = MaterialTheme.typography.headlineMedium,
                 fontWeight = FontWeight.Bold,
-                color = BoothTextPrimary,
+                color = MaterialTheme.colorScheme.onSurface,
                 fontSize = 24.sp
             )
 
@@ -299,7 +294,7 @@ fun RegistrationScreen(
                 text = "Full Name",
                 fontSize = 13.5.sp,
                 fontWeight = FontWeight.SemiBold,
-                color = Color(0xFF1E293B)
+                color = MaterialTheme.colorScheme.onSurface
             )
             Spacer(modifier = Modifier.height(6.dp))
             OutlinedTextField(
@@ -311,7 +306,7 @@ fun RegistrationScreen(
                     if (isSubmitted && !isFullNameValid) {
                         Text(
                             text = "Full name is required (min 3 characters)",
-                            color = Color(0xFFDC2626),
+                            color = MaterialTheme.colorScheme.error,
                             fontSize = 11.sp
                         )
                     }
@@ -320,7 +315,7 @@ fun RegistrationScreen(
                     Icon(
                         imageVector = Icons.Default.Person,
                         contentDescription = null,
-                        tint = if (isSubmitted && !isFullNameValid) Color(0xFFDC2626) else Color(0xFF94A3B8),
+                        tint = if (isSubmitted && !isFullNameValid) MaterialTheme.colorScheme.error else Color(0xFF94A3B8),
                         modifier = Modifier.size(20.dp)
                     )
                 },
@@ -328,11 +323,11 @@ fun RegistrationScreen(
                 shape = RoundedCornerShape(12.dp),
                 singleLine = true,
                 colors = OutlinedTextFieldDefaults.colors(
-                    focusedContainerColor = Color.White,
-                    unfocusedContainerColor = Color.White,
-                    focusedBorderColor = BoothPrimary,
-                    unfocusedBorderColor = Color(0xFFE2E8F0),
-                    errorBorderColor = Color(0xFFDC2626)
+                    focusedContainerColor = MaterialTheme.colorScheme.surface,
+                    unfocusedContainerColor = MaterialTheme.colorScheme.surface,
+                    focusedBorderColor = MaterialTheme.colorScheme.primary,
+                    unfocusedBorderColor = MaterialTheme.colorScheme.outline,
+                    errorBorderColor = MaterialTheme.colorScheme.error
                 )
             )
 
@@ -342,7 +337,7 @@ fun RegistrationScreen(
                 text = "Email Address",
                 fontSize = 13.5.sp,
                 fontWeight = FontWeight.SemiBold,
-                color = Color(0xFF1E293B)
+                color = MaterialTheme.colorScheme.onSurface
             )
             Spacer(modifier = Modifier.height(6.dp))
             OutlinedTextField(
@@ -354,7 +349,7 @@ fun RegistrationScreen(
                     if (isSubmitted && !isEmailValid) {
                         Text(
                             text = "Valid email address required (e.g. name@example.com)",
-                            color = Color(0xFFDC2626),
+                            color = MaterialTheme.colorScheme.error,
                             fontSize = 11.sp
                         )
                     }
@@ -363,7 +358,7 @@ fun RegistrationScreen(
                     Icon(
                         imageVector = Icons.Default.AlternateEmail,
                         contentDescription = null,
-                        tint = if (isSubmitted && !isEmailValid) Color(0xFFDC2626) else Color(0xFF94A3B8),
+                        tint = if (isSubmitted && !isEmailValid) MaterialTheme.colorScheme.error else Color(0xFF94A3B8),
                         modifier = Modifier.size(20.dp)
                     )
                 },
@@ -372,11 +367,11 @@ fun RegistrationScreen(
                 shape = RoundedCornerShape(12.dp),
                 singleLine = true,
                 colors = OutlinedTextFieldDefaults.colors(
-                    focusedContainerColor = Color.White,
-                    unfocusedContainerColor = Color.White,
-                    focusedBorderColor = BoothPrimary,
-                    unfocusedBorderColor = Color(0xFFE2E8F0),
-                    errorBorderColor = Color(0xFFDC2626)
+                    focusedContainerColor = MaterialTheme.colorScheme.surface,
+                    unfocusedContainerColor = MaterialTheme.colorScheme.surface,
+                    focusedBorderColor = MaterialTheme.colorScheme.primary,
+                    unfocusedBorderColor = MaterialTheme.colorScheme.outline,
+                    errorBorderColor = MaterialTheme.colorScheme.error
                 )
             )
 
@@ -386,7 +381,7 @@ fun RegistrationScreen(
                 text = "Phone Number",
                 fontSize = 13.5.sp,
                 fontWeight = FontWeight.SemiBold,
-                color = Color(0xFF1E293B)
+                color = MaterialTheme.colorScheme.onSurface
             )
             Spacer(modifier = Modifier.height(6.dp))
             OutlinedTextField(
@@ -401,7 +396,7 @@ fun RegistrationScreen(
                     if (isSubmitted && !isPhoneValid) {
                         Text(
                             text = "Valid phone number required (min 8 digits)",
-                            color = Color(0xFFDC2626),
+                            color = MaterialTheme.colorScheme.error,
                             fontSize = 11.sp
                         )
                     }
@@ -414,7 +409,7 @@ fun RegistrationScreen(
                         Icon(
                             imageVector = Icons.Default.Phone,
                             contentDescription = null,
-                            tint = if (isSubmitted && !isPhoneValid) Color(0xFFDC2626) else BoothPrimary,
+                            tint = if (isSubmitted && !isPhoneValid) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.primary,
                             modifier = Modifier.size(18.dp)
                         )
                         Spacer(modifier = Modifier.width(6.dp))
@@ -422,14 +417,14 @@ fun RegistrationScreen(
                             text = "+62",
                             fontWeight = FontWeight.SemiBold,
                             fontSize = 14.sp,
-                            color = Color(0xFF1E293B)
+                            color = MaterialTheme.colorScheme.onSurface
                         )
                         Spacer(modifier = Modifier.width(8.dp))
                         Box(
                             modifier = Modifier
                                 .width(1.dp)
                                 .height(20.dp)
-                                .background(Color(0xFFCBD5E1))
+                                .background(MaterialTheme.colorScheme.outlineVariant)
                         )
                     }
                 },
@@ -438,11 +433,11 @@ fun RegistrationScreen(
                 shape = RoundedCornerShape(12.dp),
                 singleLine = true,
                 colors = OutlinedTextFieldDefaults.colors(
-                    focusedContainerColor = Color.White,
-                    unfocusedContainerColor = Color.White,
-                    focusedBorderColor = BoothPrimary,
-                    unfocusedBorderColor = Color(0xFFE2E8F0),
-                    errorBorderColor = Color(0xFFDC2626)
+                    focusedContainerColor = MaterialTheme.colorScheme.surface,
+                    unfocusedContainerColor = MaterialTheme.colorScheme.surface,
+                    focusedBorderColor = MaterialTheme.colorScheme.primary,
+                    unfocusedBorderColor = MaterialTheme.colorScheme.outline,
+                    errorBorderColor = MaterialTheme.colorScheme.error
                 )
             )
 
@@ -452,19 +447,19 @@ fun RegistrationScreen(
                 text = "Password",
                 fontSize = 13.5.sp,
                 fontWeight = FontWeight.SemiBold,
-                color = Color(0xFF1E293B)
+                color = MaterialTheme.colorScheme.onSurface
             )
             Spacer(modifier = Modifier.height(6.dp))
             OutlinedTextField(
                 value = password,
                 onValueChange = { password = it },
-                placeholder = { Text("Create secure password", color = Color(0xFF94A3B8)) },
+                placeholder = { Text("Create a password", color = Color(0xFF94A3B8)) },
                 isError = isSubmitted && !isPasswordValid,
                 supportingText = {
                     if (isSubmitted && !isPasswordValid) {
                         Text(
                             text = "Password must be at least 8 characters",
-                            color = Color(0xFFDC2626),
+                            color = MaterialTheme.colorScheme.error,
                             fontSize = 11.sp
                         )
                     }
@@ -473,7 +468,7 @@ fun RegistrationScreen(
                     Icon(
                         imageVector = Icons.Default.Lock,
                         contentDescription = null,
-                        tint = if (isSubmitted && !isPasswordValid) Color(0xFFDC2626) else Color(0xFF94A3B8),
+                        tint = if (isSubmitted && !isPasswordValid) MaterialTheme.colorScheme.error else Color(0xFF94A3B8),
                         modifier = Modifier.size(20.dp)
                     )
                 },
@@ -493,11 +488,11 @@ fun RegistrationScreen(
                 shape = RoundedCornerShape(12.dp),
                 singleLine = true,
                 colors = OutlinedTextFieldDefaults.colors(
-                    focusedContainerColor = Color.White,
-                    unfocusedContainerColor = Color.White,
-                    focusedBorderColor = BoothPrimary,
-                    unfocusedBorderColor = Color(0xFFE2E8F0),
-                    errorBorderColor = Color(0xFFDC2626)
+                    focusedContainerColor = MaterialTheme.colorScheme.surface,
+                    unfocusedContainerColor = MaterialTheme.colorScheme.surface,
+                    focusedBorderColor = MaterialTheme.colorScheme.primary,
+                    unfocusedBorderColor = MaterialTheme.colorScheme.outline,
+                    errorBorderColor = MaterialTheme.colorScheme.error
                 )
             )
 
@@ -506,7 +501,7 @@ fun RegistrationScreen(
             Text(
                 text = "Password strength",
                 fontSize = 11.5.sp,
-                color = Color(0xFF64748B)
+                color = MaterialTheme.colorScheme.onSurfaceVariant
             )
             Spacer(modifier = Modifier.height(6.dp))
             Row(
@@ -526,7 +521,7 @@ fun RegistrationScreen(
                             .weight(1f)
                             .height(3.5.dp)
                             .background(
-                                if (isSegmentFilled) BoothPrimary else Color(0xFFDCE7F3),
+                                if (isSegmentFilled) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surfaceVariant,
                                 RoundedCornerShape(2.dp)
                             )
                     )
@@ -551,8 +546,8 @@ fun RegistrationScreen(
                     checked = agreedToTerms,
                     onCheckedChange = { agreedToTerms = it },
                     colors = CheckboxDefaults.colors(
-                        checkedColor = BoothPrimary,
-                        uncheckedColor = if (isSubmitted && !agreedToTerms) Color(0xFFDC2626) else Color(0xFF94A3B8)
+                        checkedColor = MaterialTheme.colorScheme.primary,
+                        uncheckedColor = if (isSubmitted && !agreedToTerms) MaterialTheme.colorScheme.error else Color(0xFF94A3B8)
                     ),
                     modifier = Modifier.padding(end = 6.dp)
                 )
@@ -560,17 +555,17 @@ fun RegistrationScreen(
                 Text(
                     text = buildAnnotatedString {
                         append("I agree to the ")
-                        withStyle(style = SpanStyle(fontWeight = FontWeight.Bold, color = BoothPrimary)) {
+                        withStyle(style = SpanStyle(fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.primary)) {
                             append("Terms of Service")
                         }
                         append(" and ")
-                        withStyle(style = SpanStyle(fontWeight = FontWeight.Bold, color = BoothPrimary)) {
+                        withStyle(style = SpanStyle(fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.primary)) {
                             append("Privacy Policy")
                         }
                         append(", and consent to biometric verification for account authenticity.")
                     },
                     fontSize = 11.5.sp,
-                    color = if (isSubmitted && !agreedToTerms) Color(0xFFDC2626) else Color(0xFF64748B),
+                    color = if (isSubmitted && !agreedToTerms) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onSurfaceVariant,
                     lineHeight = 16.sp
                 )
             }

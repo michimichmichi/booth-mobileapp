@@ -65,7 +65,7 @@ import androidx.compose.ui.unit.sp
 import org.umn.booth.R
 import org.umn.booth.ui.components.InitialsAvatar
 import org.umn.booth.ui.theme.BoothPrimary
-import org.umn.booth.ui.theme.BoothTextSecondary
+import org.umn.booth.ui.theme.BoothWarning
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
@@ -90,10 +90,10 @@ fun ReviewFeedbackScreen(
     )
 
     Scaffold(
-        containerColor = Color(0xFFF8FAFC),
+        containerColor = MaterialTheme.colorScheme.background,
         topBar = {
             Surface(
-                color = Color(0xFFF8FAFC),
+                color = MaterialTheme.colorScheme.background,
                 modifier = Modifier
                     .fillMaxWidth()
                     .statusBarsPadding()
@@ -109,7 +109,7 @@ fun ReviewFeedbackScreen(
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = "Back",
-                            tint = Color(0xFF0F172A)
+                            tint = MaterialTheme.colorScheme.onSurface
                         )
                     }
 
@@ -117,7 +117,7 @@ fun ReviewFeedbackScreen(
                         text = "Review and Feedback",
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.Bold,
-                        color = Color(0xFF0F172A),
+                        color = MaterialTheme.colorScheme.onSurface,
                         fontSize = 17.sp
                     )
 
@@ -134,7 +134,7 @@ fun ReviewFeedbackScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .navigationBarsPadding(),
-                color = Color(0xFFF8FAFC)
+                color = MaterialTheme.colorScheme.background
             ) {
                 Column(
                     modifier = Modifier
@@ -149,15 +149,15 @@ fun ReviewFeedbackScreen(
                             .height(52.dp),
                         shape = RoundedCornerShape(14.dp),
                         colors = ButtonDefaults.buttonColors(
-                            containerColor = BoothPrimary,
-                            contentColor = Color.White
+                            containerColor = MaterialTheme.colorScheme.primary,
+                            contentColor = MaterialTheme.colorScheme.onPrimary
                         )
                     ) {
                         Text(
                             text = "Submit Review & Finish →",
                             fontWeight = FontWeight.Bold,
                             fontSize = 14.5.sp,
-                            color = Color.White
+                            color = MaterialTheme.colorScheme.onPrimary
                         )
                     }
 
@@ -166,7 +166,7 @@ fun ReviewFeedbackScreen(
                     Text(
                         text = "Skip for now",
                         fontSize = 12.5.sp,
-                        color = Color(0xFF64748B),
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
                         modifier = Modifier.clickable { onSubmitSuccess() }
                     )
                 }
@@ -185,8 +185,8 @@ fun ReviewFeedbackScreen(
             Card(
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(16.dp),
-                colors = CardDefaults.cardColors(containerColor = Color.White),
-                border = BorderStroke(1.dp, Color(0xFFE2E8F0))
+                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+                border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline)
             ) {
                 Row(
                     modifier = Modifier
@@ -207,14 +207,14 @@ fun ReviewFeedbackScreen(
                         )
                         Surface(
                             shape = RoundedCornerShape(4.dp),
-                            color = BoothPrimary.copy(alpha = 0.9f),
+                            color = MaterialTheme.colorScheme.primary.copy(alpha = 0.9f),
                             modifier = Modifier
                                 .align(Alignment.BottomEnd)
                                 .padding(4.dp)
                         ) {
                             Text(
                                 text = "T-04",
-                                color = Color.White,
+                                color = MaterialTheme.colorScheme.onPrimary,
                                 fontSize = 9.sp,
                                 fontWeight = FontWeight.Bold,
                                 modifier = Modifier.padding(horizontal = 4.dp, vertical = 1.dp)
@@ -229,7 +229,7 @@ fun ReviewFeedbackScreen(
                             text = "Afternoon WFC & Tech Chat",
                             fontWeight = FontWeight.Bold,
                             fontSize = 14.5.sp,
-                            color = Color(0xFF0F172A)
+                            color = MaterialTheme.colorScheme.onSurface
                         )
 
                         Spacer(modifier = Modifier.height(3.dp))
@@ -245,7 +245,7 @@ fun ReviewFeedbackScreen(
                             Text(
                                 text = "Kopi Nako Serpong, Table 04",
                                 fontSize = 11.5.sp,
-                                color = Color(0xFF64748B)
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
                             )
                         }
 
@@ -253,7 +253,7 @@ fun ReviewFeedbackScreen(
 
                         Surface(
                             shape = RoundedCornerShape(12.dp),
-                            color = Color(0xFFF1F5F9)
+                            color = MaterialTheme.colorScheme.surfaceVariant
                         ) {
                             Row(
                                 modifier = Modifier.padding(horizontal = 8.dp, vertical = 3.dp),
@@ -265,7 +265,7 @@ fun ReviewFeedbackScreen(
                                     text = "Sarah K. (Table Host)",
                                     fontSize = 11.sp,
                                     fontWeight = FontWeight.Medium,
-                                    color = Color(0xFF334155)
+                                    color = MaterialTheme.colorScheme.onSurface
                                 )
                             }
                         }
@@ -276,8 +276,8 @@ fun ReviewFeedbackScreen(
             Card(
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(16.dp),
-                colors = CardDefaults.cardColors(containerColor = Color.White),
-                border = BorderStroke(1.dp, Color(0xFFE2E8F0))
+                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+                border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline)
             ) {
                 Column(
                     modifier = Modifier
@@ -288,13 +288,13 @@ fun ReviewFeedbackScreen(
                     Box(
                         modifier = Modifier
                             .size(36.dp)
-                            .background(Color(0xFFE0EDFB), CircleShape),
+                            .background(MaterialTheme.colorScheme.primaryContainer, CircleShape),
                         contentAlignment = Alignment.Center
                     ) {
                         Icon(
                             imageVector = Icons.Default.Groups,
                             contentDescription = null,
-                            tint = BoothPrimary,
+                            tint = MaterialTheme.colorScheme.primary,
                             modifier = Modifier.size(20.dp)
                         )
                     }
@@ -305,15 +305,15 @@ fun ReviewFeedbackScreen(
                         text = "How was your hangout experience?",
                         fontWeight = FontWeight.Bold,
                         fontSize = 15.sp,
-                        color = Color(0xFF0F172A)
+                        color = MaterialTheme.colorScheme.onSurface
                     )
 
                     Spacer(modifier = Modifier.height(3.dp))
 
                     Text(
-                        text = "Your honest rating supports table curations",
+                        text = "Your rating helps us recommend better tables.",
                         fontSize = 11.5.sp,
-                        color = Color(0xFF64748B)
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
 
                     Spacer(modifier = Modifier.height(14.dp))
@@ -326,7 +326,7 @@ fun ReviewFeedbackScreen(
                             Icon(
                                 imageVector = Icons.Default.Star,
                                 contentDescription = "Star $star",
-                                tint = if (star <= overallRating) Color(0xFFF59E0B) else Color(0xFFE2E8F0),
+                                tint = if (star <= overallRating) BoothWarning else MaterialTheme.colorScheme.outline,
                                 modifier = Modifier
                                     .size(36.dp)
                                     .clickable { overallRating = star }
@@ -339,8 +339,8 @@ fun ReviewFeedbackScreen(
             Card(
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(16.dp),
-                colors = CardDefaults.cardColors(containerColor = Color.White),
-                border = BorderStroke(1.dp, Color(0xFFE2E8F0))
+                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+                border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline)
             ) {
                 Column(modifier = Modifier.padding(16.dp)) {
                     Row(
@@ -352,15 +352,15 @@ fun ReviewFeedbackScreen(
                             Icon(
                                 imageVector = Icons.Default.Coffee,
                                 contentDescription = null,
-                                tint = BoothPrimary,
+                                tint = MaterialTheme.colorScheme.primary,
                                 modifier = Modifier.size(16.dp)
                             )
                             Spacer(modifier = Modifier.width(6.dp))
                             Text(
-                                text = "Cafe Ambiance",
+                                text = "Cafe Ambience",
                                 fontWeight = FontWeight.Bold,
                                 fontSize = 13.5.sp,
-                                color = Color(0xFF0F172A)
+                                color = MaterialTheme.colorScheme.onSurface
                             )
                         }
 
@@ -368,7 +368,7 @@ fun ReviewFeedbackScreen(
                             text = "★ 5.0 / 5.0",
                             fontSize = 12.sp,
                             fontWeight = FontWeight.Bold,
-                            color = Color(0xFFD97706)
+                            color = BoothWarning
                         )
                     }
 
@@ -378,7 +378,7 @@ fun ReviewFeedbackScreen(
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(4.dp)
-                            .background(BoothPrimary, RoundedCornerShape(2.dp))
+                            .background(MaterialTheme.colorScheme.primary, RoundedCornerShape(2.dp))
                     )
 
                     Spacer(modifier = Modifier.height(18.dp))
@@ -389,10 +389,10 @@ fun ReviewFeedbackScreen(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Text(
-                            text = "Table Vibe Compliments",
+                            text = "What stood out?",
                             fontWeight = FontWeight.Bold,
                             fontSize = 13.sp,
-                            color = Color(0xFF0F172A)
+                            color = MaterialTheme.colorScheme.onSurface
                         )
 
                         Text(
@@ -412,7 +412,7 @@ fun ReviewFeedbackScreen(
                             val isSelected = selectedCompliments.contains(compliment)
                             Surface(
                                 shape = RoundedCornerShape(20.dp),
-                                color = if (isSelected) BoothPrimary else Color(0xFFEFF6FF),
+                                color = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.primaryContainer,
                                 modifier = Modifier.clickable {
                                     if (isSelected) {
                                         selectedCompliments.remove(compliment)
@@ -429,7 +429,7 @@ fun ReviewFeedbackScreen(
                                         Icon(
                                             imageVector = Icons.Default.Check,
                                             contentDescription = null,
-                                            tint = Color.White,
+                                            tint = MaterialTheme.colorScheme.onPrimary,
                                             modifier = Modifier.size(13.dp)
                                         )
                                         Spacer(modifier = Modifier.width(4.dp))
@@ -438,7 +438,7 @@ fun ReviewFeedbackScreen(
                                         text = compliment,
                                         fontSize = 11.5.sp,
                                         fontWeight = FontWeight.Medium,
-                                        color = if (isSelected) Color.White else BoothPrimary
+                                        color = if (isSelected) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.primary
                                     )
                                 }
                             }
@@ -450,8 +450,8 @@ fun ReviewFeedbackScreen(
             Card(
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(16.dp),
-                colors = CardDefaults.cardColors(containerColor = Color.White),
-                border = BorderStroke(1.dp, Color(0xFFE2E8F0))
+                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+                border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline)
             ) {
                 Column(modifier = Modifier.padding(16.dp)) {
                     Row(
@@ -463,7 +463,7 @@ fun ReviewFeedbackScreen(
                             Icon(
                                 imageVector = Icons.Default.EditNote,
                                 contentDescription = null,
-                                tint = BoothPrimary,
+                                tint = MaterialTheme.colorScheme.primary,
                                 modifier = Modifier.size(18.dp)
                             )
                             Spacer(modifier = Modifier.width(6.dp))
@@ -471,7 +471,7 @@ fun ReviewFeedbackScreen(
                                 text = "Personal Feedback",
                                 fontWeight = FontWeight.Bold,
                                 fontSize = 13.5.sp,
-                                color = Color(0xFF0F172A)
+                                color = MaterialTheme.colorScheme.onSurface
                             )
                         }
 
@@ -500,10 +500,10 @@ fun ReviewFeedbackScreen(
                             .height(100.dp),
                         shape = RoundedCornerShape(12.dp),
                         colors = OutlinedTextFieldDefaults.colors(
-                            focusedContainerColor = Color(0xFFF8FAFC),
-                            unfocusedContainerColor = Color(0xFFF8FAFC),
-                            focusedBorderColor = BoothPrimary,
-                            unfocusedBorderColor = Color(0xFFE2E8F0)
+                            focusedContainerColor = MaterialTheme.colorScheme.background,
+                            unfocusedContainerColor = MaterialTheme.colorScheme.background,
+                            focusedBorderColor = MaterialTheme.colorScheme.primary,
+                            unfocusedBorderColor = MaterialTheme.colorScheme.outline
                         )
                     )
                 }
@@ -512,8 +512,8 @@ fun ReviewFeedbackScreen(
             Card(
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(16.dp),
-                colors = CardDefaults.cardColors(containerColor = Color.White),
-                border = BorderStroke(1.dp, Color(0xFFE2E8F0))
+                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+                border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline)
             ) {
                 Row(
                     modifier = Modifier
@@ -524,13 +524,13 @@ fun ReviewFeedbackScreen(
                     Box(
                         modifier = Modifier
                             .size(34.dp)
-                            .background(Color(0xFFE0EDFB), CircleShape),
+                            .background(MaterialTheme.colorScheme.primaryContainer, CircleShape),
                         contentAlignment = Alignment.Center
                     ) {
                         Icon(
                             imageVector = Icons.Default.Favorite,
                             contentDescription = null,
-                            tint = BoothPrimary,
+                            tint = MaterialTheme.colorScheme.primary,
                             modifier = Modifier.size(16.dp)
                         )
                     }
@@ -542,12 +542,12 @@ fun ReviewFeedbackScreen(
                             text = "Add to Your Community",
                             fontWeight = FontWeight.Bold,
                             fontSize = 13.sp,
-                            color = Color(0xFF0F172A)
+                            color = MaterialTheme.colorScheme.onSurface
                         )
                         Text(
-                            text = "Receive priority invites whenever she opens a new table in Serpong",
+                            text = "Get notified when Sarah K. opens a new table.",
                             fontSize = 11.sp,
-                            color = Color(0xFF64748B),
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
                             lineHeight = 15.sp
                         )
                     }
@@ -558,10 +558,10 @@ fun ReviewFeedbackScreen(
                         checked = addToCommunity,
                         onCheckedChange = { addToCommunity = it },
                         colors = SwitchDefaults.colors(
-                            checkedThumbColor = Color.White,
-                            checkedTrackColor = BoothPrimary,
-                            uncheckedThumbColor = Color.White,
-                            uncheckedTrackColor = Color(0xFFCBD5E1)
+                            checkedThumbColor = MaterialTheme.colorScheme.onPrimary,
+                            checkedTrackColor = MaterialTheme.colorScheme.primary,
+                            uncheckedThumbColor = MaterialTheme.colorScheme.onPrimary,
+                            uncheckedTrackColor = MaterialTheme.colorScheme.outlineVariant
                         )
                     )
                 }

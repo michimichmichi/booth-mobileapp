@@ -52,9 +52,6 @@ import androidx.compose.ui.unit.sp
 import org.umn.booth.ui.components.InitialsAvatar
 import org.umn.booth.ui.theme.BoothPrimary
 import org.umn.booth.ui.theme.BoothSuccess
-import org.umn.booth.ui.theme.BoothTextMuted
-import org.umn.booth.ui.theme.BoothTextPrimary
-import org.umn.booth.ui.theme.BoothTextSecondary
 
 @Composable
 fun ProfilePictureScreen(
@@ -65,10 +62,10 @@ fun ProfilePictureScreen(
     var hasPhotoSelected by remember { mutableStateOf(false) }
 
     Scaffold(
-        containerColor = Color(0xFFF8FAFC),
+        containerColor = MaterialTheme.colorScheme.background,
         topBar = {
             Surface(
-                color = Color(0xFFF8FAFC),
+                color = MaterialTheme.colorScheme.background,
                 modifier = Modifier
                     .fillMaxWidth()
                     .statusBarsPadding()
@@ -83,7 +80,7 @@ fun ProfilePictureScreen(
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = "Back",
-                            tint = Color(0xFF0F172A)
+                            tint = MaterialTheme.colorScheme.onSurface
                         )
                     }
                     Spacer(modifier = Modifier.width(4.dp))
@@ -92,14 +89,14 @@ fun ProfilePictureScreen(
                             text = "BOOTH",
                             fontSize = 11.sp,
                             fontWeight = FontWeight.Bold,
-                            color = Color(0xFF64748B),
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
                             letterSpacing = 1.5.sp
                         )
                         Text(
                             text = "Registration",
                             fontSize = 15.sp,
                             fontWeight = FontWeight.Bold,
-                            color = Color(0xFF0F172A)
+                            color = MaterialTheme.colorScheme.onSurface
                         )
                     }
                 }
@@ -108,7 +105,7 @@ fun ProfilePictureScreen(
         bottomBar = {
             Surface(
                 modifier = Modifier.fillMaxWidth(),
-                color = Color(0xFFF8FAFC)
+                color = MaterialTheme.colorScheme.background
             ) {
                 Column(
                     modifier = Modifier
@@ -123,15 +120,15 @@ fun ProfilePictureScreen(
                             .height(52.dp),
                         shape = RoundedCornerShape(12.dp),
                         colors = ButtonDefaults.buttonColors(
-                            containerColor = BoothPrimary,
-                            contentColor = Color.White
+                            containerColor = MaterialTheme.colorScheme.primary,
+                            contentColor = MaterialTheme.colorScheme.onPrimary
                         )
                     ) {
                         Text(
                             text = "Continue →",
                             style = MaterialTheme.typography.titleMedium,
                             fontWeight = FontWeight.Bold,
-                            color = Color.White
+                            color = MaterialTheme.colorScheme.onPrimary
                         )
                     }
                 }
@@ -148,21 +145,21 @@ fun ProfilePictureScreen(
 
             Box(
                 modifier = Modifier
-                    .background(Color(0xFFE0EDFB), RoundedCornerShape(12.dp))
+                    .background(MaterialTheme.colorScheme.primaryContainer, RoundedCornerShape(12.dp))
                     .padding(horizontal = 10.dp, vertical = 4.dp)
             ) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Box(
                         modifier = Modifier
                             .size(6.dp)
-                            .background(BoothPrimary, CircleShape)
+                            .background(MaterialTheme.colorScheme.primary, CircleShape)
                     )
                     Spacer(modifier = Modifier.width(6.dp))
                     Text(
                         text = "Step 2 of 3",
                         fontSize = 12.sp,
                         fontWeight = FontWeight.Bold,
-                        color = BoothPrimary
+                        color = MaterialTheme.colorScheme.primary
                     )
                 }
             }
@@ -177,19 +174,19 @@ fun ProfilePictureScreen(
                     modifier = Modifier
                         .weight(1f)
                         .height(4.dp)
-                        .background(BoothPrimary, RoundedCornerShape(2.dp))
+                        .background(MaterialTheme.colorScheme.primary, RoundedCornerShape(2.dp))
                 )
                 Box(
                     modifier = Modifier
                         .weight(1f)
                         .height(4.dp)
-                        .background(BoothPrimary, RoundedCornerShape(2.dp))
+                        .background(MaterialTheme.colorScheme.primary, RoundedCornerShape(2.dp))
                 )
                 Box(
                     modifier = Modifier
                         .weight(1f)
                         .height(4.dp)
-                        .background(Color(0xFFDCE7F3), RoundedCornerShape(2.dp))
+                        .background(MaterialTheme.colorScheme.surfaceVariant, RoundedCornerShape(2.dp))
                 )
             }
 
@@ -199,7 +196,7 @@ fun ProfilePictureScreen(
                 text = "Add Your Profile Picture",
                 style = MaterialTheme.typography.headlineMedium,
                 fontWeight = FontWeight.Bold,
-                color = BoothTextPrimary,
+                color = MaterialTheme.colorScheme.onSurface,
                 fontSize = 24.sp
             )
 
@@ -208,8 +205,8 @@ fun ProfilePictureScreen(
             Card(
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(20.dp),
-                colors = CardDefaults.cardColors(containerColor = Color.White),
-                border = androidx.compose.foundation.BorderStroke(1.dp, Color(0xFFE2E8F0)),
+                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+                border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.outline),
                 elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
             ) {
                 Column(
@@ -237,21 +234,21 @@ fun ProfilePictureScreen(
                                 modifier = Modifier
                                     .size(124.dp)
                                     .clip(CircleShape)
-                                    .background(Color(0xFFE0EDFB)),
+                                    .background(MaterialTheme.colorScheme.primaryContainer),
                                 contentAlignment = Alignment.Center
                             ) {
                                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                                     Icon(
                                         imageVector = Icons.Default.Person,
                                         contentDescription = null,
-                                        tint = Color(0xFF2B6CB0),
+                                        tint = MaterialTheme.colorScheme.primary,
                                         modifier = Modifier.size(38.dp)
                                     )
                                     Spacer(modifier = Modifier.height(2.dp))
                                     Text(
                                         text = "Portrait photo",
                                         style = MaterialTheme.typography.labelSmall,
-                                        color = Color(0xFF2B6CB0),
+                                        color = MaterialTheme.colorScheme.primary,
                                         fontSize = 11.5.sp
                                     )
                                 }
@@ -263,14 +260,14 @@ fun ProfilePictureScreen(
                                 .size(34.dp)
                                 .align(Alignment.BottomEnd)
                                 .clip(CircleShape)
-                                .background(BoothPrimary)
+                                .background(MaterialTheme.colorScheme.primary)
                                 .border(2.5.dp, Color.White, CircleShape),
                             contentAlignment = Alignment.Center
                         ) {
                             Icon(
                                 imageVector = Icons.Default.CameraAlt,
                                 contentDescription = "Camera",
-                                tint = Color.White,
+                                tint = MaterialTheme.colorScheme.onPrimary,
                                 modifier = Modifier.size(16.dp)
                             )
                         }
@@ -281,7 +278,7 @@ fun ProfilePictureScreen(
                     Box(
                         modifier = Modifier
                             .background(
-                                color = if (hasPhotoSelected) Color(0xFFEBFDF2) else Color(0xFFF1F5F9),
+                                color = if (hasPhotoSelected) BoothSuccess.copy(alpha = 0.12f) else MaterialTheme.colorScheme.surfaceVariant,
                                 shape = RoundedCornerShape(12.dp)
                             )
                             .padding(horizontal = 12.dp, vertical = 4.dp)
@@ -290,7 +287,7 @@ fun ProfilePictureScreen(
                             text = if (hasPhotoSelected) "✓ Profile photo ready" else "• No photo selected",
                             fontSize = 11.5.sp,
                             fontWeight = FontWeight.Medium,
-                            color = if (hasPhotoSelected) Color(0xFF16A34A) else Color(0xFF64748B)
+                            color = if (hasPhotoSelected) BoothSuccess else MaterialTheme.colorScheme.onSurfaceVariant
                         )
                     }
 
@@ -307,22 +304,22 @@ fun ProfilePictureScreen(
                                 .height(46.dp),
                             shape = RoundedCornerShape(12.dp),
                             colors = ButtonDefaults.buttonColors(
-                                containerColor = Color(0xFFEFF6FF),
-                                contentColor = BoothPrimary
+                                containerColor = MaterialTheme.colorScheme.primaryContainer,
+                                contentColor = MaterialTheme.colorScheme.primary
                             ),
                             elevation = ButtonDefaults.buttonElevation(defaultElevation = 0.dp)
                         ) {
                             Icon(
                                 imageVector = Icons.Default.CameraAlt,
                                 contentDescription = null,
-                                tint = BoothPrimary,
+                                tint = MaterialTheme.colorScheme.primary,
                                 modifier = Modifier.size(17.dp)
                             )
                             Spacer(modifier = Modifier.width(6.dp))
                             Text(
                                 text = "Take Selfie",
                                 fontWeight = FontWeight.Bold,
-                                color = BoothPrimary,
+                                color = MaterialTheme.colorScheme.primary,
                                 fontSize = 13.sp
                             )
                         }
@@ -334,22 +331,22 @@ fun ProfilePictureScreen(
                                 .height(46.dp),
                             shape = RoundedCornerShape(12.dp),
                             colors = ButtonDefaults.buttonColors(
-                                containerColor = Color(0xFFEFF6FF),
-                                contentColor = BoothPrimary
+                                containerColor = MaterialTheme.colorScheme.primaryContainer,
+                                contentColor = MaterialTheme.colorScheme.primary
                             ),
                             elevation = ButtonDefaults.buttonElevation(defaultElevation = 0.dp)
                         ) {
                             Icon(
                                 imageVector = Icons.Default.FolderOpen,
                                 contentDescription = null,
-                                tint = BoothPrimary,
+                                tint = MaterialTheme.colorScheme.primary,
                                 modifier = Modifier.size(17.dp)
                             )
                             Spacer(modifier = Modifier.width(6.dp))
                             Text(
                                 text = "From Files",
                                 fontWeight = FontWeight.Bold,
-                                color = BoothPrimary,
+                                color = MaterialTheme.colorScheme.primary,
                                 fontSize = 13.sp
                             )
                         }
@@ -364,7 +361,7 @@ fun ProfilePictureScreen(
                         Icon(
                             imageVector = Icons.Default.Shield,
                             contentDescription = null,
-                            tint = Color(0xFF2563EB),
+                            tint = MaterialTheme.colorScheme.primary,
                             modifier = Modifier.size(18.dp)
                         )
                         Spacer(modifier = Modifier.width(8.dp))
@@ -372,7 +369,7 @@ fun ProfilePictureScreen(
                             text = "Photo requirements",
                             style = MaterialTheme.typography.titleSmall,
                             fontWeight = FontWeight.Bold,
-                            color = Color(0xFF1E293B),
+                            color = MaterialTheme.colorScheme.onSurface,
                             fontSize = 14.sp
                         )
                     }
@@ -380,22 +377,19 @@ fun ProfilePictureScreen(
                     Spacer(modifier = Modifier.height(14.dp))
 
                     RequirementItem(
-                        title = "Clear lighting & high resolution",
-                        description = "Even illumination without glare, shadows, or grain"
+                        title = "Clear lighting & high resolution"
                     )
 
                     Spacer(modifier = Modifier.height(12.dp))
 
                     RequirementItem(
-                        title = "Solo shot, facing directly forward",
-                        description = "Neutral posture with shoulders centered in frame"
+                        title = "Solo shot, facing directly forward"
                     )
 
                     Spacer(modifier = Modifier.height(12.dp))
 
                     RequirementItem(
-                        title = "No sunglasses, masks, or beauty filters",
-                        description = "Eyes, eyebrows, and jawline must remain fully identifiable"
+                        title = "No sunglasses, masks, or beauty filters"
                     )
                 }
             }
@@ -407,8 +401,7 @@ fun ProfilePictureScreen(
 
 @Composable
 private fun RequirementItem(
-    title: String,
-    description: String
+    title: String
 ) {
     Row(
         modifier = Modifier.fillMaxWidth(),
@@ -417,13 +410,13 @@ private fun RequirementItem(
         Box(
             modifier = Modifier
                 .size(18.dp)
-                .background(Color(0xFFDBEAFE), CircleShape),
+                .background(MaterialTheme.colorScheme.primaryContainer, CircleShape),
             contentAlignment = Alignment.Center
         ) {
             Icon(
                 imageVector = Icons.Default.Check,
                 contentDescription = null,
-                tint = Color(0xFF2563EB),
+                tint = MaterialTheme.colorScheme.primary,
                 modifier = Modifier.size(12.dp)
             )
         }
@@ -435,14 +428,7 @@ private fun RequirementItem(
                 text = title,
                 fontSize = 12.5.sp,
                 fontWeight = FontWeight.Bold,
-                color = Color(0xFF1E293B)
-            )
-            Spacer(modifier = Modifier.height(2.dp))
-            Text(
-                text = description,
-                fontSize = 11.sp,
-                color = Color(0xFF64748B),
-                lineHeight = 15.sp
+                color = MaterialTheme.colorScheme.onSurface
             )
         }
     }

@@ -117,54 +117,62 @@ fun CommunityScreen(
     }
 
     Scaffold(
-        containerColor = Color(0xFFF8FAFC),
+        containerColor = MaterialTheme.colorScheme.background,
         bottomBar = {
             NavigationBar(
-                containerColor = Color.White,
+                containerColor = MaterialTheme.colorScheme.surface,
                 tonalElevation = 8.dp
             ) {
                 NavigationBarItem(
                     selected = false,
                     onClick = onExploreClick,
                     icon = { Icon(Icons.Default.Search, contentDescription = "Explore") },
-                    label = { Text("Explore", fontSize = 11.sp) },
+                    label = { Text("Explore", fontSize = 11.sp, color = MaterialTheme.colorScheme.onSurface) },
                     colors = NavigationBarItemDefaults.colors(
-                        selectedIconColor = BoothPrimary,
-                        selectedTextColor = BoothPrimary,
-                        indicatorColor = Color(0xFFEFF6FF)
+                        selectedIconColor = MaterialTheme.colorScheme.primary,
+                        selectedTextColor = MaterialTheme.colorScheme.primary,
+                        unselectedIconColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                        unselectedTextColor = MaterialTheme.colorScheme.onSurface,
+                        indicatorColor = MaterialTheme.colorScheme.primaryContainer
                     )
                 )
                 NavigationBarItem(
                     selected = false,
                     onClick = onReservationsClick,
                     icon = { Icon(Icons.Default.DateRange, contentDescription = "Reservations") },
-                    label = { Text("Reservations", fontSize = 11.sp) },
+                    label = { Text("Reservations", fontSize = 11.sp, color = MaterialTheme.colorScheme.onSurface) },
                     colors = NavigationBarItemDefaults.colors(
-                        selectedIconColor = BoothPrimary,
-                        selectedTextColor = BoothPrimary,
-                        indicatorColor = Color(0xFFEFF6FF)
+                        selectedIconColor = MaterialTheme.colorScheme.primary,
+                        selectedTextColor = MaterialTheme.colorScheme.primary,
+                        unselectedIconColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                        unselectedTextColor = MaterialTheme.colorScheme.onSurface,
+                        indicatorColor = MaterialTheme.colorScheme.primaryContainer
                     )
                 )
                 NavigationBarItem(
                     selected = true,
                     onClick = { },
                     icon = { Icon(Icons.Default.Groups, contentDescription = "Community") },
-                    label = { Text("Community", fontSize = 11.sp, fontWeight = FontWeight.SemiBold) },
+                    label = { Text("Community", fontSize = 11.sp, fontWeight = FontWeight.SemiBold, color = MaterialTheme.colorScheme.primary) },
                     colors = NavigationBarItemDefaults.colors(
-                        selectedIconColor = BoothPrimary,
-                        selectedTextColor = BoothPrimary,
-                        indicatorColor = Color(0xFFEFF6FF)
+                        selectedIconColor = MaterialTheme.colorScheme.primary,
+                        selectedTextColor = MaterialTheme.colorScheme.primary,
+                        unselectedIconColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                        unselectedTextColor = MaterialTheme.colorScheme.onSurface,
+                        indicatorColor = MaterialTheme.colorScheme.primaryContainer
                     )
                 )
                 NavigationBarItem(
                     selected = false,
                     onClick = onProfileClick,
                     icon = { Icon(Icons.Default.Person, contentDescription = "Profile") },
-                    label = { Text("Profile", fontSize = 11.sp) },
+                    label = { Text("Profile", fontSize = 11.sp, color = MaterialTheme.colorScheme.onSurface) },
                     colors = NavigationBarItemDefaults.colors(
-                        selectedIconColor = BoothPrimary,
-                        selectedTextColor = BoothPrimary,
-                        indicatorColor = Color(0xFFEFF6FF)
+                        selectedIconColor = MaterialTheme.colorScheme.primary,
+                        selectedTextColor = MaterialTheme.colorScheme.primary,
+                        unselectedIconColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                        unselectedTextColor = MaterialTheme.colorScheme.onSurface,
+                        indicatorColor = MaterialTheme.colorScheme.primaryContainer
                     )
                 )
             }
@@ -174,7 +182,7 @@ fun CommunityScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding)
-                .background(Color(0xFFF8FAFC)),
+                .background(MaterialTheme.colorScheme.background),
             contentPadding = PaddingValues(start = 16.dp, end = 16.dp, top = 4.dp, bottom = 48.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
@@ -190,13 +198,13 @@ fun CommunityScreen(
                             text = "Community",
                             style = MaterialTheme.typography.headlineSmall,
                             fontWeight = FontWeight.Bold,
-                            color = Color(0xFF0F172A),
+                            color = MaterialTheme.colorScheme.onSurface,
                             fontSize = 24.sp
                         )
                         Text(
-                            text = "Your saved circles & verified hangout buddies",
+                            text = "Circles you've joined and hosts you saved",
                             fontSize = 12.5.sp,
-                            color = Color(0xFF64748B)
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                     }
 
@@ -212,21 +220,21 @@ fun CommunityScreen(
                 Card(
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(16.dp),
-                    colors = CardDefaults.cardColors(containerColor = Color(0xFFF0F7FF)),
-                    border = BorderStroke(1.dp, Color(0xFFBFDBFE))
+                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer),
+                    border = BorderStroke(1.dp, MaterialTheme.colorScheme.primary.copy(alpha = 0.3f))
                 ) {
                     Column(modifier = Modifier.padding(16.dp)) {
                         Row(verticalAlignment = Alignment.CenterVertically) {
                             Box(
                                 modifier = Modifier
                                     .size(30.dp)
-                                    .background(Color(0xFFDBEAFE), CircleShape),
+                                    .background(MaterialTheme.colorScheme.primaryContainer, CircleShape),
                                 contentAlignment = Alignment.Center
                             ) {
                                 Icon(
                                     imageVector = Icons.Default.Groups,
                                     contentDescription = null,
-                                    tint = BoothPrimary,
+                                    tint = MaterialTheme.colorScheme.primary,
                                     modifier = Modifier.size(17.dp)
                                 )
                             }
@@ -235,7 +243,7 @@ fun CommunityScreen(
                                 text = "Join a Circle with Code",
                                 fontSize = 14.sp,
                                 fontWeight = FontWeight.Bold,
-                                color = Color(0xFF0F172A)
+                                color = MaterialTheme.colorScheme.onSurface
                             )
                         }
 
@@ -253,10 +261,10 @@ fun CommunityScreen(
                                 shape = RoundedCornerShape(10.dp),
                                 singleLine = true,
                                 colors = OutlinedTextFieldDefaults.colors(
-                                    focusedContainerColor = Color.White,
-                                    unfocusedContainerColor = Color.White,
-                                    focusedBorderColor = BoothPrimary,
-                                    unfocusedBorderColor = Color(0xFFCBD5E1)
+                                    focusedContainerColor = MaterialTheme.colorScheme.surface,
+                                    unfocusedContainerColor = MaterialTheme.colorScheme.surface,
+                                    focusedBorderColor = MaterialTheme.colorScheme.primary,
+                                    unfocusedBorderColor = MaterialTheme.colorScheme.outlineVariant
                                 )
                             )
 
@@ -283,11 +291,11 @@ fun CommunityScreen(
                                 },
                                 shape = RoundedCornerShape(10.dp),
                                 colors = ButtonDefaults.buttonColors(
-                                    containerColor = BoothPrimary,
-                                    contentColor = Color.White
+                                    containerColor = MaterialTheme.colorScheme.primary,
+                                    contentColor = MaterialTheme.colorScheme.onPrimary
                                 )
                             ) {
-                                Text("Join Circle", fontWeight = FontWeight.Bold, fontSize = 13.sp, color = Color.White)
+                                Text("Join Circle", fontWeight = FontWeight.Bold, fontSize = 13.sp, color = MaterialTheme.colorScheme.onPrimary)
                             }
                         }
 
@@ -323,13 +331,13 @@ fun CommunityScreen(
                         text = "Joined Communities (${joinedCommunities.size})",
                         fontWeight = FontWeight.Bold,
                         fontSize = 17.sp,
-                        color = Color(0xFF0F172A)
+                        color = MaterialTheme.colorScheme.onSurface
                     )
                     Text(
                         text = "Saved",
                         fontSize = 12.sp,
                         fontWeight = FontWeight.SemiBold,
-                        color = BoothPrimary
+                        color = MaterialTheme.colorScheme.primary
                     )
                 }
             }
@@ -347,7 +355,7 @@ fun CommunityScreen(
                     text = "Saved Table Hosts",
                     fontWeight = FontWeight.Bold,
                     fontSize = 17.sp,
-                    color = Color(0xFF0F172A)
+                    color = MaterialTheme.colorScheme.onSurface
                 )
             }
 
@@ -355,8 +363,8 @@ fun CommunityScreen(
                 Card(
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(16.dp),
-                    colors = CardDefaults.cardColors(containerColor = Color.White),
-                    border = BorderStroke(1.dp, Color(0xFFE2E8F0))
+                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+                    border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline)
                 ) {
                     Column(modifier = Modifier.padding(16.dp)) {
                         SavedHostRow(
@@ -367,7 +375,7 @@ fun CommunityScreen(
                             avatarBg = BoothPrimary
                         )
                         Spacer(modifier = Modifier.height(12.dp))
-                        Box(modifier = Modifier.fillMaxWidth().height(1.dp).background(Color(0xFFF1F5F9)))
+                        Box(modifier = Modifier.fillMaxWidth().height(1.dp).background(MaterialTheme.colorScheme.surfaceVariant))
                         Spacer(modifier = Modifier.height(12.dp))
                         SavedHostRow(
                             name = "David P.",
@@ -393,8 +401,8 @@ private fun CommunityItemCard(
             .fillMaxWidth()
             .clickable { onOpenSession() },
         shape = RoundedCornerShape(16.dp),
-        colors = CardDefaults.cardColors(containerColor = Color.White),
-        border = BorderStroke(1.dp, Color(0xFFE2E8F0)),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline),
         elevation = CardDefaults.cardElevation(defaultElevation = 1.dp)
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
@@ -405,20 +413,20 @@ private fun CommunityItemCard(
             ) {
                 Surface(
                     shape = RoundedCornerShape(8.dp),
-                    color = Color(0xFFEFF6FF)
+                    color = MaterialTheme.colorScheme.primaryContainer
                 ) {
                     Text(
                         text = community.circleType,
                         fontSize = 11.5.sp,
                         fontWeight = FontWeight.Bold,
-                        color = BoothPrimary,
+                        color = MaterialTheme.colorScheme.primary,
                         modifier = Modifier.padding(horizontal = 8.dp, vertical = 3.dp)
                     )
                 }
 
                 Surface(
                     shape = RoundedCornerShape(12.dp),
-                    color = Color(0xFFF0FDF4)
+                    color = BoothSuccess.copy(alpha = 0.12f)
                 ) {
                     Row(
                         modifier = Modifier.padding(horizontal = 8.dp, vertical = 3.dp),
@@ -442,7 +450,7 @@ private fun CommunityItemCard(
                 text = community.name,
                 fontWeight = FontWeight.Bold,
                 fontSize = 15.sp,
-                color = Color(0xFF0F172A)
+                color = MaterialTheme.colorScheme.onSurface
             )
 
             Spacer(modifier = Modifier.height(4.dp))
@@ -450,7 +458,7 @@ private fun CommunityItemCard(
             Text(
                 text = community.venueName,
                 fontSize = 12.sp,
-                color = Color(0xFF64748B)
+                color = MaterialTheme.colorScheme.onSurfaceVariant
             )
 
             Spacer(modifier = Modifier.height(12.dp))
@@ -458,7 +466,7 @@ private fun CommunityItemCard(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(Color(0xFFF8FAFC), RoundedCornerShape(10.dp))
+                    .background(MaterialTheme.colorScheme.background, RoundedCornerShape(10.dp))
                     .padding(10.dp),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
@@ -471,25 +479,25 @@ private fun CommunityItemCard(
                             text = "Host: ${community.hostName}",
                             fontSize = 11.5.sp,
                             fontWeight = FontWeight.Bold,
-                            color = Color(0xFF0F172A)
+                            color = MaterialTheme.colorScheme.onSurface
                         )
                         Text(
                             text = "${community.memberCount} members in circle",
                             fontSize = 10.5.sp,
-                            color = Color(0xFF64748B)
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                     }
                 }
 
                 Surface(
                     shape = RoundedCornerShape(8.dp),
-                    color = Color(0xFFEFF6FF)
+                    color = MaterialTheme.colorScheme.primaryContainer
                 ) {
                     Text(
                         text = community.nextSession,
                         fontSize = 10.5.sp,
                         fontWeight = FontWeight.SemiBold,
-                        color = BoothPrimary,
+                        color = MaterialTheme.colorScheme.primary,
                         modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
                     )
                 }
@@ -516,20 +524,20 @@ private fun SavedHostRow(
             Spacer(modifier = Modifier.width(10.dp))
             Column {
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    Text(text = name, fontWeight = FontWeight.Bold, fontSize = 13.5.sp, color = Color(0xFF0F172A))
+                    Text(text = name, fontWeight = FontWeight.Bold, fontSize = 13.5.sp, color = MaterialTheme.colorScheme.onSurface)
                     Spacer(modifier = Modifier.width(4.dp))
-                    Icon(Icons.Default.CheckCircle, contentDescription = null, tint = BoothPrimary, modifier = Modifier.size(13.dp))
+                    Icon(Icons.Default.CheckCircle, contentDescription = null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(13.dp))
                 }
-                Text(text = role, fontSize = 11.sp, color = Color(0xFF64748B))
+                Text(text = role, fontSize = 11.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
             }
         }
 
-        Surface(shape = RoundedCornerShape(8.dp), color = Color(0xFFEFF6FF)) {
+        Surface(shape = RoundedCornerShape(8.dp), color = MaterialTheme.colorScheme.primaryContainer) {
             Text(
                 text = rating,
                 fontSize = 11.5.sp,
                 fontWeight = FontWeight.Bold,
-                color = BoothPrimary,
+                color = MaterialTheme.colorScheme.primary,
                 modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
             )
         }

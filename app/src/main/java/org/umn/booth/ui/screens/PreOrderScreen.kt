@@ -55,8 +55,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.umn.booth.data.DummyData
 import org.umn.booth.data.model.MenuItem
-import org.umn.booth.ui.theme.BoothPrimary
-import org.umn.booth.ui.theme.BoothTextSecondary
 
 @Composable
 fun PreOrderScreen(
@@ -66,9 +64,9 @@ fun PreOrderScreen(
 ) {
     var qtyItem1 by remember { mutableIntStateOf(1) }
     var qtyItem2 by remember { mutableIntStateOf(1) }
-    var selectedCategory by remember { mutableStateOf("All Pre-Orders (2)") }
+    var selectedCategory by remember { mutableStateOf("All Items (2)") }
 
-    val categories = listOf("All Pre-Orders (2)", "Signature Coffee", "Pastries & Snacks")
+    val categories = listOf("All Items (2)", "Signature Coffee", "Pastries & Snacks")
 
     val item1 = DummyData.menuItems[0]
     val item2 = DummyData.menuItems[1]
@@ -77,10 +75,10 @@ fun PreOrderScreen(
     val totalItems = qtyItem1 + qtyItem2
 
     Scaffold(
-        containerColor = Color(0xFFF8FAFC),
+        containerColor = MaterialTheme.colorScheme.background,
         topBar = {
             Surface(
-                color = Color(0xFFF8FAFC),
+                color = MaterialTheme.colorScheme.background,
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Row(
@@ -93,7 +91,7 @@ fun PreOrderScreen(
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = "Back",
-                            tint = Color(0xFF0F172A)
+                            tint = MaterialTheme.colorScheme.onSurface
                         )
                     }
                     Spacer(modifier = Modifier.width(4.dp))
@@ -102,12 +100,12 @@ fun PreOrderScreen(
                             text = "Table 04 • Glasshouse Corner",
                             fontSize = 14.sp,
                             fontWeight = FontWeight.Bold,
-                            color = Color(0xFF0F172A)
+                            color = MaterialTheme.colorScheme.onSurface
                         )
                         Text(
                             text = "Pre-Order & Checkout",
                             fontSize = 11.5.sp,
-                            color = Color(0xFF64748B)
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                     }
                 }
@@ -116,9 +114,9 @@ fun PreOrderScreen(
         bottomBar = {
             Surface(
                 modifier = Modifier.fillMaxWidth(),
-                color = Color.White,
+                color = MaterialTheme.colorScheme.surface,
                 tonalElevation = 8.dp,
-                border = androidx.compose.foundation.BorderStroke(1.dp, Color(0xFFE2E8F0))
+                border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.outline)
             ) {
                 Row(
                     modifier = Modifier
@@ -140,7 +138,7 @@ fun PreOrderScreen(
                             text = "Rp ${String.format("%,d", subtotal).replace(',', '.')}",
                             fontSize = 18.sp,
                             fontWeight = FontWeight.Bold,
-                            color = Color(0xFF0F172A)
+                            color = MaterialTheme.colorScheme.onSurface
                         )
                     }
 
@@ -151,12 +149,12 @@ fun PreOrderScreen(
                         },
                         shape = RoundedCornerShape(12.dp),
                         colors = ButtonDefaults.buttonColors(
-                            containerColor = BoothPrimary,
-                            contentColor = Color.White
+                            containerColor = MaterialTheme.colorScheme.primary,
+                            contentColor = MaterialTheme.colorScheme.onPrimary
                         ),
                         modifier = Modifier.height(48.dp)
                     ) {
-                        Text("Confirm & Join Table →", fontWeight = FontWeight.Bold, fontSize = 13.5.sp, color = Color.White)
+                        Text("Confirm & Join Table →", fontWeight = FontWeight.Bold, fontSize = 13.5.sp, color = MaterialTheme.colorScheme.onPrimary)
                     }
                 }
             }
@@ -166,7 +164,7 @@ fun PreOrderScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding)
-                .background(Color(0xFFF8FAFC)),
+                .background(MaterialTheme.colorScheme.background),
             contentPadding = PaddingValues(start = 16.dp, end = 16.dp, top = 8.dp, bottom = 32.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
@@ -177,14 +175,14 @@ fun PreOrderScreen(
                         text = "Pre-Order Food & Drinks",
                         style = MaterialTheme.typography.titleLarge,
                         fontWeight = FontWeight.Bold,
-                        color = Color(0xFF0F172A),
+                        color = MaterialTheme.colorScheme.onSurface,
                         fontSize = 20.sp
                     )
                     Spacer(modifier = Modifier.height(4.dp))
                     Text(
                         text = "Ready & served when you take your seat",
                         fontSize = 12.5.sp,
-                        color = Color(0xFF64748B)
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 }
             }
@@ -198,15 +196,15 @@ fun PreOrderScreen(
                             onClick = { selectedCategory = category },
                             label = { Text(category, fontWeight = FontWeight.Medium, fontSize = 12.sp) },
                             colors = FilterChipDefaults.filterChipColors(
-                                selectedContainerColor = BoothPrimary,
-                                selectedLabelColor = Color.White,
-                                containerColor = Color.White,
-                                labelColor = Color(0xFF64748B)
+                                selectedContainerColor = MaterialTheme.colorScheme.primary,
+                                selectedLabelColor = MaterialTheme.colorScheme.onPrimary,
+                                containerColor = MaterialTheme.colorScheme.surface,
+                                labelColor = MaterialTheme.colorScheme.onSurfaceVariant
                             ),
                             border = FilterChipDefaults.filterChipBorder(
                                 enabled = true,
                                 selected = isSelected,
-                                borderColor = if (isSelected) BoothPrimary else Color(0xFFE2E8F0)
+                                borderColor = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline
                             ),
                             shape = RoundedCornerShape(20.dp)
                         )
@@ -240,12 +238,12 @@ fun PreOrderScreen(
                         .height(44.dp),
                     shape = RoundedCornerShape(12.dp),
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = Color(0xFFEFF6FF),
-                        contentColor = BoothPrimary
+                        containerColor = MaterialTheme.colorScheme.primaryContainer,
+                        contentColor = MaterialTheme.colorScheme.primary
                     ),
                     elevation = ButtonDefaults.buttonElevation(defaultElevation = 0.dp)
                 ) {
-                    Icon(Icons.Default.Add, contentDescription = null, tint = BoothPrimary, modifier = Modifier.size(16.dp))
+                    Icon(Icons.Default.Add, contentDescription = null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(16.dp))
                     Spacer(modifier = Modifier.width(6.dp))
                     Text("Add More", fontWeight = FontWeight.Bold, fontSize = 13.sp)
                 }
@@ -255,37 +253,37 @@ fun PreOrderScreen(
                 Card(
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(16.dp),
-                    colors = CardDefaults.cardColors(containerColor = Color.White),
-                    border = androidx.compose.foundation.BorderStroke(1.dp, Color(0xFFE2E8F0))
+                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+                    border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.outline)
                 ) {
                     Column(modifier = Modifier.padding(16.dp)) {
                         Row(verticalAlignment = Alignment.Top) {
                             Box(
                                 modifier = Modifier
                                     .size(32.dp)
-                                    .background(Color(0xFFE0EDFB), CircleShape),
+                                    .background(MaterialTheme.colorScheme.primaryContainer, CircleShape),
                                 contentAlignment = Alignment.Center
                             ) {
                                 Icon(
                                     imageVector = Icons.Default.Shield,
                                     contentDescription = null,
-                                    tint = BoothPrimary,
+                                    tint = MaterialTheme.colorScheme.primary,
                                     modifier = Modifier.size(16.dp)
                                 )
                             }
                             Spacer(modifier = Modifier.width(10.dp))
                             Column(modifier = Modifier.weight(1f)) {
                                 Text(
-                                    text = "Individual QRIS Checkout",
+                                    text = "Pay for Your Order (QRIS)",
                                     fontSize = 13.sp,
                                     fontWeight = FontWeight.Bold,
-                                    color = Color(0xFF0F172A)
+                                    color = MaterialTheme.colorScheme.onSurface
                                 )
                                 Spacer(modifier = Modifier.height(3.dp))
                                 Text(
-                                    text = "You only pay for your own items. Table reservation deposit of Rp 50.000 was guaranteed by host Sarah K. Seamless QRIS settlement activates upon arrival check-in.",
+                                    text = "You pay only for your own order. Sarah K. covered the Rp 50.000 table deposit.",
                                     fontSize = 11.5.sp,
-                                    color = Color(0xFF64748B),
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant,
                                     lineHeight = 16.sp
                                 )
                             }
@@ -296,7 +294,7 @@ fun PreOrderScreen(
                         Box(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .background(Color(0xFFF8FAFC), RoundedCornerShape(10.dp))
+                                .background(MaterialTheme.colorScheme.background, RoundedCornerShape(10.dp))
                                 .padding(horizontal = 14.dp, vertical = 10.dp)
                         ) {
                             Row(
@@ -307,13 +305,13 @@ fun PreOrderScreen(
                                 Text(
                                     text = "Pre-Order Subtotal",
                                     fontSize = 12.sp,
-                                    color = Color(0xFF64748B)
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant
                                 )
                                 Text(
                                     text = "Rp ${String.format("%,d", subtotal).replace(',', '.')} ($totalItems items)",
                                     fontSize = 13.sp,
                                     fontWeight = FontWeight.Bold,
-                                    color = BoothPrimary
+                                    color = MaterialTheme.colorScheme.primary
                                 )
                             }
                         }
@@ -334,8 +332,8 @@ private fun MenuItemCard(
     Card(
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(14.dp),
-        colors = CardDefaults.cardColors(containerColor = Color.White),
-        border = androidx.compose.foundation.BorderStroke(1.dp, Color(0xFFE2E8F0)),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+        border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.outline),
         elevation = CardDefaults.cardElevation(defaultElevation = 1.dp)
     ) {
         Row(
@@ -360,13 +358,13 @@ private fun MenuItemCard(
                     text = item.name,
                     fontWeight = FontWeight.Bold,
                     fontSize = 14.5.sp,
-                    color = Color(0xFF0F172A)
+                    color = MaterialTheme.colorScheme.onSurface
                 )
                 Spacer(modifier = Modifier.height(2.dp))
                 Text(
                     text = item.description,
                     fontSize = 11.sp,
-                    color = Color(0xFF64748B),
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
                     maxLines = 1
                 )
                 Spacer(modifier = Modifier.height(6.dp))
@@ -374,7 +372,7 @@ private fun MenuItemCard(
                     text = "Rp ${String.format("%,d", item.price).replace(',', '.')}",
                     fontWeight = FontWeight.Bold,
                     fontSize = 13.sp,
-                    color = BoothPrimary
+                    color = MaterialTheme.colorScheme.primary
                 )
             }
 
@@ -387,14 +385,14 @@ private fun MenuItemCard(
                 Box(
                     modifier = Modifier
                         .size(30.dp)
-                        .background(Color(0xFFF1F5F9), RoundedCornerShape(8.dp))
+                        .background(MaterialTheme.colorScheme.surfaceVariant, RoundedCornerShape(8.dp))
                         .clickable { onDecrease() },
                     contentAlignment = Alignment.Center
                 ) {
                     Icon(
                         imageVector = Icons.Default.Remove,
                         contentDescription = "Decrease",
-                        tint = Color(0xFF64748B),
+                        tint = MaterialTheme.colorScheme.onSurfaceVariant,
                         modifier = Modifier.size(16.dp)
                     )
                 }
@@ -403,20 +401,20 @@ private fun MenuItemCard(
                     text = "$qty",
                     fontWeight = FontWeight.Bold,
                     fontSize = 14.sp,
-                    color = Color(0xFF0F172A)
+                    color = MaterialTheme.colorScheme.onSurface
                 )
 
                 Box(
                     modifier = Modifier
                         .size(30.dp)
-                        .background(BoothPrimary, RoundedCornerShape(8.dp))
+                        .background(MaterialTheme.colorScheme.primary, RoundedCornerShape(8.dp))
                         .clickable { onIncrease() },
                     contentAlignment = Alignment.Center
                 ) {
                     Icon(
                         imageVector = Icons.Default.Add,
                         contentDescription = "Increase",
-                        tint = Color.White,
+                        tint = MaterialTheme.colorScheme.onPrimary,
                         modifier = Modifier.size(16.dp)
                     )
                 }

@@ -84,10 +84,10 @@ fun VenueDetailScreen(
     var selectedBottomNav by remember { mutableStateOf(0) }
 
     Scaffold(
-        containerColor = Color(0xFFF8FAFC),
+        containerColor = MaterialTheme.colorScheme.background,
         bottomBar = {
             NavigationBar(
-                containerColor = Color.White,
+                containerColor = MaterialTheme.colorScheme.surface,
                 tonalElevation = 8.dp
             ) {
                 NavigationBarItem(
@@ -97,11 +97,13 @@ fun VenueDetailScreen(
                         onNavigateBack()
                     },
                     icon = { Icon(Icons.Default.Search, contentDescription = "Explore") },
-                    label = { Text("Explore", fontSize = 11.sp, fontWeight = FontWeight.SemiBold) },
+                    label = { Text("Explore", fontSize = 11.sp, fontWeight = FontWeight.SemiBold, color = MaterialTheme.colorScheme.primary) },
                     colors = NavigationBarItemDefaults.colors(
-                        selectedIconColor = BoothPrimary,
-                        selectedTextColor = BoothPrimary,
-                        indicatorColor = Color(0xFFEFF6FF)
+                        selectedIconColor = MaterialTheme.colorScheme.primary,
+                        selectedTextColor = MaterialTheme.colorScheme.primary,
+                        unselectedIconColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                        unselectedTextColor = MaterialTheme.colorScheme.onSurface,
+                        indicatorColor = MaterialTheme.colorScheme.primaryContainer
                     )
                 )
                 NavigationBarItem(
@@ -111,11 +113,13 @@ fun VenueDetailScreen(
                         onReservationsClick()
                     },
                     icon = { Icon(Icons.Default.DateRange, contentDescription = "Reservations") },
-                    label = { Text("Reservations", fontSize = 11.sp) },
+                    label = { Text("Reservations", fontSize = 11.sp, color = MaterialTheme.colorScheme.onSurface) },
                     colors = NavigationBarItemDefaults.colors(
-                        selectedIconColor = BoothPrimary,
-                        selectedTextColor = BoothPrimary,
-                        indicatorColor = Color(0xFFEFF6FF)
+                        selectedIconColor = MaterialTheme.colorScheme.primary,
+                        selectedTextColor = MaterialTheme.colorScheme.primary,
+                        unselectedIconColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                        unselectedTextColor = MaterialTheme.colorScheme.onSurface,
+                        indicatorColor = MaterialTheme.colorScheme.primaryContainer
                     )
                 )
                 NavigationBarItem(
@@ -125,11 +129,13 @@ fun VenueDetailScreen(
                         onCommunityClick()
                     },
                     icon = { Icon(Icons.Default.Groups, contentDescription = "Community") },
-                    label = { Text("Community", fontSize = 11.sp) },
+                    label = { Text("Community", fontSize = 11.sp, color = MaterialTheme.colorScheme.onSurface) },
                     colors = NavigationBarItemDefaults.colors(
-                        selectedIconColor = BoothPrimary,
-                        selectedTextColor = BoothPrimary,
-                        indicatorColor = Color(0xFFEFF6FF)
+                        selectedIconColor = MaterialTheme.colorScheme.primary,
+                        selectedTextColor = MaterialTheme.colorScheme.primary,
+                        unselectedIconColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                        unselectedTextColor = MaterialTheme.colorScheme.onSurface,
+                        indicatorColor = MaterialTheme.colorScheme.primaryContainer
                     )
                 )
                 NavigationBarItem(
@@ -139,11 +145,13 @@ fun VenueDetailScreen(
                         onProfileClick()
                     },
                     icon = { Icon(Icons.Default.Person, contentDescription = "Profile") },
-                    label = { Text("Profile", fontSize = 11.sp) },
+                    label = { Text("Profile", fontSize = 11.sp, color = MaterialTheme.colorScheme.onSurface) },
                     colors = NavigationBarItemDefaults.colors(
-                        selectedIconColor = BoothPrimary,
-                        selectedTextColor = BoothPrimary,
-                        indicatorColor = Color(0xFFEFF6FF)
+                        selectedIconColor = MaterialTheme.colorScheme.primary,
+                        selectedTextColor = MaterialTheme.colorScheme.primary,
+                        unselectedIconColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                        unselectedTextColor = MaterialTheme.colorScheme.onSurface,
+                        indicatorColor = MaterialTheme.colorScheme.primaryContainer
                     )
                 )
             }
@@ -223,19 +231,19 @@ fun VenueDetailScreen(
                 ) {
                     Surface(
                         shape = RoundedCornerShape(20.dp),
-                        color = Color.White
+                        color = MaterialTheme.colorScheme.surface
                     ) {
                         Row(
                             modifier = Modifier.padding(horizontal = 10.dp, vertical = 5.dp),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
-                            Icon(Icons.Default.Check, contentDescription = null, tint = BoothPrimary, modifier = Modifier.size(14.dp))
+                            Icon(Icons.Default.Check, contentDescription = null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(14.dp))
                             Spacer(modifier = Modifier.width(4.dp))
                             Text(
                                 text = "Verified Partner",
                                 fontSize = 11.5.sp,
                                 fontWeight = FontWeight.Bold,
-                                color = Color(0xFF0F172A)
+                                color = MaterialTheme.colorScheme.onSurface
                             )
                         }
                     }
@@ -246,7 +254,7 @@ fun VenueDetailScreen(
                     ) {
                         Text(
                             text = "📷 1/8 Photos",
-                            color = Color.White,
+                            color = MaterialTheme.colorScheme.surface,
                             fontSize = 11.5.sp,
                             fontWeight = FontWeight.Bold,
                             modifier = Modifier.padding(horizontal = 10.dp, vertical = 5.dp)
@@ -272,11 +280,11 @@ fun VenueDetailScreen(
                             .height(48.dp),
                         shape = RoundedCornerShape(12.dp),
                         colors = ButtonDefaults.buttonColors(
-                            containerColor = Color(0xFFEFF6FF),
-                            contentColor = BoothPrimary
+                            containerColor = MaterialTheme.colorScheme.primaryContainer,
+                            contentColor = MaterialTheme.colorScheme.primary
                         )
                     ) {
-                        Icon(Icons.Default.Chair, contentDescription = null, tint = BoothPrimary, modifier = Modifier.size(18.dp))
+                        Icon(Icons.Default.Chair, contentDescription = null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(18.dp))
                         Spacer(modifier = Modifier.width(8.dp))
                         Text("Browse Seats", fontWeight = FontWeight.Bold, fontSize = 13.5.sp)
                     }
@@ -288,13 +296,13 @@ fun VenueDetailScreen(
                             .height(48.dp),
                         shape = RoundedCornerShape(12.dp),
                         colors = ButtonDefaults.buttonColors(
-                            containerColor = BoothPrimary,
-                            contentColor = Color.White
+                            containerColor = MaterialTheme.colorScheme.primary,
+                            contentColor = MaterialTheme.colorScheme.onPrimary
                         )
                     ) {
-                        Icon(Icons.Default.Add, contentDescription = null, tint = Color.White, modifier = Modifier.size(18.dp))
+                        Icon(Icons.Default.Add, contentDescription = null, tint = MaterialTheme.colorScheme.onPrimary, modifier = Modifier.size(18.dp))
                         Spacer(modifier = Modifier.width(6.dp))
-                        Text("Host New Table", fontWeight = FontWeight.Bold, fontSize = 13.5.sp, color = Color.White)
+                        Text("Host New Table", fontWeight = FontWeight.Bold, fontSize = 13.5.sp, color = MaterialTheme.colorScheme.onPrimary)
                     }
                 }
 
@@ -309,17 +317,17 @@ fun VenueDetailScreen(
                         text = venue.name,
                         style = MaterialTheme.typography.headlineSmall,
                         fontWeight = FontWeight.Bold,
-                        color = Color(0xFF0F172A),
+                        color = MaterialTheme.colorScheme.onSurface,
                         fontSize = 22.sp
                     )
 
                     Surface(
                         shape = RoundedCornerShape(12.dp),
-                        color = Color(0xFFEFF6FF)
+                        color = MaterialTheme.colorScheme.primaryContainer
                     ) {
                         Text(
                             text = "★ ${venue.rating} (${venue.reviewCount}+)",
-                            color = BoothPrimary,
+                            color = MaterialTheme.colorScheme.primary,
                             fontWeight = FontWeight.Bold,
                             fontSize = 12.sp,
                             modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
@@ -332,24 +340,11 @@ fun VenueDetailScreen(
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                     Surface(
                         shape = RoundedCornerShape(8.dp),
-                        color = Color(0xFFEFF6FF)
+                        color = MaterialTheme.colorScheme.primaryContainer
                     ) {
                         Text(
                             text = "Popular WFC Spot",
-                            color = BoothPrimary,
-                            fontWeight = FontWeight.Medium,
-                            fontSize = 11.5.sp,
-                            modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
-                        )
-                    }
-
-                    Surface(
-                        shape = RoundedCornerShape(8.dp),
-                        color = Color(0xFFEFF6FF)
-                    ) {
-                        Text(
-                            text = "Creator Showcase Venue",
-                            color = BoothPrimary,
+                            color = MaterialTheme.colorScheme.primary,
                             fontWeight = FontWeight.Medium,
                             fontSize = 11.5.sp,
                             modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
@@ -362,8 +357,8 @@ fun VenueDetailScreen(
                 Card(
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(14.dp),
-                    colors = CardDefaults.cardColors(containerColor = Color(0xFFF0F7FF)),
-                    border = androidx.compose.foundation.BorderStroke(1.dp, Color(0xFFDBEAFE))
+                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer),
+                    border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.primaryContainer)
                 ) {
                     Row(
                         modifier = Modifier
@@ -374,10 +369,10 @@ fun VenueDetailScreen(
                         Box(
                             modifier = Modifier
                                 .size(34.dp)
-                                .background(Color(0xFFDBEAFE), CircleShape),
+                                .background(MaterialTheme.colorScheme.primaryContainer, CircleShape),
                             contentAlignment = Alignment.Center
                         ) {
-                            Icon(Icons.Default.LocationOn, contentDescription = null, tint = BoothPrimary, modifier = Modifier.size(18.dp))
+                            Icon(Icons.Default.LocationOn, contentDescription = null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(18.dp))
                         }
                         Spacer(modifier = Modifier.width(10.dp))
                         Column(modifier = Modifier.weight(1f)) {
@@ -385,25 +380,25 @@ fun VenueDetailScreen(
                                 text = venue.address,
                                 fontWeight = FontWeight.Bold,
                                 fontSize = 12.5.sp,
-                                color = Color(0xFF0F172A),
+                                color = MaterialTheme.colorScheme.onSurface,
                                 maxLines = 1
                             )
                             Text(
                                 text = "Tangerang • ${venue.distanceKm} km away from your location",
                                 fontSize = 11.sp,
-                                color = Color(0xFF64748B)
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
                             )
                         }
                         Spacer(modifier = Modifier.width(8.dp))
                         Surface(
                             shape = RoundedCornerShape(8.dp),
-                            color = Color(0xFFDBEAFE)
+                            color = MaterialTheme.colorScheme.primaryContainer
                         ) {
                             Text(
                                 text = "Directions ↱",
                                 fontSize = 11.sp,
                                 fontWeight = FontWeight.Bold,
-                                color = BoothPrimary,
+                                color = MaterialTheme.colorScheme.primary,
                                 modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
                             )
                         }
@@ -419,7 +414,7 @@ fun VenueDetailScreen(
                     Card(
                         modifier = Modifier.weight(1f),
                         shape = RoundedCornerShape(12.dp),
-                        colors = CardDefaults.cardColors(containerColor = Color(0xFFF0F7FF))
+                        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer)
                     ) {
                         Column(modifier = Modifier.padding(12.dp)) {
                             Row(verticalAlignment = Alignment.CenterVertically) {
@@ -429,26 +424,26 @@ fun VenueDetailScreen(
                                         .background(BoothSuccess, CircleShape)
                                 )
                                 Spacer(modifier = Modifier.width(6.dp))
-                                Text("Operating Hours", fontSize = 10.5.sp, color = Color(0xFF64748B))
+                                Text("Operating Hours", fontSize = 10.5.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
                             }
                             Spacer(modifier = Modifier.height(4.dp))
-                            Text(venue.operatingHours, fontSize = 12.sp, fontWeight = FontWeight.Bold, color = Color(0xFF0F172A))
+                            Text(venue.operatingHours, fontSize = 12.sp, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSurface)
                         }
                     }
 
                     Card(
                         modifier = Modifier.weight(1f),
                         shape = RoundedCornerShape(12.dp),
-                        colors = CardDefaults.cardColors(containerColor = Color(0xFFF0F7FF))
+                        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer)
                     ) {
                         Column(modifier = Modifier.padding(12.dp)) {
                             Row(verticalAlignment = Alignment.CenterVertically) {
-                                Icon(Icons.Default.Payments, contentDescription = null, tint = BoothPrimary, modifier = Modifier.size(13.dp))
+                                Icon(Icons.Default.Payments, contentDescription = null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(13.dp))
                                 Spacer(modifier = Modifier.width(4.dp))
-                                Text("Average Spend", fontSize = 10.5.sp, color = Color(0xFF64748B))
+                                Text("Average Spend", fontSize = 10.5.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
                             }
                             Spacer(modifier = Modifier.height(4.dp))
-                            Text("${venue.priceRange} / pax", fontSize = 12.sp, fontWeight = FontWeight.Bold, color = Color(0xFF0F172A))
+                            Text("${venue.priceRange} / pax", fontSize = 12.sp, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSurface)
                         }
                     }
                 }
@@ -459,7 +454,7 @@ fun VenueDetailScreen(
                     text = "VENUE AMENITIES",
                     fontSize = 11.sp,
                     fontWeight = FontWeight.Bold,
-                    color = Color(0xFF64748B),
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
                     letterSpacing = 1.sp
                 )
 
@@ -472,8 +467,8 @@ fun VenueDetailScreen(
                     venue.amenities.forEach { amenity ->
                         Surface(
                             shape = RoundedCornerShape(10.dp),
-                            color = Color.White,
-                            border = androidx.compose.foundation.BorderStroke(1.dp, Color(0xFFE2E8F0))
+                            color = MaterialTheme.colorScheme.surface,
+                            border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.outline)
                         ) {
                             Row(
                                 modifier = Modifier.padding(horizontal = 10.dp, vertical = 6.dp),
@@ -482,7 +477,7 @@ fun VenueDetailScreen(
                                 Text(
                                     text = amenity,
                                     fontSize = 11.5.sp,
-                                    color = Color(0xFF1E293B),
+                                    color = MaterialTheme.colorScheme.onSurface,
                                     fontWeight = FontWeight.Medium
                                 )
                             }
@@ -502,21 +497,21 @@ fun VenueDetailScreen(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
-                        text = "Active Open Tables",
+                        text = "Open Tables",
                         style = MaterialTheme.typography.titleLarge,
                         fontWeight = FontWeight.Bold,
-                        color = Color(0xFF0F172A),
+                        color = MaterialTheme.colorScheme.onSurface,
                         fontSize = 20.sp
                     )
                     Surface(
                         shape = RoundedCornerShape(12.dp),
-                        color = Color(0xFFDCFCE7)
+                        color = BoothSuccess.copy(alpha = 0.12f)
                     ) {
                         Text(
                             text = "${openTables.size} Open",
                             modifier = Modifier.padding(horizontal = 8.dp, vertical = 3.dp),
                             style = MaterialTheme.typography.labelSmall,
-                            color = Color(0xFF16A34A),
+                            color = BoothSuccess,
                             fontWeight = FontWeight.Bold
                         )
                     }
@@ -528,8 +523,8 @@ fun VenueDetailScreen(
                     val remainingSeats = (tableSession.totalSeats - tableSession.filledSeats).coerceAtLeast(0)
                     val isOneSeatLeft = remainingSeats == 1
                     val badgeText = if (isOneSeatLeft) "● 1 Seat Left!" else tableSession.circleType
-                    val badgeColor = if (isOneSeatLeft) Color(0xFFDC2626) else BoothPrimary
-                    val badgeBg = if (isOneSeatLeft) Color(0xFFFEE2E2) else Color(0xFFEFF6FF)
+                    val badgeColor = if (isOneSeatLeft) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.primary
+                    val badgeBg = if (isOneSeatLeft) MaterialTheme.colorScheme.errorContainer else MaterialTheme.colorScheme.primaryContainer
 
                     ActiveOpenTableCard(
                         tableNumber = tableSession.tableNumber,
@@ -580,8 +575,8 @@ private fun ActiveOpenTableCard(
     Card(
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(16.dp),
-        colors = CardDefaults.cardColors(containerColor = Color.White),
-        border = androidx.compose.foundation.BorderStroke(1.dp, Color(0xFFE2E8F0)),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+        border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.outline),
         elevation = CardDefaults.cardElevation(defaultElevation = 1.dp)
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
@@ -594,13 +589,13 @@ private fun ActiveOpenTableCard(
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Surface(
                         shape = RoundedCornerShape(6.dp),
-                        color = Color(0xFFEFF6FF)
+                        color = MaterialTheme.colorScheme.primaryContainer
                     ) {
                         Text(
                             text = tableNumber,
                             fontSize = 11.5.sp,
                             fontWeight = FontWeight.Bold,
-                            color = BoothPrimary,
+                            color = MaterialTheme.colorScheme.primary,
                             modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp)
                         )
                     }
@@ -608,7 +603,7 @@ private fun ActiveOpenTableCard(
                     Text(
                         text = area,
                         fontSize = 12.sp,
-                        color = Color(0xFF64748B)
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 }
 
@@ -632,7 +627,7 @@ private fun ActiveOpenTableCard(
                 text = title,
                 fontWeight = FontWeight.Bold,
                 fontSize = 15.sp,
-                color = Color(0xFF0F172A)
+                color = MaterialTheme.colorScheme.onSurface
             )
 
             Spacer(modifier = Modifier.height(12.dp))
@@ -640,7 +635,7 @@ private fun ActiveOpenTableCard(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(Color(0xFFF8FAFC), RoundedCornerShape(10.dp))
+                    .background(MaterialTheme.colorScheme.background, RoundedCornerShape(10.dp))
                     .padding(10.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -656,31 +651,31 @@ private fun ActiveOpenTableCard(
                             text = hostName,
                             fontWeight = FontWeight.Bold,
                             fontSize = 13.sp,
-                            color = Color(0xFF0F172A)
+                            color = MaterialTheme.colorScheme.onSurface
                         )
                         Spacer(modifier = Modifier.width(4.dp))
                         Icon(
                             imageVector = Icons.Default.Check,
                             contentDescription = null,
-                            tint = Color(0xFF3B82F6),
+                            tint = MaterialTheme.colorScheme.primary,
                             modifier = Modifier.size(13.dp)
                         )
                     }
                     Text(
                         text = hostRole,
                         fontSize = 10.5.sp,
-                        color = Color(0xFF64748B),
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
                         maxLines = 1
                     )
                 }
                 Surface(
                     shape = RoundedCornerShape(8.dp),
-                    color = Color(0xFFEFF6FF)
+                    color = MaterialTheme.colorScheme.primaryContainer
                 ) {
                     Text(
                         text = timeAgo,
                         fontSize = 10.sp,
-                        color = BoothPrimary,
+                        color = MaterialTheme.colorScheme.primary,
                         fontWeight = FontWeight.Medium,
                         modifier = Modifier.padding(horizontal = 6.dp, vertical = 3.dp)
                     )
@@ -693,7 +688,7 @@ private fun ActiveOpenTableCard(
                 text = seatsFilledText,
                 fontSize = 12.sp,
                 fontWeight = FontWeight.Bold,
-                color = Color(0xFF0F172A)
+                color = MaterialTheme.colorScheme.onSurface
             )
 
             Spacer(modifier = Modifier.height(8.dp))
@@ -711,10 +706,10 @@ private fun ActiveOpenTableCard(
                         Box(
                             modifier = Modifier
                                 .size(30.dp)
-                                .background(Color(0xFFEFF6FF), CircleShape),
+                                .background(MaterialTheme.colorScheme.primaryContainer, CircleShape),
                             contentAlignment = Alignment.Center
                         ) {
-                            Text("+", color = BoothPrimary, fontWeight = FontWeight.Bold, fontSize = 14.sp)
+                            Text("+", color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.Bold, fontSize = 14.sp)
                         }
                     }
                 }
@@ -723,12 +718,12 @@ private fun ActiveOpenTableCard(
                     onClick = onJoinClick,
                     shape = RoundedCornerShape(10.dp),
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = BoothPrimary,
-                        contentColor = Color.White
+                        containerColor = MaterialTheme.colorScheme.primary,
+                        contentColor = MaterialTheme.colorScheme.onPrimary
                     ),
                     contentPadding = PaddingValues(horizontal = 14.dp, vertical = 8.dp)
                 ) {
-                    Text("Join Table 👥", fontWeight = FontWeight.Bold, fontSize = 12.5.sp, color = Color.White)
+                    Text("Join Table 👥", fontWeight = FontWeight.Bold, fontSize = 12.5.sp, color = MaterialTheme.colorScheme.onPrimary)
                 }
             }
 
@@ -741,12 +736,12 @@ private fun ActiveOpenTableCard(
                 tags.forEach { tag ->
                     Surface(
                         shape = RoundedCornerShape(8.dp),
-                        color = Color(0xFFF0F7FF)
+                        color = MaterialTheme.colorScheme.primaryContainer
                     ) {
                         Text(
                             text = tag,
                             fontSize = 10.5.sp,
-                            color = BoothPrimary,
+                            color = MaterialTheme.colorScheme.primary,
                             fontWeight = FontWeight.Medium,
                             modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
                         )
